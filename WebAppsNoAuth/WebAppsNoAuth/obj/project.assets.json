@@ -12301,11 +12301,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj",
+      "projectUniqueName": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj",
       "projectName": "WebAppsNoAuth",
-      "projectPath": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj",
+      "projectPath": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj",
       "packagesPath": "/Users/mishalrizvi/.nuget/packages/",
-      "outputPath": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/obj/",
+      "outputPath": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/mishalrizvi/.nuget/NuGet/NuGet.Config"
@@ -12314,7 +12314,8 @@
         "net7.0"
       ],
       "sources": {
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://nuget.telerik.com/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {

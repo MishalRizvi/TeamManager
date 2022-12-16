@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OyyzshaJyrSMhm+WD46e7KVi+Yp/qHlhoUQ/Kxe3CJF2p83RcDfYqX90jE2FRuMuQs1dL2y5cIBmNXFwKSTxyQ==",
+  "dgSpecHash": "OBIfo3k9ENCkSn7MdMG5PcD6qxNPomz7Qn/4wk4DdWLqlSdmrwAd4hs0eJu5y3rfhBURomh4NLISBm5m3pQ4mA==",
   "success": true,
-  "projectFilePath": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj",
+  "projectFilePath": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj",
   "expectedPackageFiles": [
     "/Users/mishalrizvi/.nuget/packages/azure.core/1.24.0/azure.core.1.24.0.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/azure.identity/1.6.0/azure.identity.1.6.0.nupkg.sha512",

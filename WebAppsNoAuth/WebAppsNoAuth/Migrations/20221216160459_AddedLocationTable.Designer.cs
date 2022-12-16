@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAppsNoAuth.Data;
 
@@ -10,9 +11,11 @@ using WebAppsNoAuth.Data;
 namespace WebAppsNoAuth.Migrations
 {
     [DbContext(typeof(WebAppsNoAuthDbContext))]
-    partial class WebAppsNoAuthDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221216160459_AddedLocationTable")]
+    partial class AddedLocationTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
