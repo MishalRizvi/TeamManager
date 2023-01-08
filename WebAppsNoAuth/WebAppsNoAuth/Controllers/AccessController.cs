@@ -26,7 +26,81 @@ namespace WebAppsNoAuth.Controllers
             _webApps = webApps;
             _configuration = configuration;
         }
-        // GET: /<controller>/
+
+        //THESE METHODS NEED TO BE MOVED
+        public bool IsUserAdmin(int userId)
+        {
+            bool isAdmin = false;
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
+            {
+                connection.Open();
+                var queryString = "SELECT Admin FROM [Users] WHERE Id = @ID";
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@ID", userId);
+                using (SqlDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        if (dbReader.IsDBNull(0))
+                        {
+                            return isAdmin;
+                        }
+                        isAdmin = dbReader.GetBoolean(0);
+                    }
+                }
+                return isAdmin;
+            }
+        }
+
+        public bool IsUserManager(int userId)
+        {
+            bool isManager = false;
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
+            {
+                connection.Open();
+                var queryString = "SELECT Manager FROM [Users] WHERE Id = @ID";
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@ID", userId);
+                using (SqlDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        if (dbReader.IsDBNull(0))
+                        {
+                            return isManager;
+                        }
+                        isManager = dbReader.GetBoolean(0);
+                    }
+                }
+                return isManager;
+            }
+        }
+
+
+        public int GetInstitutionId(int userId)
+        {
+            int institutionId = -1;
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
+            {
+                connection.Open();
+                var queryString = "SELECT InstitutionID FROM [Users] WHERE Id = @USERID";
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@USERID", userId);
+                using (SqlDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        if (dbReader.IsDBNull(0))
+                        {
+                            return institutionId;
+                        }
+                        institutionId = dbReader.GetInt32(0);
+                    }
+                }
+                return institutionId;
+            }
+        }
+        //THE ABOVE METHODS NEED TO BE MOVED TO THEIR OWN SEPARATE CLASS 
         public IActionResult Login()
         {
             ClaimsPrincipal claimUser = HttpContext.User;
@@ -36,7 +110,15 @@ namespace WebAppsNoAuth.Controllers
             }
             return View();
         }
-
+        public IActionResult Relogin()
+        {
+            ViewData["Authenticated"] = "true";
+            int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
+            ViewData["Username"] = HttpContext.User.Claims.ToList()[2].ToString().Split(":")[1];
+            ViewData["Admin"] = IsUserAdmin(userId);
+            ViewData["Manager"] = IsUserManager(userId);
+            return View();
+        }
         public IActionResult Register()
         {
             return View();
@@ -54,7 +136,10 @@ namespace WebAppsNoAuth.Controllers
             var name = "";
             var email = "";
             var password = "";
+            var contactNumber = "";
+            var managerUserId = -1;
             var admin = false;
+            var manager = false;
             var institutionID = -1;
 
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
@@ -77,8 +162,11 @@ namespace WebAppsNoAuth.Controllers
                         name = dbReader.GetString(1);
                         email = dbReader.GetString(2);
                         password = dbReader.GetString(3);
-                        admin = dbReader.GetBoolean(4);
-                        institutionID = dbReader.GetInt32(5);
+                        contactNumber = dbReader.IsDBNull(4) ? "" : dbReader.GetString(4);
+                        managerUserId = dbReader.IsDBNull(5) ? -1 : dbReader.GetInt32(5);
+                        admin = dbReader.IsDBNull(6) ? false : dbReader.GetBoolean(6);
+                        manager = dbReader.IsDBNull(7) ? false : dbReader.GetBoolean(7);
+                        institutionID = dbReader.GetInt32(8);
                     }
                     if (password.Equals(userIn.Password))
                     {
@@ -112,7 +200,7 @@ namespace WebAppsNoAuth.Controllers
             {
                 connection.Open();
 
-                var queryString = @"INSERT INTO [Company] VALUES (@INSTITUTION); SELECT CAST(SCOPE_IDENTITY() AS INT)";
+                var queryString = "INSERT INTO [Company] VALUES (@INSTITUTION); SELECT CAST(SCOPE_IDENTITY() AS INT)";
                 SqlCommand command = new SqlCommand(queryString, connection);
                 command.Parameters.AddWithValue("@INSTITUTION", userIn.Institution);
 
@@ -136,25 +224,56 @@ namespace WebAppsNoAuth.Controllers
         // [HttpPost]
         public bool AddUser2(User userIn, int institutionID)
         {
+            var addedUserId = -1;
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
             {
                 connection.Open();
 
-                var command = connection.CreateCommand();
-                command.CommandText = @"INSERT INTO [Users] VALUES (@NAME, @EMAIL,@PASSWORD,@ADMIN,@INSTITUTIONID)";
+                var queryString = "INSERT INTO [Users] VALUES (@NAME, @EMAIL,@PASSWORD,NULL,NULL,@ADMIN,@FALSE,@INSTITUTIONID); " +
+                                        "SELECT CAST(SCOPE_IDENTITY() AS INT)";
+                SqlCommand command = new SqlCommand(queryString, connection);
                 command.Parameters.AddWithValue("@NAME", userIn.Name);
                 command.Parameters.AddWithValue("@EMAIL", userIn.Email);
                 command.Parameters.AddWithValue("@PASSWORD", userIn.Password);
                 command.Parameters.AddWithValue("@ADMIN", true);
+                command.Parameters.AddWithValue("@FALSE", false);
                 command.Parameters.AddWithValue("@INSTITUTIONID", institutionID);
+
+                using (SqlDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        addedUserId = dbReader.GetInt32(0);
+                    }
+                }
+                connection.Close();
+
+                var success = SetAdminEntitlements(addedUserId);
+
+                if (success)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool SetAdminEntitlements(int userId)
+        {
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
+            {
+                connection.Open();
+
+                var queryString = "INSERT INTO [UserEntitlements] VALUES (@USERID, 0, @CURRENTYEAR)";
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@USERID", userId);
+                command.Parameters.AddWithValue("@CURRENTYEAR", DateTime.Today.Year); //change so you can recieve the proper one from updateuser.cshtml
                 command.ExecuteNonQuery();
 
                 connection.Close();
-
                 return true;
-
             }
-
             return false;
         }
     }

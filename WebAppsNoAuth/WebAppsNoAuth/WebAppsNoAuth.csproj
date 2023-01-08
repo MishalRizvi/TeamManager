@@ -24,11 +24,23 @@
     <None Remove="NuGet.PackageManagement" />
     <None Remove="Microsoft.AspNetCore.Authentication" />
     <None Remove="Views\Access\" />
+    <None Remove="Views\Admin\" />
+    <None Remove="KendoUICore" />
+    <None Remove="Microsoft.AspNetCore.Mvc.Formatters.Json" />
+    <None Remove="bootstrap" />
+    <None Remove="Services\" />
+    <None Remove="MailKit" />
+    <None Remove="MimeKit" />
+    <None Remove="Views\Manager\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Styles\" />
     <Folder Include="Data\" />
     <Folder Include="Views\Access\" />
+    <Folder Include="Views\Admin\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\" />
+    <Folder Include="Views\Manager\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
@@ -44,8 +56,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="jQuery" Version="3.6.1" />
+    <PackageReference Include="jQuery" Version="3.6.3" />
     <PackageReference Include="NuGet.PackageManagement" Version="6.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
+    <PackageReference Include="KendoUICore" Version="2022.3.1109" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.0" />
+    <PackageReference Include="bootstrap" Version="5.2.3" />
+    <PackageReference Include="MailKit" Version="3.4.3" />
+    <PackageReference Include="MimeKit" Version="3.4.3" />
   </ItemGroup>
 </Project>

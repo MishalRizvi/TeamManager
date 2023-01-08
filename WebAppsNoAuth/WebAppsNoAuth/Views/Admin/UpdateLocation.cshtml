@@ -1,0 +1,215 @@
+﻿
+<div class="container">
+    <h2>Users</h2>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="clearTextBox();">Add New Location</button>
+    <br />
+    <br />
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Location Title</th>
+            </tr>
+        </thead>
+        <tbody class="tbody">
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h4 class="modal-title" id="myModalLabel">Add Location</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="name">Location</label>
+                        <select id="name"></select>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="title">Location Title</label>
+                        <input type="text" id="title" class="form-control form-control-lg" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="addLocationButton" onclick="return addNewLocation()">Add</button>
+                <button type="button" class="btn btn-primary" style="display:none;" id="updateLocationButton" onclick="updateLocation();">Update</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var updateLocationId = -1;
+        $(document).ready(function () {
+            getAllLocations();
+            populateLocationsDropdown();
+
+        });
+
+        function getAllLocations() {
+            $.ajax({
+                url: "GetAllLocations",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    var html = "";
+                    //  $.each(result, function (key, item) {
+                    for (var i = 0; i < result.data.length; i++) {
+                        html += "<tr>";
+                        html += "<td>" + result.data[i].locationName + "</td>";
+                        html += "<td>" + result.data[i].locationTitle + "</td>";
+                        html += "<td><a href='#' onclick='return getById(" + result.data[i].locationId + ")'>Edit</a> | <a href='#' onclick='deleteLocation(" + result.data[i].locationId + ")'>Delete</a></td>";
+                        html += "<tr>";
+
+                        // });
+                    }
+                    $(".tbody").html(html);
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+
+        function getById(locationId) {
+            updateLocationId = locationId;
+            $("#name").css("border-color", "lightgrey");
+            $("#title").css("border-color", "lightgrey");
+            $.ajax({
+                url: "GetLocationById",
+                type: "GET",
+                data: { locationId: locationId },
+                success: function (result) {
+                    console.log(result);
+                    $("#name").val(result.data.locationName);
+                    $("#title").val(result.data.locationTitle);
+                    $("#myModal").modal("show");
+                    $("#updateLocationButton").show();
+                    $("#addLocationButton").hide();
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+            return false; //May change
+        }
+
+        function clearTextBox() {
+            console.log("called");
+            $("#myModal").modal("show");
+
+            $("#name").val("");
+            $("#title").val("");
+            $("#updateLocationButton").hide();
+            $("#addLocationButton").show();
+            $("#name").css("border-color", "lightgrey");
+            $("#title").css("border-color", "lightgrey");
+        }
+
+        function addNewLocation() {
+            var newLocation = $("#name").val();
+            var newLocationTitle = $("#title").val();
+            $.ajax({
+                url: "AddNewLocation",
+                type: "POST",
+                data: {
+                    locationName: newLocation,
+                    locationTitle: newLocationTitle
+                },
+                success: function (result) {
+                    getAllLocations();
+                    $("#myModal").modal("hide");
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+        function populateLocationsDropdown() {
+            const locationsDropdown = document.querySelector("#name");
+            const options = {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': 'fe231a5846msh9d371c00933a5f2p180cf0jsncb911602be2e',
+                    'X-RapidAPI-Host': 'andruxnet-world-cities-v1.p.rapidapi.com'
+                }
+            };
+
+            fetch('https://andruxnet-world-cities-v1.p.rapidapi.com/?query=United%20Kingdom&searchby=country', options)
+                .then
+                (res => {
+                    return res.json();
+                })
+                .then
+                (data => {
+                    let output = "";
+                    data.forEach(loc => {
+                        output += `<option value='${loc.city}'>${loc.city}</option>`;
+                    })
+                    locationsDropdown.innerHTML = output;
+                }).catch(err => {
+                    console.log(err);
+                })
+            
+        }
+
+        function updateLocation() {
+            var confirmed = confirm("Would you like to update?");
+            if (confirmed) {
+                var newLocation = $("#name").val();
+                var newLocationTitle = $("#title").val();
+                $.ajax({
+                    url: "UpdateLocationMethod",
+                    type: "POST",
+                    data: {
+                        updateLocationId: updateLocationId,
+                        locationName: newLocation,
+                        locationTitle: newLocationTitle
+                    },
+                    success: function (result) {
+                        getAllLocations();
+                        $("#myModal").modal("hide");
+                        $("#name").val("");
+                        $("#title").val("");
+                    },
+                    error: function (error) {
+                        alert(error.responseText);
+                    }
+                })
+            }
+            updateLocationId = -1;
+            closeModal();
+        }
+
+        function deleteLocation(locationId) {
+            var confirmed = confirm("Would you like to delete?");
+            if (confirmed) {
+                $.ajax({
+                    url: "DeleteLocation",
+                    type: "POST",
+                    data: {
+                        locationId: locationId
+                    },
+                    success: function (result) {
+                        getAllLocations();
+                    },
+                    error: function (error) {
+                        alert(error.responseText);
+                    }
+                })
+            }
+        }
+
+        function closeModal() {
+            $("#myModal").modal("hide");
+        }
+    </script>
+}

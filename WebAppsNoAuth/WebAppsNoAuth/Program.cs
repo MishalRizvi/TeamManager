@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using WebAppsNoAuth.Data;
 using WebAppsNoAuth.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Net;
+using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,8 +19,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         option.LoginPath = "/Access/Login";
         option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     });
-                
-    
+builder.Services.Configure<Email>(builder.Configuration.GetSection("EmailConfiguration"));
+        
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

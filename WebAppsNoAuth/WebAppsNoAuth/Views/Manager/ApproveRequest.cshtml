@@ -1,0 +1,92 @@
+﻿@{
+}
+<div>
+    <div style="float:left">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Request Type</th>
+                </tr>
+            </thead>
+            <tbody class="tbody">
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+           // var updateRequestId = -1;
+            getAllManagerRequests();
+        })
+
+        function getAllManagerRequests() {
+            $.ajax({
+                url: "GetAllManagerRequests",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    var html = "";
+                    for (var i = 0; i < result.data.length; i++) {
+                        html += "<tr>";
+                        html += "<td>" + result.data[i].userName + "</td>";
+                        html += "<td>" + result.data[i].startDateStr + "</td>";
+                        html += "<td>" + result.data[i].endDateStr + "</td>";
+                        html += "<td>" + result.data[i].requestTypeName + "</td>";
+                        html += "<td><a href='#' onclick='return approveRequest(" + result.data[i].requestId + ")'>Approve</a> | <a href='#' onclick='rejectRequest(" + result.data[i].requestId + ")'>Reject</a></td>";
+                        html += "<tr>";
+                    }
+                    $(".tbody").html(html);
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+
+        function approveRequest(requestId) {
+            $.ajax({
+                url: "ApproveRequestMethod",
+                type: "POST",
+                data: {
+                    requestId: requestId
+                },
+                success: function (result) {
+                    getAllManagerRequests();
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+
+        function rejectRequest(requestId) {
+            $.ajax({
+                url: "RejectRequestMethod",
+                type: "POST",
+                data: {
+                    requestId: requestId
+                },
+                success: function (result) {
+                    getAllManagerRequests();
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+    </script>
+}
+
+

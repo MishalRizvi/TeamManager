@@ -7,6 +7,13 @@
       "sslPort": 44378
     }
   },
+  "EmailConfiguration": {
+    "From": "servicesappforyou@gmail.com",
+    "SmtpServer": "smtp.gmail.com",
+    "Port": 465,
+    "Username": "servicesappforyou@gmail.com",
+    "Password": "ServicesApp111"
+  },
   "profiles": {
     "http": {
       "commandName": "Project",

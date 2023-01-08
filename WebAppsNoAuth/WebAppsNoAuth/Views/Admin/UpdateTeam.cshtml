@@ -1,0 +1,321 @@
+﻿
+<div class="container">
+    <h2>Teams</h2>
+
+    <div class="form-outline mb-4">
+        <label class="form-label" for="locationId">Location</label>
+        @Html.DropDownList("LocationList", "---")
+    </div>
+    <br />
+    <br />
+    <div id="locationTeams">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="clearTextBox();">Add New Team</button>
+        <br />
+        <br />
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Team Name</th>
+                </tr>
+            </thead>
+            <tbody class="tbody" id="teamsTable">
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h4 class="modal-title" id="myModalLabel">Add Team</h4>
+            </div>
+            <div class="modal-body">
+                <form style="float:left">
+                    <div>
+                        <label class="form-label" for="name">Team Name</label>
+                        <input type="text" id="name" class="form-control form-control-lg" />
+                    </div>
+                </form>
+                <form style="float:right"> 
+                    <div id="usersInTeam">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Users In Team</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody" id="usersInTeamTable" style="height:100px;overflow-y:scroll;display:block">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="usersNotInTeam">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Users Not In Team</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody" id="usersNotInTeamTable" style="height:100px;overflow-y:scroll;display:block">
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="addTeamButton" onclick="return addNewTeam()">Add</button>
+                <button type="button" class="btn btn-primary" id="updateTeamButton" onclick="updateTeam();">Update</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var updateTeamId = -1;
+        $(document).ready(function () {
+            $("#locationTeams").hide();
+            document.getElementById("LocationList").onchange = function () {
+                getAllLocationTeams();
+            }
+        });
+
+        function getAllLocationTeams() {
+            $("#locationTeams").show();
+            var selectedLocationId = document.getElementById("LocationList").value;
+            $.ajax({
+                url: "GetAllLocationTeams",
+                type: "GET",
+                data: {
+                    locationId: selectedLocationId
+                },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    var html = "";
+                    for (var i = 0; i < result.data.length; i++) {
+                        html += "<tr>";
+                        html += "<td>" + result.data[i].teamName + "</td>";
+                        html += "<td><a href='#' onclick='return getById(" + result.data[i].teamId + ")'>Edit</a> | <a href='#' onclick='deleteTeam(" + result.data[i].teamId + ")'>Delete</a></td>";
+                        html += "<tr>";
+                    }
+                    $("#teamsTable").html(html);
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+
+        function getById(teamId) {
+            updateTeamId = teamId;
+            $("#name").css("border-color", "lightgrey");
+            $.ajax({
+                url: "GetTeamById",
+                type: "GET",
+                data: { teamId: teamId },
+                success: function (result) {
+                    $("#name").val(result.data.teamName);
+                    $("#myModal").modal("show");
+                    $("#updateTeamButton").show();
+                    $("#addTeamButton").hide();
+                    getAllUsersInTeam(); //when the modal box shows the users both in and not in team should automatically be loaded 
+                    getAllUsersNotInTeam();
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+            return false; //May change
+        }
+
+        function clearTextBox() { //This function is called when adding a new team 
+          //  updateTeamId = -1;
+            $("#myModal").modal("show");
+            //added the next four
+            $("#usersInTeam").hide();
+            $("#usersNotInTeam").hide();
+            $("#usersInTeamTable").html("");
+            $("#usersNotInTeamTable").html("");
+            
+            $("#name").val("");
+            $("#updateTeamButton").hide();
+            $("#addTeamButton").show();
+            $("#name").css("border-color", "lightgrey");
+        }
+
+        function addNewTeam() {
+            var newTeam = $("#name").val();
+            var locationId = document.getElementById("LocationList").value;
+            $.ajax({
+                url: "AddNewTeam",
+                type: "POST",
+                data: {
+                    teamName: newTeam,
+                    locationId: locationId
+                },
+                success: function (result) {
+                    getAllLocationTeams();
+                    $("#myModal").modal("hide");
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+
+        function updateTeam() {
+            var confirmed = confirm("Would you like to update?");
+            if (confirmed) {
+                var newTeam = $("#name").val();
+                var locationId = document.getElementById("LocationList").value;
+                $.ajax({
+                    url: "UpdateTeamMethod",
+                    type: "POST",
+                    data: {
+                        updateTeamId: updateTeamId,
+                        teamName: newTeam,
+                    },
+                    success: function (result) {
+                        getAllLocationTeams();
+                        $("#myModal").modal("hide");
+                       // window.location.reload();
+                    },
+                    error: function (error) {
+                        alert(error.responseText);
+                    }
+                })
+            }
+            updateTeamId = -1;
+            closeModal();
+        }
+
+        function deleteTeam(teamId) {
+            var confirmed = confirm("Would you like to delete?");
+            if (confirmed) {
+                $.ajax({
+                    url: "DeleteTeam",
+                    type: "POST",
+                    data: {
+                        teamId: teamId
+                    },
+                    success: function (result) {
+                        getAllLocationTeams();
+                    },
+                    error: function (error) {
+                        alert(error.responseText);
+                    }
+                })
+            }
+        }
+
+        function getAllUsersInTeam() {
+            console.log(updateTeamId);
+            $.ajax({
+                url: "GetAllUsersInTeamAsJson",
+                type: "GET",
+                data: {
+                    teamId: updateTeamId,
+                },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    var html = "";
+                    for (var i = 0; i < result.data.length; i++) {
+                        html += "<tr>";
+                        html += "<td>" + result.data[i].name + "</td>";
+                        html += "<td><a href='#' onclick='removeUserFromTeam(" + result.data[i].id + ")'>Remove</a></td>"; //COMPLETE
+                        html += "<tr>";
+                    }
+                    $("#usersInTeamTable").html(html);
+                    $("#usersInTeam").show();
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+
+        function getAllUsersNotInTeam(teamId) {
+            console.log(updateTeamId);
+            $.ajax({
+                url: "GetAllUsersNotInTeamAsJson",
+                type: "GET",
+                data: {
+                    teamId: updateTeamId,
+                },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    var html = "";
+                    for (var i = 0; i < result.data.length; i++) {
+                        html += "<tr>";
+                        html += "<td>" + result.data[i].name + "</td>";
+                        html += "<td><a href='#' onclick='addUserToTeam(" + result.data[i].id + ")'>Add</a></td>"; //COMPLETE
+                        html += "<tr>";
+                    }
+                    $("#usersNotInTeamTable").html(html);
+                    $("#usersNotInTeam").show();
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+
+        function addUserToTeam(userId) {
+            var newTeam = $("#name").val(); //refers to team name 
+            var locationId = document.getElementById("LocationList").value;
+            console.log(updateTeamId);
+            console.log(userId);
+            $.ajax({
+                url: "AddUserToTeam",
+                type: "POST",
+                data: {
+                    userId: userId,
+                    teamId: updateTeamId
+                },
+                success: function (result) {
+                    getAllLocationTeams();
+                    getAllUsersInTeam();
+                    getAllUsersNotInTeam();
+                 //   $("#myModal").modal("hide");
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+
+        function removeUserFromTeam(userId) {
+            var newTeam = $("#name").val(); //refers to team name 
+            var locationId = document.getElementById("LocationList").value;
+            console.log(updateTeamId);
+            console.log(userId);
+            $.ajax({
+                url: "RemoveUserFromTeam",
+                type: "POST",
+                data: {
+                    userId: userId,
+                    teamId: updateTeamId
+                },
+                success: function (result) {
+                    getAllLocationTeams();
+                    getAllUsersInTeam();
+                    getAllUsersNotInTeam();
+                //    $("#myModal").modal("hide");
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+
+        function closeModal() {
+            $("#myModal").modal("hide");
+        }
+    </script>
+}

@@ -7,8 +7,8 @@ namespace WebAppsNoAuth.Models
 		{
 		}
 
-		public int Id;
-		public string MessageStr;
+		public int Id { get; set; }
+		public string MessageStr { get; set; }
 	}
 }
 

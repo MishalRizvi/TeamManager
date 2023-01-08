@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj": {}
+    "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj": {}
   },
   "projects": {
-    "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj": {
+    "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj",
+        "projectUniqueName": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj",
         "projectName": "WebAppsNoAuth",
-        "projectPath": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj",
+        "projectPath": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj",
         "packagesPath": "/Users/mishalrizvi/.nuget/packages/",
-        "outputPath": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/obj/",
+        "outputPath": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/mishalrizvi/.nuget/NuGet/NuGet.Config"
@@ -39,7 +39,19 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "KendoUICore": {
+              "target": "Package",
+              "version": "[2022.3.1109, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[3.4.3, )"
+            },
             "Microsoft.AspNetCore.Authentication": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Formatters.Json": {
               "target": "Package",
               "version": "[2.2.0, )"
             },
@@ -71,6 +83,10 @@
               "target": "Package",
               "version": "[7.0.1, )"
             },
+            "MimeKit": {
+              "target": "Package",
+              "version": "[3.4.3, )"
+            },
             "NuGet.PackageManagement": {
               "target": "Package",
               "version": "[6.4.0, )"
@@ -79,9 +95,13 @@
               "target": "Package",
               "version": "[1.0.117, )"
             },
+            "bootstrap": {
+              "target": "Package",
+              "version": "[5.2.3, )"
+            },
             "jQuery": {
               "target": "Package",
-              "version": "[3.6.1, )"
+              "version": "[3.6.3, )"
             }
           },
           "imports": [

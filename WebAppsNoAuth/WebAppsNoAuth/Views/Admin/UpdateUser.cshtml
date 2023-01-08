@@ -1,0 +1,324 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model WebAppsNoAuth.Models.User;
+
+
+<div class="container">
+    <h2>Users</h2>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="clearTextBox();">Add New User</button>
+    <br />
+    <br />
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact Number</th>
+                <th>Manager</th>
+                <th>Is Admin</th>
+                <th>Is Manager</th>
+            </tr>
+        </thead>
+        <tbody class="tbody">
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="closeModal()">x</button>
+                <h4 class="modal-title" id="myModalLabel">Add User</h4>
+            </div>
+            <div class="modal-body">
+                <form method="get">
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="name" asp-for="Name">Name</label>
+                        <input type="text" id="name" class="form-control form-control-lg" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="email" asp-for="Email">Email address</label>
+                        <input type="email" id="email" class="form-control form-control-lg" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="password" asp-for="Password">Password</label>
+                        <input type="password" id="password" class="form-control form-control-lg" />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="contact" asp-for="ContactNumber">Contact Number</label>
+                        <input type="tel" id="contact" class="form-control form-control-lg" />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="managerUserId" asp-for="Manager">Manager</label>
+                        @Html.DropDownList("ManagerList", "---")
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="admin" asp-for="Admin">Is Admin</label>
+                        <input type="checkbox" id="admin" />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="manager" asp-for="Manager">Is Manager</label>
+                        <input type="checkbox" id="manager" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="addUserButton" onclick="return addNewUser()">Add</button>
+                <button type="button" class="btn btn-primary" style="display:none;" id="updateUserButton" onclick="updateUser();">Update</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var updateUserId = -1;
+        $(document).ready(function () {
+            getAllUsers();
+
+        });
+
+        function getAllUsers() {
+            $.ajax({
+                url: "GetAllUsers",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    var html = "";
+                    for (var i = 0; i < result.data.length; i++) {
+                        html += "<tr>";
+                        html += "<td>" + result.data[i].name + "</td>";
+                        html += "<td>" + result.data[i].email + "</td>";
+                        html += "<td>" + result.data[i].contactNumber + "</td>";
+                        html += "<td>" + result.data[i].managerUserName + "</td>";
+                        html += "<td>" + result.data[i].admin + "</td>";
+                        html += "<td>" + result.data[i].manager + "</td>";
+                        html += "<td><a href='#' onclick='return getById(" + result.data[i].id + ")'>Edit</a> | <a href='#' onclick='deleteUser(" + result.data[i].id + ")'>Delete</a></td>";
+                        html += "<tr>";
+                    }
+                    $(".tbody").html(html);
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+
+        function getById(userId) {
+            updateUserId = userId;
+            console.log(userId);
+            $("#name").css("border-color", "lightgrey");
+            $("#email").css("border-color", "lightgrey");
+            $("#password").css("border-color", "lightgrey");
+            $("#contact").css("border-color", "lightgrey");
+            $.ajax({
+                url: "GetUserById",
+                type: "GET",
+                data: { userId: userId },
+                success: function (result) {
+                    console.log(result);
+                    $("#name").val(result.data.name);
+                    $("#email").val(result.data.email);
+                    $("#password").val(result.data.password);
+                    $("#contact").val(result.data.contactNumber);
+                    document.getElementById("admin").checked = result.data.admin;
+                    document.getElementById("manager").checked = result.data.manager;
+                    document.getElementById("ManagerList").value = result.data.managerUserId;
+                    $("#myModal").modal("show");
+                    $("#updateUserButton").show();
+                    $("#addUserButton").hide();
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+            return false; //May change
+        }
+
+        function clearTextBox() {
+            $("#myModal").modal("show");
+
+            $("#name").val("");
+            $("#email").val("");
+            $("#password").val("");
+            $("#contact").val("");
+            document.getElementById("admin").checked = false
+            document.getElementById("manager").checked = false
+            $("#updateUserButton").hide();
+            $("#addUserButton").show();
+            $("#name").css("border-color", "lightgrey");
+            $("#email").css("border-color", "lightgrey");
+            $("#password").css("border-color", "lightgrey");
+            $("#contact").css("border-color", "lightgrey");
+        }
+
+        function addNewUser() {
+            var valid = validateDetails();
+            console.log(valid);
+            if (valid == false) {
+                return false;
+            }
+            var newName = $("#name").val();
+            var newEmail = $("#email").val();
+            var newPassword = $("#password").val();
+            var newContactNumber = $("#contact").val();
+            var newManagerUserId = document.getElementById("ManagerList").value;
+            console.log(newManagerUserId);
+            var newAdmin = document.getElementById("admin").checked;
+            var newManager = document.getElementById("manager").checked;
+            $.ajax({
+                url: "AddNewUser",
+                type: "POST",
+                data: {
+                    name: newName,
+                    email: newEmail,
+                    password: newPassword,
+                    contactNumber: newContactNumber,
+                    managerUserId: newManagerUserId,
+                    isAdmin: newAdmin,
+                    isManager: newManager
+                },
+                success: function (result) {
+                   // getAllUsers();
+                    $("#myModal").modal("hide");
+                    window.location.reload(); //This makes sure when a new manager is added they now appear in the dropdown
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+        function closeModal() {
+            $("#myModal").modal("hide");
+        }
+
+        function updateUser() {
+           var valid = validateDetails();
+            if (valid == false) {
+                //alert("not valid");
+                return false;
+            }
+            var confirmed = confirm("Would you like to update?");
+            if (confirmed) {
+                var newName = $("#name").val();
+                var newEmail = $("#email").val();
+                var newPassword = $("#password").val();
+                var newContactNumber = $("#contact").val();
+                var newManagerUserId = document.getElementById("ManagerList").value;
+                var newAdmin = document.getElementById("admin").checked;
+                var newManager = document.getElementById("manager").checked;
+                $.ajax({
+                    url: "UpdateUserMethod",
+                    type: "POST",
+                    data: {
+                        userId: updateUserId,
+                        name: newName,
+                        email: newEmail,
+                        password: newPassword,
+                        contactNumber: newContactNumber,
+                        managerUserId: newManagerUserId,
+                        isAdmin: newAdmin,
+                        isManager: newManager
+                    },
+                    success: function (result) {
+                        getAllUsers();
+                        $("#myModal").modal("hide");
+                        $("#name").val("");
+                        $("#email").val("");
+                        $("#password").val("");
+                        $("#contact").val("");
+                        document.getElementById("admin").checked = false
+                        document.getElementById("manager").checked = false
+                        if (result == "false") {
+                            alert("You have updated your own details. Please sign out and login again."); //If another user is logged in, need to inform them somehow
+                            updateUserId = -1;
+                            window.location.replace("/Access/Relogin");
+                        }
+                        if (result == "changedManager") {
+                            updateUserId = -1;
+                            window.location.reload();
+                        }
+                    },
+                    error: function (error) {
+                        alert(error.responseText);
+                    }
+                })
+                updateUserId = -1;
+            }
+            return;
+        }
+
+        function deleteUser(userId) {
+            var confirmed = confirm("Would you like to delete?");
+            if (confirmed) {
+                $.ajax({
+                    url: "DeleteUser",
+                    type: "POST",
+                    data: {
+                        userId: userId
+                    },
+                    success: function (result) {
+                        getAllUsers();
+                        $("#myModal").modal("hide");
+                    },
+                    error: function (error) {
+                        alert(error.responseText);
+                    }
+                })
+            }
+        }
+
+        function validateDetails() { //Add more validation here 
+
+            var regPhone = /^\d{10}$/;                                        
+            var regName = /\d+$/g;
+
+            var newName = $("#name").val();
+            console.log(newName);
+            var newEmail = $("#email").val();
+            console.log(newEmail);
+            var newPassword = $("#password").val();
+            var newContactNumber = $("#contact").val();
+            var newManagerUserId = document.getElementById("ManagerList").value;
+            var newAdmin = document.getElementById("admin").checked;
+            var newManager = document.getElementById("manager").checked;
+
+            if (newName == "" || newName.match(regName) == false) {
+                alert("Please enter the name properly.");
+                $("#name").css("border-color", "red");
+                return false;
+            }
+            var atposition= newEmail.indexOf("@@");
+            var dotposition = newEmail.lastIndexOf(".");
+            if (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= newEmail.length) {
+                $("#email").css("border-color", "red");
+                alert("Please enter a valid e-mail address \n @@ position:" + atposition + "\n . position:" + dotposition);
+                return false;
+            }
+            if (newContactNumber == "" || newContactNumber.match(regPhone) == false) { //does not work
+                $("#contact").css("border-color", "red");
+                alert("Please enter the contact number properly.");
+                return false;
+            }
+            if (newName === newPassword) {
+                $("#password").css("border-color", "red");
+                alert("Name cannot be the same as password");
+                return false;
+            }
+            return true;
+
+        }
+
+        function closeModal() {
+            $("#myModal").modal("hide");
+        }
+    </script>
+}

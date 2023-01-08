@@ -1,0 +1,149 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="container">
+    <h2>Users</h2>
+    <br />
+    <br />
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody class="tbody">
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="closeModal()">x</button>
+                <h4 class="modal-title" id="myModalLabel">Update User Entitlements</h4>
+            </div>
+            <div class="modal-body">
+                <form method="get">
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="name">Name</label>
+                        <input type="text" id="name" class="form-control form-control-lg" disabled/>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="amount">Amount</label>
+                        <input type="text" id="amount" class="form-control form-control-lg" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="updateEntitlementsButton" onclick="updateEntitlements();">Update</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        var updateUserId = -1;
+        var updateYear = 0;
+        $(document).ready(function () {
+            getAllEntitlements();
+
+        });
+
+        function getAllEntitlements() {
+            $.ajax({
+                url: "GetAllEntitlements",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    var html = "";
+                    for (var i = 0; i < result.data.length; i++) {
+                        html += "<tr>";
+                        html += "<td>" + result.data[i].name + "</td>";
+                        html += "<td>" + result.data[i].amount + "</td>";
+                        html += "<td><a href='#' onclick='return getById(" + result.data[i].userId + ")'>Edit</a></td>";
+                        html += "<tr>";
+                    }
+                    $(".tbody").html(html);
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+
+        function getById(userId) {
+            updateUserId = userId;
+            console.log(userId);
+            $("#amount").css("border-color", "lightgrey");
+            $.ajax({
+                url: "GetUserEntitlementsById",
+                type: "GET",
+                data: { userId: userId },
+                success: function (result) {
+                    console.log(result);
+                    $("#name").val(result.data.name);
+                    $("#amount").val(result.data.amount);
+                    updateYear = result.data.year;
+                    $("#myModal").modal("show");
+                    $("#updateUserButton").show();
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+            return false; //May change
+        }
+
+        function clearTextBox() {
+            $("#myModal").modal("show");
+
+            $("#amount").val("");
+
+            $("#updateUserButton").hide();
+            $("#amount").css("border-color", "lightgrey");
+        }
+
+        function closeModal() {
+            $("#myModal").modal("hide");
+        }
+
+        function updateEntitlements() {
+            var confirmed = confirm("Would you like to update?");
+            if (confirmed) {
+                var amount = $("#amount").val();
+                $.ajax({
+                    url: "UpdateEntitlementsMethod",
+                    type: "POST",
+                    data: {
+                        userId: updateUserId,
+                        year: updateYear,
+                        amount: amount
+                    },
+                    success: function (result) {
+                        getAllEntitlements();
+                        $("#myModal").modal("hide");
+                        $("#amount").val("");
+                        $("#year").val("");
+                    },
+                    error: function (error) {
+                        alert(error.responseText);
+                    }
+                })
+                updateUserId = -1;
+                updateYear = 0;
+            }
+            return;
+        }
+
+        function closeModal() {
+            $("#myModal").modal("hide");
+        }
+    </script>
+}

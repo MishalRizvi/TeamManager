@@ -1,0 +1,213 @@
+﻿@{
+    if (ViewData["Manager"].ToString() == "True")
+    {
+        <div class="form-outline mb-4">
+            <label class="form-label" for="userId">Users</label>
+            @Html.DropDownList("ManagerUsersList")
+        </div>
+    }
+}
+<div>
+    <div style="float:left">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Request Type</th>
+                    <th>Approved</th>
+                </tr>
+            </thead>
+            <tbody class="tbody">
+            </tbody>
+        </table>
+    </div>
+
+    <div style="float:right">
+        <label class="form-label">New Request</label>
+        <form method="get">
+            <div class="form-outline mb-4">
+                <label class="form-label" for="startDate">Start Date:</label>
+                <input type="date" id="startDate" class="form-control form-control-lg" required />
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="endDate">End Date:</label>
+                <input type="date" id="endDate" class="form-control form-control-lg" required />
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="requestType" required>Type: </label>
+                @Html.DropDownList("RequestTypeList", "---")
+            </div>
+        </form>
+        <button type="button" class="btn btn-primary" id="addRequestButton" onclick="return addNewRequest()">Submit</button>
+        <textarea id="messageBox"></textarea>
+    </div>
+</div>
+
+
+
+@section Scripts {
+
+    <script>
+        var isManager = false;
+        $(document).ready(function () {
+            var updateRequestId = -1;
+            if (document.getElementById("ManagerUsersList") != null) {
+                isManager = true;
+                document.getElementById("ManagerUsersList").onchange = function () {
+                    getUserRequests(); //this function is for
+                }
+            }
+            getAllRequests();
+        })
+
+        function getAllRequests() {
+            $.ajax({
+                url: "GetAllRequests",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    var html = "";
+                    for (var i = 0; i < result.data.length; i++) {
+                        html += "<tr>";
+                        html += "<td>" + result.data[i].startDateStr + "</td>";
+                        html += "<td>" + result.data[i].endDateStr + "</td>";
+                        html += "<td>" + result.data[i].requestTypeName + "</td>";
+                        html += "<td>" + result.data[i].approvedMessage + "</td>";
+                        html += "<td><a href='#' onclick='deleteRequest(" + result.data[i].requestId + ")'>Cancel</a></td>";
+                        html += "<tr>";
+                    }
+                    $(".tbody").html(html);
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+        function getUserRequests() {
+            var selectedUserId = document.getElementById("ManagerUsersList").value;
+            $.ajax({
+                url: "GetUserRequests",
+                type: "GET",
+                data: {
+                    userId: selectedUserId //do we need to pass this in? think of manager choosing a different user
+                },
+                contentType: "application/json;charset=utf-8",
+
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    var html = "";
+                    for (var i = 0; i < result.data.length; i++) {
+                        html += "<tr>";
+                        html += "<td>" + result.data[i].startDate + "</td>";
+                        html += "<td>" + result.data[i].endDate + "</td>";
+                        html += "<td>" + result.data[i].requestTypeName + "</td>";
+                        html += "<td>" + result.data[i].approvedMessage + "</td>";
+                        html += "<td><a href='#' onclick='return getById(" + result.data[i].requestId + ")'>Edit</a> | <a href='#' onclick='deleteRequest(" + result.data[i].requestId + ")'>Delete</a></td>";
+                        html += "<tr>";
+                    }
+                    $(".tbody").html(html);
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+        function addNewRequest() {
+            var valid = validateDetails();
+            if (valid == false) {
+                return false;
+            }
+            var requestTypeId = document.getElementById("RequestTypeList").value;
+            var startDate = document.getElementById("startDate").value;
+            var endDate = document.getElementById("endDate").value;
+            var selectedUserId = -1;
+            if (isManager) {
+                selectedUserId = document.getElementById("ManagerUsersList").value;
+            }
+            $.ajax({
+                url: "ValidateRequest",
+                type: "POST",
+                data: {
+                    userId: selectedUserId,
+                    requestTypeId: requestTypeId,
+                    startDate: startDate,
+                    endDate: endDate
+                },
+                success: function (result) {
+                    if (result.data.id == 3) {
+                        $("#messageBox").html(result.data.messageStr);
+                        return false;
+                    }
+                    resetPage()
+                    getAllRequests();
+
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+
+        function deleteRequest(requestId) {
+            $.ajax({
+                url: "DeleteRequest",
+                type: "POST",
+                data: {
+                    requestId: requestId
+                },
+                success: function (result) {
+                    getAllRequests();
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+
+        function resetPage() {
+            document.getElementById("startDate").value = "";
+            document.getElementById("endDate").value = "";
+            document.getElementById("RequestTypeList").value = "";
+            $("#messageBox").html("");
+            $("#startDate").css("border-color", "lightgrey");
+            $("#endDate").css("border-color", "lightgrey");
+            $("#RequestTypeList").css("border-color", "lightgrey");
+
+        }
+
+        function validateDetails() {
+
+            var startDate = document.getElementById("startDate").value;
+            var endDate = document.getElementById("endDate").value;
+            var requestType = document.getElementById("RequestTypeList").value;
+
+            if (startDate == "") {
+                $("#startDate").css("border-color", "red");
+                alert("Please enter a start date.");
+                return false;
+            }
+            if (endDate == "") {
+                $("#endDate").css("border-color", "red");
+                alert("Please enter an end date.");
+                return false;
+            }
+            if (requestType == "") {
+                $("#RequestTypeList").css("border-color", "red");
+                alert("Please select type of request.");
+                return false;
+            }
+            if (startDate > endDate) {
+                $("#startDate").css("border-color", "red");
+                $("#endDate").css("border-color", "red");
+                alert("End date can't be before start date");
+                return false;
+            }
+        }
+    </script>
+}
+
+

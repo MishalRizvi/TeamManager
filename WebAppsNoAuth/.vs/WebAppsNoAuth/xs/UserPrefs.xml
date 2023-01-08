@@ -1,27 +1,48 @@
 ﻿<Properties StartupConfiguration="{0969071E-5FEC-4F01-8C74-FA0FFC1A5FE8}|https">
-  <MonoDevelop.Ide.Workbench ActiveDocument="WebAppsNoAuth/Controllers/AccessController.cs">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.WebAppsNoAuth PreferredExecutionTarget="/Applications/Safari.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="WebAppsNoAuth/Controllers/ManagerController.cs">
     <Files>
       <File FileName="app.config" />
-      <File FileName="WebAppsNoAuth/appsettings.json" />
+      <File FileName="WebAppsNoAuth/appsettings.json" Line="11" Column="16" />
       <File FileName="WebAppsNoAuth/Views/Home/Index.cshtml" Line="6" Column="1" />
-      <File FileName="WebAppsNoAuth/Views/Home/Privacy.cshtml" Line="1" Column="1" />
-      <File FileName="WebAppsNoAuth/Program.cs" Line="53" Column="1" />
-      <File FileName="WebAppsNoAuth/Views/Shared/_Layout.cshtml" Line="41" Column="75" />
-      <File FileName="WebAppsNoAuth/wwwroot/lib/jquery/dist/jquery.js" />
-      <File FileName="EmptyTextFile.txt" />
-      <File FileName="WebAppsNoAuth/Data/WebAppsNoAuthDbContext.cs" />
-      <File FileName="WebAppsNoAuth/Properties/launchSettings.json" />
+      <File FileName="WebAppsNoAuth/Views/Home/Privacy.cshtml" />
+      <File FileName="WebAppsNoAuth/Views/Shared/_Layout.cshtml" Line="55" Column="86" />
       <File FileName="WebAppsNoAuth/dockercompose.yml" />
-      <File FileName="WebAppsNoAuth/Styles/stylesLogin.css" />
-      <File FileName="WebAppsNoAuth/Models/User.cs" Line="20" Column="1" />
-      <File FileName="WebAppsNoAuth/Controllers/AccessController.cs" Line="77" Column="56" />
-      <File FileName="WebAppsNoAuth/Views/Access/Login.cshtml" Line="26" Column="43" />
-      <File FileName="WebAppsNoAuth/Views/Access/Register.cshtml" Line="12" Column="85" />
-      <File FileName="WebAppsNoAuth/Controllers/HomeSQLiteController.cs" />
-      <File FileName="WebAppsNoAuth/Views/Shared/_ValidationScriptsPartial.cshtml" />
-      <File FileName="WebAppsNoAuth/Views/Shared/Error.cshtml" />
-      <File FileName="WebAppsNoAuth/Models/Company.cs" Line="6" Column="10" />
-      <File FileName="WebAppsNoAuth/Controllers/HomeController.cs" Line="36" Column="13" />
+      <File FileName="WebAppsNoAuth/Models/User.cs" Line="6" Column="10" />
+      <File FileName="WebAppsNoAuth/Controllers/AdminController.cs" Line="364" Column="18" />
+      <File FileName="WebAppsNoAuth/Views/Admin/UpdateUser.cshtml" Line="323" Column="14" />
+      <File FileName="WebAppsNoAuth/Views/Access/Login.cshtml" Line="22" Column="43" />
+      <File FileName="WebAppsNoAuth/Views/Access/Register.cshtml" Line="49" Column="1" />
+      <File FileName="WebAppsNoAuth/Views/Access/ConfirmEmail.cshtml" Line="1" Column="1" />
+      <File FileName="WebAppsNoAuth/Controllers/AccessController.cs" Line="247" Column="1" />
+      <File FileName="WebAppsNoAuth/Controllers/HomeController.cs" Line="162" Column="1" />
+      <File FileName="WebAppsNoAuth/Views/Access/Relogin.cshtml" Line="1" Column="1" />
+      <File FileName="WebAppsNoAuth/Views/Admin/UpdateTeam.cshtml" Line="20" Column="21" />
+      <File FileName="WebAppsNoAuth/Views/Admin/UpdateLocation.cshtml" Line="70" Column="1" />
+      <File FileName="WebAppsNoAuth/Models/Location.cs" Line="1" Column="1" />
+      <File FileName="WebAppsNoAuth/Models/Team.cs" Line="11" Column="16" />
+      <File FileName="WebAppsNoAuth/Data/WebAppsNoAuthDbContext.cs" Line="17" Column="4" />
+      <File FileName="WebAppsNoAuth/wwwroot/css/site.css" Line="23" Column="1" />
+      <File FileName="WebAppsNoAuth/Views/Home/Holidays.cshtml" Line="25" Column="1" />
+      <File FileName="WebAppsNoAuth/Models/Request.cs" Line="13" Column="37" />
+      <File FileName="WebAppsNoAuth/Models/Message.cs" Line="15" Column="1" />
+      <File FileName="WebAppsNoAuth/Models/RequestType.cs" Line="10" Column="16" />
+      <File FileName="WebAppsNoAuth/Views/Admin/UpdateEntitlements.cshtml" Line="120" Column="1" />
+      <File FileName="WebAppsNoAuth/Models/UserEntitlements.cs" Line="13" Column="30" />
+      <File FileName="WebAppsNoAuth/Program.cs" Line="23" Column="1" />
+      <File FileName="WebAppsNoAuth/Controllers/HomeSQLiteController.cs" Line="1" Column="1" />
+      <File FileName="WebAppsNoAuth/Models/Email.cs" Line="14" Column="37" />
+      <File FileName="WebAppsNoAuth/Services/EmailService.cs" Line="51" Column="1" />
+      <File FileName="WebAppsNoAuth/Services/WebService.cs" Line="1" Column="1" />
+      <File FileName="WebAppsNoAuth/Controllers/EmailController.cs" Line="28" Column="43" />
+      <File FileName="WebAppsNoAuth/Properties/launchSettings.json" Line="16" Column="5" />
+      <File FileName="WebAppsNoAuth/Models/EmailTemplate.cs" Line="13" Column="35" />
+      <File FileName="WebAppsNoAuth/Controllers/ManagerController.cs" Line="298" Column="86" />
+      <File FileName="WebAppsNoAuth/Views/Manager/ApproveRequests.cshtml" Line="40" Column="35" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -29,39 +50,31 @@
           <Node name="WebAppsNoAuth" expanded="True">
             <Node name="WebAppsNoAuth" expanded="True">
               <Node name="Controllers" expanded="True">
-                <Node name="AccessController.cs" selected="True" />
+                <Node name="ManagerController.cs" selected="True" />
               </Node>
               <Node name="Data" expanded="True" />
               <Node name="Migrations" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Properties" expanded="True" />
+              <Node name="Services" expanded="True" />
               <Node name="Styles" expanded="True" />
               <Node name="Views" expanded="True">
                 <Node name="Access" expanded="True" />
+                <Node name="Admin" expanded="True" />
                 <Node name="Home" expanded="True" />
+                <Node name="Manager" expanded="True" />
                 <Node name="Shared" expanded="True" />
               </Node>
               <Node name="wwwroot" expanded="True">
-                <Node name="lib" expanded="True">
-                  <Node name="jquery" expanded="True">
-                    <Node name="dist" expanded="True" />
-                  </Node>
-                </Node>
+                <Node name="css" expanded="True" />
+                <Node name="js" expanded="True" />
               </Node>
             </Node>
           </Node>
         </State>
       </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
-      </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.WebAppsNoAuth PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>

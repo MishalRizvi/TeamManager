@@ -10,6 +10,11 @@ namespace WebAppsNoAuth.Data
 		}
 		public DbSet<Company> Company { get; set; }
 		public DbSet<User> Users { get; set; }
-	}
+		public DbSet<Location> Location { get; set; }
+		public DbSet<Team> Team { get; set; }
+		//public DbSet<TeamUser> TeamUser { get; set; }
+        public DbSet<Request> Request { get; set; }
+	//	public DbSet<UserEntitlements> UserEntitlements { get; set; }
+    }
 }
 

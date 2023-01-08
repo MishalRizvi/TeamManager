@@ -21,33 +21,61 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                            <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">Log Out</a>
-                                </li>
-                                <li class="nav-item">
-                                    <label class="nav-link text-dark">Welcome @ViewData["Username"]!</label>
-                                </li>
-                            </ul>
-                            <ul class="nav navbar navbar-right">
-                            @{
-                                if (ViewData["Admin"].ToString() == "True")
-                                {
-                                   <li class="dropdown">
-                                        <a class="dropdown-toggle" data-toggle="dropdown" style="cursor:pointer;">Admin</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="/Admin/AddLocation/">Locations</a></li>
-                                        </ul>
-                                   </li>
-                                }
-                            }
-                            </ul>
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Holidays">Holidays</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">Log Out</a>
+                                    </li>
+                                    @{
+                                        if (ViewData["Admin"] != null && ViewData["Admin"].ToString() == "True")
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="UpdateLocation">Locations</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="UpdateUser">Users</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="UpdateTeam">Teams</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="UpdateEntitlements">Entitlements</a>
+                                            </li>
+                                        }
+                                    }
+                                    @{
+                                        if (ViewData["Manager"] != null && ViewData["Manager"].ToString() == "True")
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Manager" asp-action="ApproveRequest">Requests</a>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                                <ul class="nav navbar navbar-right">
+                                    <li class="nav-item">
+                                        <label class="nav-link text-dark">Welcome @ViewData["Username"]!</label>
+                                    </li>
+                                    @{
+                                        if (ViewData["Admin"].ToString() == "True")
+                                        {
+                                            <li class="dropdown">
+                                                <a class="dropdown-toggle" data-toggle="dropdown" style="cursor:pointer;">Admin</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="/Admin/UpdateLocation/">Locations</a></li>
+                                                </ul>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
                         </div>
                     </div>
                 </nav>
