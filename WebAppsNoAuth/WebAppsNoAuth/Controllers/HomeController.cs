@@ -225,6 +225,10 @@ namespace WebAppsNoAuth.Controllers
             emailTemplate.Subject = "New Request";
             var userName = GetUserName(userId);
             var managerId = GetManager(userId);
+            if (managerId == -1)
+            {
+                return true;
+            }
             var managerName = GetUserName(managerId);
             var managerEmail = GetUserEmail(managerId);
 
@@ -271,26 +275,65 @@ namespace WebAppsNoAuth.Controllers
             //smtp.Authenticate("servicesappforyou@gmail.com", "ServicesApp111");
             //smtp.Send(email);
             //smtp.Disconnect(true);
+       
 
-            MailMessage m = new MailMessage();
-            SmtpClient sc = new SmtpClient();
-            m.From = new MailAddress(_configuration.GetSection("EmailConfiguration")["From"], "Services App For You");
-            m.To.Add(new MailAddress(emailTemplate.To, emailTemplate.ToName));
-            m.Subject = emailTemplate.Subject;
-            m.Body = emailTemplate.Body;
-            m.IsBodyHtml = false;
-            sc.Host = "smtp.gmail.com";
-            sc.Port = 587;
-            sc.Credentials = new System.Net.NetworkCredential(_configuration.GetSection("EmailConfiguration")["From"], (_configuration.GetSection("EmailConfiguration")["Password"])); //change
-            sc.EnableSsl = true; // runtime encrypt the SMTP communications using SSL
-            sc.Send(m);
+            try
+            {
+                MailMessage m = new MailMessage();
+                SmtpClient sc = new SmtpClient();
+                m.From = new MailAddress(_configuration.GetSection("EmailConfiguration")["From"], "Services App For You");
+                Debug.WriteLine(emailTemplate.To);
+                Debug.WriteLine(emailTemplate.ToName);
+                m.To.Add(new MailAddress(emailTemplate.To, emailTemplate.ToName));
+                m.Subject = emailTemplate.Subject;
+                m.Body = emailTemplate.Body;
+                m.IsBodyHtml = false;
+                sc.Host = "smtp.gmail.com";
+                sc.Port = 587;
+                sc.Credentials = new System.Net.NetworkCredential(_configuration.GetSection("EmailConfiguration")["From"], (_configuration.GetSection("EmailConfiguration")["Password"])); //change
+                sc.EnableSsl = true; // runtime encrypt the SMTP communications using SSL
+                sc.Send(m);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Cannot send email");
+                Debug.WriteLine(e);
+            }
 
-            return true;
+            return false;
         }
-    
 
-    //THE ABOVE METHODS NEED TO BE MOVED TO THEIR OWN SEPARATE CLASS 
-    // GET: /<controller>/
+        public List<User> GetAllUsersAsObject()
+        {
+            int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
+            var institutionId = GetInstitutionId(userId);
+            List<User> allUsers = new List<User>();
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
+            {
+                connection.Open();
+                var queryString = "SELECT U.[Id], U.[Name] FROM Users U WHERE Id = @USERID " +
+                                  "UNION SELECT U.[Id], U.[Name] FROM Users U WHERE InstitutionId = @INSTITUTIONID"; //Left join to allow retrieval of users with null ManagerUserId 
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@USERID", userId);
+                command.Parameters.AddWithValue("@INSTITUTIONID", institutionId);
+                using (SqlDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        User currentUser = new User();
+                        currentUser.Id = dbReader.GetInt32(0);
+                        currentUser.Name = dbReader.GetString(1);
+                        allUsers.Add(currentUser);
+                    }
+                    connection.Close();
+                }
+            }
+            return allUsers;
+        }
+
+        //THE ABOVE METHODS NEED TO BE MOVED TO THEIR OWN SEPARATE CLASS 
+        // GET: /<controller>/
         public IActionResult Index()
         {
             ViewData["Authenticated"] = "true";
@@ -312,6 +355,24 @@ namespace WebAppsNoAuth.Controllers
             ViewData["ManagerUsersList"] = new SelectList(managerUsers, "Id", "Name");
             var requestTypes = GetAllRequestTypes();
             ViewData["RequestTypeList"] = new SelectList(requestTypes, "RequestTypeId", "RequestTypeName");
+
+            return View();
+        }
+
+        public IActionResult Calendar()
+        {
+            ViewData["Authenticated"] = "true";
+            int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
+            ViewData["Username"] = HttpContext.User.Claims.ToList()[2].ToString().Split(":")[1];
+            ViewData["Admin"] = IsUserAdmin(userId);
+            ViewData["Manager"] = IsUserManager(userId);
+           // var managerUsers = GetAllManagerUsers(userId);
+          //  ViewData["ManagerUsersList"] = new SelectList(managerUsers, "Id", "Name");
+            var requestTypes = GetAllRequestTypes();
+            ViewData["RequestTypeList"] = new SelectList(requestTypes, "RequestTypeId", "RequestTypeName");
+
+            var allUsers = GetAllUsersAsObject();
+            ViewData["UsersList"] = new SelectList(allUsers, "Id", "Name");
 
             return View();
         }
@@ -440,7 +501,54 @@ namespace WebAppsNoAuth.Controllers
             }
             return Json(new { data = allRequests });
         }
-
+        public ActionResult GetAllApprovedRequests(int userId)
+        {
+           // int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
+            List<Request> allRequests = new List<Request>();
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
+            {
+                connection.Open();
+                var queryString = "SELECT R.[RequestId], R.[RequestTypeId], R.[UserId], R.[StartDate], R.[EndDate], RT.[RequestTypeName], R.[Approved] FROM Request R " +
+                                  "JOIN RequestType RT ON R.[RequestTypeId] = RT.[RequestTypeId] WHERE R.[UserId] = @USERID AND R.[Approved] = @TRUE";
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@USERID", userId);
+                command.Parameters.AddWithValue("@TRUE", true);
+                using (SqlDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        Request currentRequest = new Request();
+                        currentRequest.RequestId = dbReader.GetInt32(0);
+                        currentRequest.RequestTypeId = dbReader.GetInt32(1);
+                        currentRequest.UserId = dbReader.GetInt32(2);
+                        currentRequest.StartDate = dbReader.GetDateTime(3);
+                        currentRequest.StartDateStr = currentRequest.StartDate.ToString("dd/MM/yyyy");
+                        currentRequest.EndDate = dbReader.GetDateTime(4);
+                        currentRequest.EndDateStr = currentRequest.EndDate.ToString("dd/MM/yyyy");
+                        currentRequest.RequestTypeName = dbReader.GetString(5);
+                        if (dbReader.IsDBNull(6))
+                        {
+                            currentRequest.ApprovedMessage = "Pending";
+                        }
+                        else
+                        {
+                            var approved = dbReader.GetBoolean(6);
+                            if (approved)
+                            {
+                                currentRequest.ApprovedMessage = "Approved";
+                            }
+                            else if (approved == false)
+                            {
+                                currentRequest.ApprovedMessage = "Rejected";
+                            }
+                        }
+                        allRequests.Add(currentRequest);
+                    }
+                    connection.Close();
+                }
+            }
+            return Json(new { data = allRequests });
+        }
         //Manager getting another users requests
         public ActionResult GetUserRequests(int userId)
         {

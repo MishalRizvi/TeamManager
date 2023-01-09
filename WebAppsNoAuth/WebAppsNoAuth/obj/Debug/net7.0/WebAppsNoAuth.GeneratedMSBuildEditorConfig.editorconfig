@@ -48,6 +48,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vVXBkYXRlVXNlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/Views/Home/Calendar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9DYWxlbmRhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/Views/Home/Holidays.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Ib2xpZGF5cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
