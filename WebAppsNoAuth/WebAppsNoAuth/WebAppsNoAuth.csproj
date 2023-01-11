@@ -32,6 +32,7 @@
     <None Remove="MailKit" />
     <None Remove="MimeKit" />
     <None Remove="Views\Manager\" />
+    <None Remove="Providers\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Styles\" />
@@ -41,6 +42,7 @@
     <Folder Include="Services\" />
     <Folder Include="Services\" />
     <Folder Include="Views\Manager\" />
+    <Folder Include="Providers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />

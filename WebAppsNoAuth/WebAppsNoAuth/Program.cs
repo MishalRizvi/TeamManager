@@ -5,11 +5,14 @@ using WebAppsNoAuth.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Net;
 using System.Diagnostics;
+using WebAppsNoAuth.Providers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 builder.Services.AddControllersWithViews();
+
 
 builder.Services.AddDbContext<WebAppsNoAuthDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("WebAppsNoAuthDb")));

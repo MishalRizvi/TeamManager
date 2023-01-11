@@ -1,67 +1,25 @@
 ﻿//using System;
-//using System.Data.SqlClient;
-//using WebAppsNoAuth.Data;
+//using MailKit.Security;
+//using Microsoft.Extensions.Options;
+//using MimeKit;
+//using WebAppsNoAuth.Controllers;
+//using WebAppsNoAuth.Models;
+//using WebAppsNoAuth.Providers;
 
 //namespace WebAppsNoAuth.Services
 //{
-//	public class WebService
-//	{
-//        private readonly WebAppsNoAuthDbContext _webApps;
-//        private readonly IConfiguration _configuration;
-//        public WebService(WebAppsNoAuthDbContext webApps, IConfiguration configuration)
-//        {
-//            _webApps = webApps;
-//            _configuration = configuration;
-//        }
-         
-//        public static bool IsUserAdmin(int userId)
-//        {
-//            bool isAdmin = false;
-//            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
-//            {
-//                connection.Open();
-//                var queryString = "SELECT Admin FROM [Users] WHERE Id = @ID";
-//                SqlCommand command = new SqlCommand(queryString, connection);
-//                command.Parameters.AddWithValue("@ID", userId);
-//                using (SqlDataReader dbReader = command.ExecuteReader())
-//                {
-//                    while (dbReader.Read())
-//                    {
-//                        if (dbReader.IsDBNull(0))
-//                        {
-//                            return isAdmin;
-//                        }
-//                        isAdmin = dbReader.GetBoolean(0);
-//                    }
-//                }
-//                return isAdmin;
-//            }
-//        }
+//    public class WebService
+//    {
+//        private readonly AccessProvider _access;
+//        private readonly EmailProvider _email;
+//        private readonly LocationProvider _location;
+//        private readonly ManagerProvider _manager;
+//        private readonly RequestProvider _request;
+//        private readonly ProviderController _providers;
 
-//        public static int GetInstitutionId(int userId)
+//        public WebService()
 //        {
-//            int institutionId = -1;
-//            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
-//            {
-//                connection.Open();
-//                var queryString = "SELECT InstitutionID FROM [Users] WHERE Id = @USERID";
-//                SqlCommand command = new SqlCommand(queryString, connection);
-//                command.Parameters.AddWithValue("@USERID", userId);
-//                using (SqlDataReader dbReader = command.ExecuteReader())
-//                {
-//                    while (dbReader.Read())
-//                    {
-//                        if (dbReader.IsDBNull(0))
-//                        {
-//                            return institutionId;
-//                        }
-//                        institutionId = dbReader.GetInt32(0);
-//                    }
-//                }
-//                return institutionId;
-//            }
+//            _access = new AccessProvider(_providers);
 //        }
-
-//    }
 //}
 

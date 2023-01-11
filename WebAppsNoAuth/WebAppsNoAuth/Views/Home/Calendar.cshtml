@@ -5,48 +5,35 @@
 
 <head>
     <style>
-        table {
-            border-collapse: collapse;
-        }
 
-        td,
-        th {
-            border: 1px solid black;
-            padding: 3px;
-            text-align: center;
-        }
-
-        th {
-            font-weight: bold;
-            background-color: #E6E6E6;
-        }
     </style>
 </head>
 <body>
     <div class="row" style="display:inline-block">
-        <div id="month0"></div>
-        <div id="month1"></div>
-        <div id="month2"></div>
+        <div class="column" id="month0"></div>
+        <div class="column" id="month1"></div>
+        <div class="column" id="month2"></div>
     </div>
     <div class="row" style="display:inline-block">
-        <div id="month3"></div>
-        <div id="month4"></div>
-        <div id="month5"></div>
+        <div class="column" id="month3"></div>
+        <div class="column" id="month4"></div>
+        <div class="column" id="month5"></div>
     </div>
     <div class="row" style="display:inline-block">
-        <div id="month6"></div>
-        <div id="month7"></div>
-        <div id="month8"></div>
+        <div class="column" id="month6"></div>
+        <div class="column" id="month7"></div>
+        <div class="column" id="month8"></div>
     </div>
     <div class="row" style="display:inline-block">
-        <div id="month9"></div>
-        <div id="month10"></div>
-        <div id="month11"></div>
+        <div class="column" id="month9"></div>
+        <div class="column" id="month10"></div>
+        <div class="column" id="month11"></div>
     </div>
 </body>
 
 @section Scripts {
     <script>
+        var monthsList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         $(document).ready(function () {
             document.getElementById("UsersList").onchange = function () {
                 loadPage(); //reset calendar
@@ -67,16 +54,16 @@
             let mon = month - 1; // months in JS are 0..11, not 1..12
             let d = new Date(year, mon);
 
-            let table = '<table><tr><th>MO</th><th>TU</th><th>WE</th><th>TH</th><th>FR</th><th>SA</th><th>SU</th></tr><tr>';
+            let table = '<h2>' + monthsList[mon] + '</h2>'
+            table += '<table><tr><th>Mon</th><th>Tues</th><th>Wed</th><th>Thurs</th><th>Fri</th><th>Sat</th><th>Sun</th></tr><tr>';
 
-            // spaces for the first row
-            // from Monday till the first day of the month
-            // * * * 1  2  3  4
+                // spaces for the first row
+                // from Monday till the first day of the month
+                // * * * 1  2  3  4
             for (let i = 0; i < getDay(d); i++) {
                 table += '<td></td>';
             }
 
-            // <td> with actual dates
             while (d.getMonth() == mon) {
                 var dateString = '';
                 if (d.getDate() < 10) {
@@ -128,9 +115,24 @@
                     console.log(result);
                     var html = "";
                     for (var i = 0; i < result.data.length; i++) {
-                        console.log("request " + i);
+                        var requestUser = result.data[i].userName;
                         var requestStartDate = result.data[i].startDate;
                         var requestEndDate = result.data[i].endDate;
+                        var requestType = result.data[i].requestTypeName;
+                        var requestColour = "";
+
+                        //Set the colour of the request here:
+
+                        if (requestType === "Annual") {
+                            console.log("true");
+                            requestColour = "green";
+                        }
+                        if (requestType === "Study") {
+                            requestColour = "blue";
+                        }
+                        if (requestType === "WFH") {
+                            requestColour = "orange";
+                        }
 
                         var requestStartDateStr = result.data[i].startDateStr;
                         var requestEndDateStr = result.data[i].endDateStr;
@@ -138,13 +140,18 @@
                         var differenceInTime = new Date(requestEndDate).getTime() - new Date(requestStartDate).getTime();
                         var differenceInDays = differenceInTime / (1000 * 3600 * 24);
 
-                        // var differenceInDays = (requestEndDate.getTime() - requestStartDate.getTime()) / (1000 * 3600 * 24);
-
                         for (var j = 0; j < differenceInDays + 1; j++) {
-                            // console.log(document.getElementById(requestStartDateStr));
-                            console.log(differenceInDays);
-                            console.log(requestStartDateStr);
-                            document.getElementById(requestStartDateStr).style.backgroundColor = "green";
+
+                            document.getElementById(requestStartDateStr).style.backgroundColor = requestColour;
+
+                            var toolTip = "";
+                            toolTip += "Name: " + requestUser + '\n';
+                            toolTip += "Request Type: " + requestType + '\n';
+                            toolTip += "Number of days: ";
+                            toolTip += differenceInDays + 1; //add length of request to tooltip
+
+                            document.getElementById(requestStartDateStr).title = toolTip;
+
                             var [curDay, curMonth, curYear] = requestStartDateStr.split('/');
                             var nextDay = new Date(curYear, curMonth - 1, curDay);
                             nextDay.setDate(nextDay.getDate() + 1);

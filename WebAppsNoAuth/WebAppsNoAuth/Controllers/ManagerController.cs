@@ -22,218 +22,64 @@ namespace WebAppsNoAuth.Controllers
     {
         private readonly WebAppsNoAuthDbContext _webApps;
         private readonly IConfiguration _configuration;
+        private readonly SqlConnection _connection;
+
+        private readonly ProviderController _providers;
 
         public ManagerController(WebAppsNoAuthDbContext webApps, IConfiguration configuration)
         {
             _webApps = webApps;
             _configuration = configuration;
+            _providers = new ProviderController(webApps, configuration);
         }
 
         // GET: /<controller>/
         public IActionResult ApproveRequest()
         {
             int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
-            Debug.WriteLine("USER ID");
-            Debug.WriteLine(userId);
             ViewData["Authenticated"] = "true";
             ViewData["Username"] = HttpContext.User.Claims.ToList()[2].ToString().Split(":")[1];
-            ViewData["Admin"] = IsUserAdmin(userId);
-            ViewData["Manager"] = IsUserManager(userId);
-            Debug.WriteLine(ViewData["Manager"]);
+            User currentUser = _providers.User.GetUserById(userId);
+            ViewData["Admin"] = currentUser.Admin;
+            ViewData["Manager"] = currentUser.Manager;
             return View();
         }
 
         //THESE METHODS NEED TO BE MOVED
-        public bool IsUserAdmin(int userId)
-        {
-            bool isAdmin = false;
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
-            {
-                connection.Open();
-                var queryString = "SELECT Admin FROM [Users] WHERE Id = @ID";
-                SqlCommand command = new SqlCommand(queryString, connection);
-                command.Parameters.AddWithValue("@ID", userId);
-                using (SqlDataReader dbReader = command.ExecuteReader())
-                {
-                    while (dbReader.Read())
-                    {
-                        if (dbReader.IsDBNull(0))
-                        {
-                            return isAdmin;
-                        }
-                        isAdmin = dbReader.GetBoolean(0);
-                    }
-                }
-                return isAdmin;
-            }
-        }
-        public bool IsUserManager(int userId)
-        {
-            bool isManager = false;
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
-            {
-                connection.Open();
-                var queryString = "SELECT Manager FROM [Users] WHERE Id = @ID";
-                SqlCommand command = new SqlCommand(queryString, connection);
-                command.Parameters.AddWithValue("@ID", userId);
-                using (SqlDataReader dbReader = command.ExecuteReader())
-                {
-                    while (dbReader.Read())
-                    {
-                        if (dbReader.IsDBNull(0))
-                        {
-                            return isManager;
-                        }
-                        isManager = dbReader.GetBoolean(0);
-                    }
-                }
-                return isManager;
-            }
-        }
+        //public bool IsUserAdmin(int userId)
+        //{
+        //    return _providers.User.IsUserAdmin(userId);
+        //}
+        //public bool IsUserManager(int userId)
+        //{
+        //    return _providers.User.IsUserManager(userId);
+
+        //}
 
         public string GetUserName(int userId)
         {
-            var userName = "";
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
-            {
-                connection.Open();
-                var queryString = "SELECT Name FROM [Users] WHERE Id = @USERID";
-                SqlCommand command = new SqlCommand(queryString, connection);
-                command.Parameters.AddWithValue("@USERID", userId);
-                using (SqlDataReader dbReader = command.ExecuteReader())
-                {
-                    while (dbReader.Read())
-                    {
-                        if (dbReader.IsDBNull(0))
-                        {
-                            return userName;
-                        }
-                        userName = dbReader.GetString(0);
-                    }
-                }
-                connection.Close();
-            }
-            return userName;
-        }
-        public string GetUserEmail(int userId)
-        {
-            var userEmail = "";
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
-            {
-                connection.Open();
-                var queryString = "SELECT Email FROM [Users] WHERE Id = @USERID";
-                SqlCommand command = new SqlCommand(queryString, connection);
-                command.Parameters.AddWithValue("@USERID", userId);
-                using (SqlDataReader dbReader = command.ExecuteReader())
-                {
-                    while (dbReader.Read())
-                    {
-                        if (dbReader.IsDBNull(0))
-                        {
-                            return userEmail;
-                        }
-                        userEmail = dbReader.GetString(0);
-                    }
-                }
-                connection.Close();
-            }
-            return userEmail;
-        }
+            return _providers.User.GetUserName(userId);
 
-        public int GetManager(int userId)
-        {
-            var managerUserId = -1;
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
-            {
-                connection.Open();
-                var queryString = "SELECT ManagerUserId FROM [Users] WHERE Id = @USERID";
-                SqlCommand command = new SqlCommand(queryString, connection);
-                command.Parameters.AddWithValue("@USERID", userId);
-                using (SqlDataReader dbReader = command.ExecuteReader())
-                {
-                    while (dbReader.Read())
-                    {
-                        if (dbReader.IsDBNull(0))
-                        {
-                            return managerUserId;
-                        }
-                        managerUserId = dbReader.GetInt32(0);
-                    }
-                    connection.Close();
-                }
-            }
-            return managerUserId;
         }
+        //public string GetUserEmail(int userId)
+        //{
+        //    return _providers.User.GetUserEmail(userId);
+        //}
 
-        public int GetInstitutionId(int userId)
-        {
-            int institutionId = -1;
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
-            {
-                connection.Open();
-                var queryString = "SELECT InstitutionID FROM [Users] WHERE Id = @USERID";
-                SqlCommand command = new SqlCommand(queryString, connection);
-                command.Parameters.AddWithValue("@USERID", userId);
-                using (SqlDataReader dbReader = command.ExecuteReader())
-                {
-                    while (dbReader.Read())
-                    {
-                        if (dbReader.IsDBNull(0))
-                        {
-                            return institutionId;
-                        }
-                        institutionId = dbReader.GetInt32(0);
-                    }
-                }
-                return institutionId;
-            }
-        }
+        //public int GetManager(int userId)
+        //{
+        //    return _providers.User.GetManager(userId);
+        //}
+
+        //public int GetInstitutionId(int userId)
+        //{
+        //    return _providers.User.GetInstitutionId(userId);
+        //}
 
         //Manager getting another users requests
         public Request GetRequestById(int requestId)
         {
-            List<Request> allRequests = new List<Request>();
-            Request currentRequest = new Request();
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
-            {
-                connection.Open();
-                var queryString = "SELECT R.[RequestId], R.[RequestTypeId], R.[UserId], R.[StartDate], R.[EndDate], RT.[RequestTypeName], R.[Approved] FROM Request R " +
-                                  "JOIN RequestType RT ON R.[RequestTypeId] = RT.[RequestTypeId] WHERE R.[RequestId] = @REQUESTID";
-                SqlCommand command = new SqlCommand(queryString, connection);
-                command.Parameters.AddWithValue("@REQUESTID", requestId);
-                using (SqlDataReader dbReader = command.ExecuteReader())
-                {
-                    while (dbReader.Read())
-                    {
-                        currentRequest.RequestId = dbReader.GetInt32(0);
-                        currentRequest.RequestTypeId = dbReader.GetInt32(1);
-                        currentRequest.UserId = dbReader.GetInt32(2);
-                        currentRequest.StartDate = dbReader.GetDateTime(3);
-                        currentRequest.StartDateStr = currentRequest.StartDate.ToString("dd/MM/yyyy");
-                        currentRequest.EndDate = dbReader.GetDateTime(4);
-                        currentRequest.EndDateStr = currentRequest.EndDate.ToString("dd/MM/yyyy");
-                        currentRequest.RequestTypeName = dbReader.GetString(5);
-                        if (dbReader.IsDBNull(6))
-                        {
-                            currentRequest.ApprovedMessage = "Pending";
-                        }
-                        else
-                        {
-                            var approved = dbReader.GetBoolean(6);
-                            if (approved)
-                            {
-                                currentRequest.ApprovedMessage = "Approved";
-                            }
-                            else if (approved == false)
-                            {
-                                currentRequest.ApprovedMessage = "Rejected";
-                            }
-                        }
-                    }
-                    connection.Close();
-                }
-            }
-            return currentRequest;
+            return _providers.Request.GetRequestById(requestId);
         }
         public bool SendApproveRequestEmail(int requestId)
         {
@@ -245,26 +91,14 @@ namespace WebAppsNoAuth.Controllers
             var requestTypeName = request.RequestTypeName;
             var requestStartDate = request.StartDateStr;
             var requestEndDate = request.EndDateStr;
-            var userName = GetUserName(userId);
-            var userEmail = GetUserEmail(userId);
-            var managerId = GetManager(userId);
+            User currentUser = _providers.User.GetUserById(userId);
+            var userName = currentUser.Name;
+            var userEmail = currentUser.Email;
+            var managerId = currentUser.ManagerUserId;
+
             var managerName = GetUserName(managerId);
 
-            emailTemplate.Body = "Hi " + userName + "," + Environment.NewLine +
-                                 "Your request:" + Environment.NewLine +
-                                 "Request Type: " + requestTypeName + Environment.NewLine +
-                                 "Start Date: " + requestStartDate + Environment.NewLine +
-                                 "End Date: " + requestEndDate + Environment.NewLine +
-                                 "has been approved by " + managerName + ".";
-
-            emailTemplate.To = userEmail;
-            emailTemplate.ToName = userName;
-            var success = SendEmail(emailTemplate);
-            if (success)
-            {
-                return true;
-            }
-            return false;
+            return _providers.Email.SendApproveRequestEmail(userId, requestTypeName, requestStartDate, requestEndDate, userName, userEmail, managerId, managerName);
         }
 
         public bool SendRejectRequestEmail(int requestId)
@@ -277,138 +111,46 @@ namespace WebAppsNoAuth.Controllers
             var requestTypeName = request.RequestTypeName;
             var requestStartDate = request.StartDateStr;
             var requestEndDate = request.EndDateStr;
-            var userName = GetUserName(userId);
-            var userEmail = GetUserEmail(userId);
-            var managerId = GetManager(userId);
+            User currentUser = _providers.User.GetUserById(userId);
+            var userName = currentUser.Name;
+            var userEmail = currentUser.Email;
+            var managerId = currentUser.ManagerUserId;
+
             var managerName = GetUserName(managerId);
 
-            emailTemplate.Body = "Hi " + userName + "," + Environment.NewLine +
-                                 "Your request:" + Environment.NewLine +
-                                 "Request Type: " + requestTypeName + Environment.NewLine +
-                                 "Start Date: " + requestStartDate + Environment.NewLine +
-                                 "End Date: " + requestEndDate + Environment.NewLine +
-                                 "has been rejected by " + managerName + ".";
-                                
-            emailTemplate.To = userEmail;
-            emailTemplate.ToName = userName;
-            var success = SendEmail(emailTemplate);
-            if (success)
-            {
-                return true;
-            }
-            return false;
+            return _providers.Email.SendRejectRequestEmail(userId, requestTypeName, requestStartDate, requestEndDate, userName, userEmail, managerId, managerName);
         }
-
-        public bool SendEmail(EmailTemplate emailTemplate)
-        {
-            MailMessage m = new MailMessage();
-            SmtpClient sc = new SmtpClient();
-            m.From = new MailAddress(_configuration.GetSection("EmailConfiguration")["From"], "Services App For You");
-            m.To.Add(new MailAddress(emailTemplate.To, emailTemplate.ToName));
-            m.Subject = emailTemplate.Subject;
-            m.Body = emailTemplate.Body;
-            m.IsBodyHtml = false;
-            sc.Host = "smtp.gmail.com";
-            sc.Port = 587;
-            sc.Credentials = new System.Net.NetworkCredential(_configuration.GetSection("EmailConfiguration")["From"], (_configuration.GetSection("EmailConfiguration")["Password"])); //change
-            sc.EnableSsl = true; // runtime encrypt the SMTP communications using SSL
-            sc.Send(m);
-
-            return true;
-        }
-
-        //THE ABOVE METHODS NEED TO BE MOVED TO THEIR RESPECTIVE CONTROLLER METHODS 
 
         public ActionResult GetAllManagerRequests()
         {
             int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]); //this is the managerUserId
-            List<Request> allRequests = new List<Request>();
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
-            {
-                connection.Open();
-                var queryString = "SELECT R.[RequestId], R.[RequestTypeId], R.[UserId], R.[StartDate], R.[EndDate], RT.[RequestTypeName], R.[Approved], U.[Name] FROM Request R " +
-                                  "JOIN RequestType RT ON R.[RequestTypeId] = RT.[RequestTypeId] " +
-                                  "JOIN Users U ON R.[UserId] = U.[Id] WHERE U.[ManagerUserId] = @USERID AND R.[Approved] IS NULL";
-                SqlCommand command = new SqlCommand(queryString, connection);
-                command.Parameters.AddWithValue("@USERID", userId);
-                using (SqlDataReader dbReader = command.ExecuteReader())
-                {
-                    while (dbReader.Read())
-                    {
-                        Request currentRequest = new Request();
-                        currentRequest.RequestId = dbReader.GetInt32(0);
-                        currentRequest.RequestTypeId = dbReader.GetInt32(1);
-                        currentRequest.UserId = dbReader.GetInt32(2);
-                        currentRequest.StartDate = dbReader.GetDateTime(3);
-                        currentRequest.StartDateStr = currentRequest.StartDate.ToString("dd/MM/yyyy");
-                        currentRequest.EndDate = dbReader.GetDateTime(4);
-                        currentRequest.EndDateStr = currentRequest.EndDate.ToString("dd/MM/yyyy");
-                        currentRequest.RequestTypeName = dbReader.GetString(5);
-                        if (dbReader.IsDBNull(6))
-                        {
-                            currentRequest.ApprovedMessage = "Pending";
-                        }
-                        else
-                        {
-                            var approved = dbReader.GetBoolean(6);
-                            if (approved)
-                            {
-                                currentRequest.ApprovedMessage = "Approved";
-                            }
-                            else if (approved == false)
-                            {
-                                currentRequest.ApprovedMessage = "Rejected";
-                            }
-                        }
-                        currentRequest.UserName = dbReader.GetString(7);
-                        allRequests.Add(currentRequest);
-                    }
-                    connection.Close();
-                }
-            }
+            List<Request> allRequests = _providers.Request.GetAllManagerRequests(userId);
             return Json(new { data = allRequests });
         }
 
         public bool ApproveRequestMethod(int requestId)
         {
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
+            var success = _providers.Request.ApproveRequestMethod(requestId);
+            if (success)
             {
-                connection.Open();
-
-                var queryString = "UPDATE [Request] SET Approved = @TRUE WHERE RequestId = @REQUESTID"; 
-                SqlCommand command = new SqlCommand(queryString, connection);
-                command.Parameters.AddWithValue("@REQUESTID", requestId);
-                command.Parameters.AddWithValue("@TRUE", true);
-                command.ExecuteNonQuery();
-
-                connection.Close();
-
-                var success = SendApproveRequestEmail(requestId);
-                if (success)
+                var success2 = SendApproveRequestEmail(requestId);
+                if (success2)
                 {
                     return true;
                 }
             }
-
             return false;
+
         }
+        
 
         public bool RejectRequestMethod(int requestId)
         {
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb")))
+            var success = _providers.Request.RejectRequestMethod(requestId);
+            if (success)
             {
-                connection.Open();
-
-                var queryString = "UPDATE [Request] SET Approved = @FALSE WHERE RequestId = @REQUESTID"; 
-                SqlCommand command = new SqlCommand(queryString, connection);
-                command.Parameters.AddWithValue("@REQUESTID", requestId);
-                command.Parameters.AddWithValue("@FALSE", false);
-                command.ExecuteNonQuery();
-
-                connection.Close();
-
-                var success = SendRejectRequestEmail(requestId);
-                if (success)
+                var success2 = SendRejectRequestEmail(requestId);
+                if (success2)
                 {
                     return true;
                 }

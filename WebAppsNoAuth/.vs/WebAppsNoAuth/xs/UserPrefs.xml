@@ -4,45 +4,56 @@
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.WebAppsNoAuth PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="WebAppsNoAuth/Controllers/ManagerController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="WebAppsNoAuth/Controllers/HomeController.cs">
     <Files>
       <File FileName="app.config" />
       <File FileName="WebAppsNoAuth/appsettings.json" Line="11" Column="16" />
-      <File FileName="WebAppsNoAuth/Views/Home/Index.cshtml" Line="6" Column="1" />
+      <File FileName="WebAppsNoAuth/Views/Home/Index.cshtml" />
       <File FileName="WebAppsNoAuth/Views/Home/Privacy.cshtml" />
-      <File FileName="WebAppsNoAuth/Views/Shared/_Layout.cshtml" Line="55" Column="86" />
+      <File FileName="WebAppsNoAuth/Views/Shared/_Layout.cshtml" Line="61" Column="42" />
       <File FileName="WebAppsNoAuth/dockercompose.yml" />
       <File FileName="WebAppsNoAuth/Models/User.cs" Line="6" Column="10" />
-      <File FileName="WebAppsNoAuth/Controllers/AdminController.cs" Line="364" Column="18" />
-      <File FileName="WebAppsNoAuth/Views/Admin/UpdateUser.cshtml" Line="323" Column="14" />
-      <File FileName="WebAppsNoAuth/Views/Access/Login.cshtml" Line="22" Column="43" />
-      <File FileName="WebAppsNoAuth/Views/Access/Register.cshtml" Line="49" Column="1" />
-      <File FileName="WebAppsNoAuth/Views/Access/ConfirmEmail.cshtml" Line="1" Column="1" />
-      <File FileName="WebAppsNoAuth/Controllers/AccessController.cs" Line="247" Column="1" />
-      <File FileName="WebAppsNoAuth/Controllers/HomeController.cs" Line="162" Column="1" />
-      <File FileName="WebAppsNoAuth/Views/Access/Relogin.cshtml" Line="1" Column="1" />
-      <File FileName="WebAppsNoAuth/Views/Admin/UpdateTeam.cshtml" Line="20" Column="21" />
-      <File FileName="WebAppsNoAuth/Views/Admin/UpdateLocation.cshtml" Line="70" Column="1" />
-      <File FileName="WebAppsNoAuth/Models/Location.cs" Line="1" Column="1" />
-      <File FileName="WebAppsNoAuth/Models/Team.cs" Line="11" Column="16" />
-      <File FileName="WebAppsNoAuth/Data/WebAppsNoAuthDbContext.cs" Line="17" Column="4" />
-      <File FileName="WebAppsNoAuth/wwwroot/css/site.css" Line="23" Column="1" />
-      <File FileName="WebAppsNoAuth/Views/Home/Holidays.cshtml" Line="25" Column="1" />
-      <File FileName="WebAppsNoAuth/Models/Request.cs" Line="13" Column="37" />
-      <File FileName="WebAppsNoAuth/Models/Message.cs" Line="15" Column="1" />
-      <File FileName="WebAppsNoAuth/Models/RequestType.cs" Line="10" Column="16" />
-      <File FileName="WebAppsNoAuth/Views/Admin/UpdateEntitlements.cshtml" Line="120" Column="1" />
-      <File FileName="WebAppsNoAuth/Models/UserEntitlements.cs" Line="13" Column="30" />
-      <File FileName="WebAppsNoAuth/Program.cs" Line="23" Column="1" />
+      <File FileName="WebAppsNoAuth/Controllers/AdminController.cs" Line="121" Column="86" />
+      <File FileName="WebAppsNoAuth/Views/Admin/UpdateUser.cshtml" Line="118" Column="24" />
+      <File FileName="WebAppsNoAuth/Views/Access/Login.cshtml" />
+      <File FileName="WebAppsNoAuth/Views/Access/Register.cshtml" />
+      <File FileName="WebAppsNoAuth/Views/Access/ConfirmEmail.cshtml" />
+      <File FileName="WebAppsNoAuth/Controllers/AccessController.cs" Line="32" Column="1" />
+      <File FileName="WebAppsNoAuth/Controllers/HomeController.cs" Line="132" Column="48" />
+      <File FileName="WebAppsNoAuth/Views/Access/Relogin.cshtml" />
+      <File FileName="WebAppsNoAuth/Views/Admin/UpdateTeam.cshtml" />
+      <File FileName="WebAppsNoAuth/Views/Admin/UpdateLocation.cshtml" Line="47" Column="13" />
+      <File FileName="WebAppsNoAuth/Models/Location.cs" />
+      <File FileName="WebAppsNoAuth/Models/Team.cs" />
+      <File FileName="WebAppsNoAuth/Data/WebAppsNoAuthDbContext.cs" />
+      <File FileName="WebAppsNoAuth/wwwroot/css/site.css" Line="43" Column="17" />
+      <File FileName="WebAppsNoAuth/Views/Home/Holidays.cshtml" Line="92" Column="40" />
+      <File FileName="WebAppsNoAuth/Models/Request.cs" />
+      <File FileName="WebAppsNoAuth/Models/Message.cs" />
+      <File FileName="WebAppsNoAuth/Models/RequestType.cs" />
+      <File FileName="WebAppsNoAuth/Views/Admin/UpdateEntitlements.cshtml" />
+      <File FileName="WebAppsNoAuth/Models/UserEntitlements.cs" />
+      <File FileName="WebAppsNoAuth/Program.cs" Line="12" Column="34" />
       <File FileName="WebAppsNoAuth/Controllers/HomeSQLiteController.cs" Line="1" Column="1" />
-      <File FileName="WebAppsNoAuth/Models/Email.cs" Line="14" Column="37" />
+      <File FileName="WebAppsNoAuth/Models/Email.cs" />
       <File FileName="WebAppsNoAuth/Services/EmailService.cs" Line="51" Column="1" />
-      <File FileName="WebAppsNoAuth/Services/WebService.cs" Line="1" Column="1" />
+      <File FileName="WebAppsNoAuth/Services/WebService.cs" Line="26" Column="1" />
       <File FileName="WebAppsNoAuth/Controllers/EmailController.cs" Line="28" Column="43" />
-      <File FileName="WebAppsNoAuth/Properties/launchSettings.json" Line="16" Column="5" />
-      <File FileName="WebAppsNoAuth/Models/EmailTemplate.cs" Line="13" Column="35" />
-      <File FileName="WebAppsNoAuth/Controllers/ManagerController.cs" Line="298" Column="86" />
-      <File FileName="WebAppsNoAuth/Views/Manager/ApproveRequests.cshtml" Line="40" Column="35" />
+      <File FileName="WebAppsNoAuth/Properties/launchSettings.json" />
+      <File FileName="WebAppsNoAuth/Models/EmailTemplate.cs" />
+      <File FileName="WebAppsNoAuth/Controllers/ManagerController.cs" Line="33" Column="73" />
+      <File FileName="WebAppsNoAuth/Views/Manager/ApproveRequest.cshtml" Line="43" Column="58" />
+      <File FileName="WebAppsNoAuth/Views/Home/Calendar.cshtml" Line="146" Column="1" />
+      <File FileName="../../.nuget/packages/bootstrap/5.2.3/contentFiles/any/any/wwwroot/css/bootstrap.css" Line="369" Column="18" />
+      <File FileName="../../.nuget/packages/bootstrap/5.2.3/contentFiles/any/any/wwwroot/css/bootstrap-grid.css" Line="1" Column="1" />
+      <File FileName="WebAppsNoAuth/wwwroot/js/site.js" Line="1" Column="1" />
+      <File FileName="WebAppsNoAuth/Controllers/ProviderController.cs" Line="31" Column="47" />
+      <File FileName="WebAppsNoAuth/Providers/AccessProvider.cs" Line="599" Column="10" />
+      <File FileName="WebAppsNoAuth/Providers/EmailProvider.cs" Line="16" Column="53" />
+      <File FileName="WebAppsNoAuth/Providers/ManagerProvider.cs" Line="17" Column="64" />
+      <File FileName="WebAppsNoAuth/Providers/LocationProvider.cs" Line="17" Column="65" />
+      <File FileName="WebAppsNoAuth/Providers/TeamProvider.cs" Line="7" Column="1" />
+      <File FileName="WebAppsNoAuth/Providers/RequestProvider.cs" Line="97" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -50,12 +61,13 @@
           <Node name="WebAppsNoAuth" expanded="True">
             <Node name="WebAppsNoAuth" expanded="True">
               <Node name="Controllers" expanded="True">
-                <Node name="ManagerController.cs" selected="True" />
+                <Node name="HomeController.cs" selected="True" />
               </Node>
               <Node name="Data" expanded="True" />
               <Node name="Migrations" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Properties" expanded="True" />
+              <Node name="Providers" expanded="True" />
               <Node name="Services" expanded="True" />
               <Node name="Styles" expanded="True" />
               <Node name="Views" expanded="True">
