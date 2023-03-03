@@ -1,11 +1,44 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿
+
 @{
+    if (ViewData["resetPassword"].ToString() == "True")
+    {
+        <div class="form-outline mb-4">
+            <label class="form-label" for="userId">Please reset your password.</label>
+            <button class="btn btn-primary appButton" onclick="window.location.href = '/Home/ResetPassword';">Reset Password</button>
+        </div>
+    }
 }
-@if (ViewData["ValidateMessage"] == null)
-{
+<div style="position:relative; left:100px">
+    <h1 class="indexHeader">Managing Teams Effectively</h1>
     <br />
     <br />
-    <label>You are logged in!</label>
+</div>
+<div class="row" style="position:relative; top:450px; left:100px">
+    <div class="col-md-4 box_industries">
+        <h3 class="indexHeaderTwo">View</h3>
+        <img src="~/Images/calendarImage.png" width="100" height="100" object-fit="cover" class="indexHeaderTwo"/>
+        <div class="content">
+            <label style="padding:50px 0; font-family:sans-serif">Study leave, work from home days, holidays</label>
+        </div>
+    </div>
+    <div class="col-md-4 box_industries">
+        <h3 class="indexHeaderThree">Manage</h3>
+        <img src="~/Images/checklistImage2.png" width="100" height="100" object-fit="cover" class="indexHeaderThree" />
+        <div class="content">
+            <h6 style="padding:50px 0; font-family:sans-serif">Manage employee leave</h6>
+        </div>
+    </div>
+    <div class="col-md-4 box_industries">
+        <h3 class="indexHeaderFour">Admin</h3>
+        <img src="~/Images/adminImage.png" width="100" height="100" class="indexHeaderFour" />
+        <div class="content">
+            <h6 style="padding:50px 0; font-family:sans-serif">Create locations with personalised names and teams, add users</h6>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
 }
+

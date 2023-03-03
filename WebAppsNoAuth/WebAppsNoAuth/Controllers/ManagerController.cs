@@ -42,10 +42,35 @@ namespace WebAppsNoAuth.Controllers
             User currentUser = _providers.User.GetUserById(userId);
             ViewData["Admin"] = currentUser.Admin;
             ViewData["Manager"] = currentUser.Manager;
+
+            var statusTypes = _providers.User.GetAllStatusTypes();
+            ViewData["StatusList"] = new SelectList(statusTypes, "StatusTypeId", "StatusTypeName");
+            var userLocationsList = GetAllUserLocations();
+            if (userLocationsList.Count != 0)
+            {
+                ViewData["UserLocationsList"] = new SelectList(userLocationsList, "LocationId", "LocationValue");
+            }
+            else
+            {
+                Location fake = new Location { LocationId = -1, LocationValue = "", LocationTitle = "" };
+                List<Location> fakeLocationsList = new List<Location>();
+                fakeLocationsList.Add(fake);
+                ViewData["UserLocationsList"] = new SelectList(fakeLocationsList, "LocationId", "LocationValue");
+
+            }
+
             return View();
         }
 
         //THESE METHODS NEED TO BE MOVED
+
+        public List<Location> GetAllUserLocations()
+        {
+            int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
+            List<Location> allUsers = _providers.User.GetAllUserLocations(userId);
+
+            return allUsers;
+        }
         //public bool IsUserAdmin(int userId)
         //{
         //    return _providers.User.IsUserAdmin(userId);

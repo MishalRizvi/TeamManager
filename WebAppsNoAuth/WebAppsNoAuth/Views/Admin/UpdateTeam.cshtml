@@ -1,18 +1,19 @@
 ﻿
 <div class="container">
-    <h2>Teams</h2>
-
+    <h2 class="appTitle indexHeader">Teams</h2>
+    <br />
+    <br />
     <div class="form-outline mb-4">
-        <label class="form-label" for="locationId">Location</label>
+        <label class="form-label-style" for="locationId">Location</label>
         @Html.DropDownList("LocationList", "---")
     </div>
     <br />
     <br />
     <div id="locationTeams">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="clearTextBox();">Add New Team</button>
+        <button type="button" class="btn btn-primary appButton" data-toggle="modal" data-target="#teamModal" onclick="clearTextBox();">Add New Team</button>
         <br />
         <br />
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-hover styled-table-calendar">
             <thead>
                 <tr>
                     <th>Team Name</th>
@@ -23,12 +24,12 @@
         </table>
     </div>
 </div>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none">
+<div class="modal fade" id="teamModal" tabindex="-1" role="dialog" aria-labelledby="teamModalLabel" aria-hidden="true" style="display:none">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">x</button>
-                <h4 class="modal-title" id="myModalLabel">Add Team</h4>
+                <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeUpdateTeamModal()">x</button>
+                <h4 class="modal-title appModalFont" id="teamModalLabel">Add Team</h4>
             </div>
             <div class="modal-body">
                 <form style="float:left">
@@ -43,6 +44,7 @@
                             <thead>
                                 <tr>
                                     <th>Users In Team</th>
+
                                 </tr>
                             </thead>
                             <tbody class="tbody" id="usersInTeamTable" style="height:100px;overflow-y:scroll;display:block">
@@ -63,9 +65,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="addTeamButton" onclick="return addNewTeam()">Add</button>
-                <button type="button" class="btn btn-primary" id="updateTeamButton" onclick="updateTeam();">Update</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary appButton" id="addTeamButton" onclick="return addNewTeam()">Add</button>
+                <button type="button" class="btn btn-primary appButton" id="updateTeamButton" onclick="updateTeam();">Update</button>
             </div>
         </div>
     </div>
@@ -109,6 +110,7 @@
         }
 
         function getById(teamId) {
+            console.log("gbid");
             updateTeamId = teamId;
             $("#name").css("border-color", "lightgrey");
             $.ajax({
@@ -117,7 +119,8 @@
                 data: { teamId: teamId },
                 success: function (result) {
                     $("#name").val(result.data.teamName);
-                    $("#myModal").modal("show");
+
+                    $("#teamModal").modal("show");
                     $("#updateTeamButton").show();
                     $("#addTeamButton").hide();
                     getAllUsersInTeam(); //when the modal box shows the users both in and not in team should automatically be loaded 
@@ -131,9 +134,9 @@
         }
 
         function clearTextBox() { //This function is called when adding a new team 
-          //  updateTeamId = -1;
-            $("#myModal").modal("show");
+            $("#teamModal").modal("show");
             //added the next four
+
             $("#usersInTeam").hide();
             $("#usersNotInTeam").hide();
             $("#usersInTeamTable").html("");
@@ -157,7 +160,7 @@
                 },
                 success: function (result) {
                     getAllLocationTeams();
-                    $("#myModal").modal("hide");
+                    $("#teamModal").modal("hide");
                 },
                 error: function (error) {
                     alert(error.responseText);
@@ -179,8 +182,8 @@
                     },
                     success: function (result) {
                         getAllLocationTeams();
-                        $("#myModal").modal("hide");
-                       // window.location.reload();
+                        $("#teamModal").modal("hide");
+                        window.location.reload();
                     },
                     error: function (error) {
                         alert(error.responseText);
@@ -225,7 +228,7 @@
                     var html = "";
                     for (var i = 0; i < result.data.length; i++) {
                         html += "<tr>";
-                        html += "<td>" + result.data[i].name + "</td>";
+                        html += "<td style='width:100%'>" + result.data[i].name + "</td>";
                         html += "<td><a href='#' onclick='removeUserFromTeam(" + result.data[i].id + ")'>Remove</a></td>"; //COMPLETE
                         html += "<tr>";
                     }
@@ -253,7 +256,7 @@
                     var html = "";
                     for (var i = 0; i < result.data.length; i++) {
                         html += "<tr>";
-                        html += "<td>" + result.data[i].name + "</td>";
+                        html += "<td style='width:100%'>" + result.data[i].name + "</td>";
                         html += "<td><a href='#' onclick='addUserToTeam(" + result.data[i].id + ")'>Add</a></td>"; //COMPLETE
                         html += "<tr>";
                     }
@@ -282,7 +285,6 @@
                     getAllLocationTeams();
                     getAllUsersInTeam();
                     getAllUsersNotInTeam();
-                 //   $("#myModal").modal("hide");
                 },
                 error: function (error) {
                     alert(error.responseText);
@@ -306,7 +308,6 @@
                     getAllLocationTeams();
                     getAllUsersInTeam();
                     getAllUsersNotInTeam();
-                //    $("#myModal").modal("hide");
                 },
                 error: function (error) {
                     alert(error.responseText);
@@ -314,8 +315,8 @@
             })
         }
 
-        function closeModal() {
-            $("#myModal").modal("hide");
+        function closeUpdateTeamModal() {
+            $("#teamModal").modal("hide");
         }
     </script>
 }

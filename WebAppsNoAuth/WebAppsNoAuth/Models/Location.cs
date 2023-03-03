@@ -7,8 +7,8 @@ namespace WebAppsNoAuth.Models
 		{
 		}
 		public int LocationId { get; set; }
-		public string LocationTitle { get; set; }
-		public string LocationName { get; set; }
+        public string LocationValue { get; set; }
+        public string LocationTitle { get; set; }
 		public int InstitutionId { get; set; }
 	}
 }

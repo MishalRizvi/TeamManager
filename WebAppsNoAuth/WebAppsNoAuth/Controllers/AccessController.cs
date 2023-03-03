@@ -11,6 +11,8 @@ using System.Data.SqlClient;
 using WebAppsNoAuth.Data;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Cryptography;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -49,12 +51,21 @@ namespace WebAppsNoAuth.Controllers
             return _providers.User.GetInstitutionId(userId);
 
         }
+
+        public List<Location> GetAllUserLocations()
+        {
+            int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
+            List<Location> allUsers = _providers.User.GetAllUserLocations(userId);
+
+            return allUsers;
+        }
         //THE ABOVE METHODS NEED TO BE MOVED TO THEIR OWN SEPARATE CLASS 
         public IActionResult Login()
         {
             ClaimsPrincipal claimUser = HttpContext.User;
             if (claimUser.Identity.IsAuthenticated)
             {
+                Debug.WriteLine("REDIRECTING TO INDEX");
                 return Redirect("/Home/Index");
             }
             return View();
@@ -66,6 +77,22 @@ namespace WebAppsNoAuth.Controllers
             ViewData["Username"] = HttpContext.User.Claims.ToList()[2].ToString().Split(":")[1];
             ViewData["Admin"] = IsUserAdmin(userId);
             ViewData["Manager"] = IsUserManager(userId);
+
+            var statusTypes = _providers.User.GetAllStatusTypes();
+            ViewData["StatusList"] = new SelectList(statusTypes, "StatusTypeId", "StatusTypeName");
+            var userLocationsList = GetAllUserLocations();
+            if (userLocationsList.Count != 0)
+            {
+                ViewData["UserLocationsList"] = new SelectList(userLocationsList, "LocationId", "LocationValue");
+            }
+            else
+            {
+                Location fake = new Location { LocationId = -1, LocationValue = "", LocationTitle = "" };
+                List<Location> fakeLocationsList = new List<Location>();
+                fakeLocationsList.Add(fake);
+                ViewData["UserLocationsList"] = new SelectList(fakeLocationsList, "LocationId", "LocationValue");
+
+            }
             return View();
         }
         public IActionResult Register()
@@ -84,7 +111,7 @@ namespace WebAppsNoAuth.Controllers
             var Id = -1;
             var name = "";
             var email = "";
-            var password = "";
+            var storedPassword = "";
             var contactNumber = "";
             var managerUserId = -1;
             var admin = false;
@@ -110,14 +137,14 @@ namespace WebAppsNoAuth.Controllers
                         Id = dbReader.GetInt32(0);
                         name = dbReader.GetString(1);
                         email = dbReader.GetString(2);
-                        password = dbReader.GetString(3);
+                        storedPassword = dbReader.GetString(3);
                         contactNumber = dbReader.IsDBNull(4) ? "" : dbReader.GetString(4);
                         managerUserId = dbReader.IsDBNull(5) ? -1 : dbReader.GetInt32(5);
                         admin = dbReader.IsDBNull(6) ? false : dbReader.GetBoolean(6);
                         manager = dbReader.IsDBNull(7) ? false : dbReader.GetBoolean(7);
                         institutionID = dbReader.GetInt32(8);
                     }
-                    if (password.Equals(userIn.Password))
+                    if (VerifyPassword(userIn.Password, storedPassword))
                     {
                         List<Claim> claims = new List<Claim>()
                         {
@@ -142,6 +169,47 @@ namespace WebAppsNoAuth.Controllers
             return View();
         }
 
+        public static bool IsHashSupported(string hashString)
+        {
+            return hashString.Contains("$MYHASH$V1$");
+        }
+
+        public bool VerifyPassword(string password, string hashedPassword)
+        {
+            if (!IsHashSupported(hashedPassword))
+            {
+                // throw new NotSupportedException("The hashtype is not supported.");
+                return true; //for now for dealing with already stored passwords that are not hashed
+            }
+            var splittedHashString = hashedPassword.Replace("$MYHASH$V1$", "").Split('$');
+            var iterations = int.Parse(splittedHashString[0]);
+            var base64Hash = splittedHashString[1];
+            var hashBytes = Convert.FromBase64String(base64Hash);
+            var saltSize = 16;
+            var hashSize = 10;
+            var salt = new byte[saltSize];
+            Array.Copy(hashBytes, 0, salt, 0, saltSize);
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations);
+            byte[] hash = pbkdf2.GetBytes(hashSize);
+            for (int i = 0; i < hashSize; i++)
+            {
+                if (hashBytes[i + saltSize] != hash[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+
+        }
+
+        public bool VerifyPasswordOnReset(string password)
+        {
+            var userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
+            User currentUser = _providers.User.GetUserById(userId);
+            var hashedPassword = currentUser.Password;
+            return VerifyPassword(password, hashedPassword);
+
+        }
         public IActionResult AddCompany(User userIn)
         {
             int institutionID = -1;
@@ -173,7 +241,7 @@ namespace WebAppsNoAuth.Controllers
         // [HttpPost]
         public bool AddUser2(User userIn, int institutionID)
         {
-            return _providers.User.AddUser2(userIn, institutionID);
+            return _providers.User.AddUser2(userIn, institutionID); //This is for adding a new user who creates an institution 
         }
     }
 }

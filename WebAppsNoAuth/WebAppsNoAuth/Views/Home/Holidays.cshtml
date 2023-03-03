@@ -1,21 +1,23 @@
-﻿@{
+﻿<h2 class="appTitle indexHeader">Holidays</h2>
+<br />
+@{
     if (ViewData["Manager"].ToString() == "True")
     {
         <div class="form-outline mb-4">
-            <label class="form-label" for="userId">Users</label>
+            <label class="form-label" for="userId" style="color:maroon">Select User: </label>
             @Html.DropDownList("ManagerUsersList")
         </div>
     }
 }
 <div>
-    <div style="float:left">
-        <table class="table table-bordered table-hover">
+    <div style="position:absolute;left:100px;">
+        <table class="table table-bordered table-hover styled-table-calendar">
             <thead>
                 <tr>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Request Type</th>
-                    <th>Approved</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody class="tbody">
@@ -23,24 +25,25 @@
         </table>
     </div>
 
-    <div style="float:right">
-        <label class="form-label">New Request</label>
+    <div style="position: absolute; right: 300px; top: 300px; outline:solid maroon; outline-offset:85px">
+        <label class="form-label appLabel" style="font-size:x-large">New Request</label>
+        <br />
         <form method="get">
             <div class="form-outline mb-4">
-                <label class="form-label" for="startDate">Start Date:</label>
+                <label class="form-label appLabel" for="startDate">Start Date:</label>
                 <input type="date" id="startDate" class="form-control form-control-lg" required />
             </div>
             <div class="form-outline mb-4">
-                <label class="form-label" for="endDate">End Date:</label>
+                <label class="form-label appLabel" for="endDate">End Date:</label>
                 <input type="date" id="endDate" class="form-control form-control-lg" required />
             </div>
             <div class="form-outline mb-4">
-                <label class="form-label" for="requestType" required>Type: </label>
+                <label class="form-label appLabel" for="requestType" required>Type: </label>
                 @Html.DropDownList("RequestTypeList", "---")
             </div>
         </form>
-        <button type="button" class="btn btn-primary" id="addRequestButton" onclick="return addNewRequest()">Submit</button>
-        <textarea id="messageBox"></textarea>
+        <button type="button" class="btn btn-primary appButton" id="addRequestButton" onclick="return addNewRequest()">Submit</button>
+        <div id="messageBox" style="outline:none"></div>
     </div>
 </div>
 
@@ -48,8 +51,7 @@
 
 @section Scripts {
 
-    <script>
-        var isManager = false;
+    <script>var isManager = false;
         $(document).ready(function () {
             var updateRequestId = -1;
             if (document.getElementById("ManagerUsersList") != null) {
@@ -76,7 +78,7 @@
                         html += "<td>" + result.data[i].endDateStr + "</td>";
                         html += "<td>" + result.data[i].requestTypeName + "</td>";
                         html += "<td>" + result.data[i].approvedMessage + "</td>";
-                        html += "<td><a href='#' onclick='deleteRequest(" + result.data[i].requestId + ")'>Cancel</a></td>";
+                        html += "<td><a href='#' onclick='deleteRequest(" + result.data[i].requestId + ")' style=color:'maroon'>Cancel</a></td>";
                         html += "<tr>";
                     }
                     $(".tbody").html(html);
@@ -138,6 +140,7 @@
                     endDate: endDate
                 },
                 success: function (result) {
+                    console.log(result);
                     if (result.data.id == 3) {
                         $("#messageBox").html(result.data.messageStr);
                         return false;
@@ -206,8 +209,7 @@
                 alert("End date can't be before start date");
                 return false;
             }
-        }
-    </script>
+        }</script>
 }
 
 

@@ -5,10 +5,10 @@
 }
 
 <div class="container">
-    <h2>Users</h2>
+    <h2 class="appTitle indexHeader">Entitlements</h2>
     <br />
     <br />
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover styled-table-calendar">
         <thead>
             <tr>
                 <th>Name</th>
@@ -23,24 +23,23 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" onclick="closeModal()">x</button>
-                <h4 class="modal-title" id="myModalLabel">Update User Entitlements</h4>
+                <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeUpdateEntModal()">x</button>
+                <h4 class="modal-title appModalFont" id="myModalLabel">User Entitlements</h4>
             </div>
             <div class="modal-body">
                 <form method="get">
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="name">Name</label>
+                        <label class="form-label-style" for="name">Name: </label>
                         <input type="text" id="name" class="form-control form-control-lg" disabled/>
                     </div>
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="amount">Amount</label>
+                        <label class="form-label-style" for="amount">Amount: </label>
                         <input type="text" id="amount" class="form-control form-control-lg" />
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="updateEntitlementsButton" onclick="updateEntitlements();">Update</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModal()">Close</button>
+                <button type="button" class="btn btn-primary appButton" id="updateEntitlementsButton" onclick="updateEntitlements();">Update</button>
             </div>
         </div>
     </div>
@@ -142,7 +141,7 @@
             return;
         }
 
-        function closeModal() {
+        function closeUpdateEntModal() {
             $("#myModal").modal("hide");
         }
     </script>

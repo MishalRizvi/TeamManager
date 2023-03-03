@@ -39,9 +39,9 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
-            "KendoUICore": {
+            "ExcelDataReader": {
               "target": "Package",
-              "version": "[2022.3.1109, )"
+              "version": "[3.6.0, )"
             },
             "MailKit": {
               "target": "Package",

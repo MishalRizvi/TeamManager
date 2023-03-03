@@ -10,6 +10,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebAppsNoAuth.Data;
 using WebAppsNoAuth.Models;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using System.Diagnostics;
+using System.Reflection.PortableExecutable;
+using ExcelDataReader;
+using Microsoft.AspNetCore.Http;
+using System.Text;
+using Microsoft.CodeAnalysis.Text;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,13 +30,15 @@ namespace WebAppsNoAuth.Controllers
         private readonly SqlConnection _connection;
 
         private readonly ProviderController _providers;
+        private Microsoft.AspNetCore.Hosting.IHostingEnvironment Environment;
 
-        public AdminController(WebAppsNoAuthDbContext webApps, IConfiguration configuration)
+        public AdminController(WebAppsNoAuthDbContext webApps, IConfiguration configuration, Microsoft.AspNetCore.Hosting.IHostingEnvironment _environment)
         {
             _webApps = webApps;
             _configuration = configuration;
             _providers = new ProviderController(webApps, configuration);
-           // _connection = connection;
+            // _connection = connection;
+            Environment = _environment;
 
         }
 
@@ -47,6 +57,13 @@ namespace WebAppsNoAuth.Controllers
             return _providers.User.GetInstitutionId(userId);
 
         }
+        public List<Location> GetAllUserLocations()
+        {
+            int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
+            List<Location> allUsers = _providers.User.GetAllUserLocations(userId);
+
+            return allUsers;
+        }
         //THE ABOVE METHODS NEED TO BE MOVED TO THEIR OWN SEPARATE CLASS 
         // GET: /<controller>/
         public IActionResult UpdateUser()
@@ -54,11 +71,34 @@ namespace WebAppsNoAuth.Controllers
             ViewData["Authenticated"] = "true";
             int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
             ViewData["Username"] = HttpContext.User.Claims.ToList()[2].ToString().Split(":")[1];
+
             User currentUser = _providers.User.GetUserById(userId);
             ViewData["Admin"] = currentUser.Admin;
             ViewData["Manager"] = currentUser.Manager;
+
             var managerList = GetAllManagers();
             ViewData["ManagerList"] = new SelectList(managerList, "Id", "Name");
+
+            //var locationList = GetAllLocations();
+            //ViewData["LocationList"] = new SelectList(locationList, "LocationId", "LocationTitle");
+
+            var statusTypes = _providers.User.GetAllStatusTypes();
+            ViewData["StatusList"] = new SelectList(statusTypes, "StatusTypeId", "StatusTypeName");
+
+            var userLocationsList = GetAllUserLocations();
+            if (userLocationsList.Count != 0)
+            {
+                ViewData["UserLocationsList"] = new SelectList(userLocationsList, "LocationId", "LocationValue");
+            }
+            else
+            {
+                Location fake = new Location { LocationId = -1, LocationValue = "", LocationTitle = "" };
+                List<Location> fakeLocationsList = new List<Location>();
+                fakeLocationsList.Add(fake);
+                ViewData["UserLocationsList"] = new SelectList(fakeLocationsList, "LocationId", "LocationValue");
+
+            }
+
             return View();
         }
         public IActionResult UpdateLocation()
@@ -71,6 +111,23 @@ namespace WebAppsNoAuth.Controllers
             ViewData["Manager"] = currentUser.Manager;
             var managerList = _providers.Manager.GetAllManagers(userId, currentUser.InstitutionId);
             ViewData["ManagerList"] = new SelectList(managerList, "Id", "Name");
+
+            var statusTypes = _providers.User.GetAllStatusTypes();
+            ViewData["StatusList"] = new SelectList(statusTypes, "StatusTypeId", "StatusTypeName");
+            var userLocationsList = GetAllUserLocations();
+            if (userLocationsList.Count != 0)
+            {
+                ViewData["UserLocationsList"] = new SelectList(userLocationsList, "LocationId", "LocationValue");
+            }
+            else
+            {
+                Location fake = new Location { LocationId = -1, LocationValue = "", LocationTitle = "" };
+                List<Location> fakeLocationsList = new List<Location>();
+                fakeLocationsList.Add(fake);
+                ViewData["UserLocationsList"] = new SelectList(fakeLocationsList, "LocationId", "LocationValue");
+
+            }
+
             return View();
         }
         public IActionResult UpdateTeam()
@@ -84,6 +141,23 @@ namespace WebAppsNoAuth.Controllers
             var managerList = GetAllManagers();
             var locationList = GetAllLocations();
             ViewData["LocationList"] = new SelectList(locationList, "LocationId", "LocationTitle");
+
+            var statusTypes = _providers.User.GetAllStatusTypes();
+            ViewData["StatusList"] = new SelectList(statusTypes, "StatusTypeId", "StatusTypeName");
+            var userLocationsList = GetAllUserLocations();
+            if (userLocationsList.Count != 0)
+            {
+                ViewData["UserLocationsList"] = new SelectList(userLocationsList, "LocationId", "LocationValue");
+            }
+            else
+            {
+                Location fake = new Location { LocationId = -1, LocationValue = "", LocationTitle = "" };
+                List<Location> fakeLocationsList = new List<Location>();
+                fakeLocationsList.Add(fake);
+                ViewData["UserLocationsList"] = new SelectList(fakeLocationsList, "LocationId", "LocationValue");
+
+            }
+
             return View();
         }
 
@@ -97,12 +171,36 @@ namespace WebAppsNoAuth.Controllers
             ViewData["Manager"] = currentUser.Manager;
             var locationList = GetAllLocations();
             ViewData["LocationList"] = new SelectList(locationList, "LocationId", "LocationTitle");
+
+            var statusTypes = _providers.User.GetAllStatusTypes();
+            ViewData["StatusList"] = new SelectList(statusTypes, "StatusTypeId", "StatusTypeName");
+            var userLocationsList = GetAllUserLocations();
+            if (userLocationsList.Count != 0)
+            {
+                ViewData["UserLocationsList"] = new SelectList(userLocationsList, "LocationId", "LocationValue");
+            }
+            else
+            {
+                Location fake = new Location { LocationId = -1, LocationValue = "", LocationTitle = "" };
+                List<Location> fakeLocationsList = new List<Location>();
+                fakeLocationsList.Add(fake);
+                ViewData["UserLocationsList"] = new SelectList(fakeLocationsList, "LocationId", "LocationValue");
+            }
+
             return View();
         }
         public ActionResult GetAllUsers()
         {
             int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
             List<User> allUsers = _providers.User.GetAllUsers(userId);
+
+            return Json(new { data = allUsers });
+        }
+
+        public ActionResult GetAllUsersInLocation(int locationId) //REMOVE THIS METHOD PLEASE 
+        {
+            int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
+            List<User> allUsers = _providers.User.GetAllUsersInLocation(userId, locationId);
 
             return Json(new { data = allUsers });
         }
@@ -198,12 +296,12 @@ namespace WebAppsNoAuth.Controllers
             int institutionId = GetInstitutionId(userId);
             return _providers.User.AddNewUser(name, email, password, contactNumber, managerUserId, isAdmin, isManager, userId, institutionId);
         }
-        public bool AddNewLocation(string locationName, string locationTitle)
+        public bool AddNewLocation(string locationValue, string locationTitle)
         {
             int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
             int institutionId = GetInstitutionId(userId);
 
-            return _providers.Location.AddNewLocation(locationName, locationTitle, userId, institutionId);
+            return _providers.Location.AddNewLocation(locationValue, locationTitle, userId, institutionId);
         }
         public bool AddNewTeam(string teamName, int locationId)
         {
@@ -222,18 +320,18 @@ namespace WebAppsNoAuth.Controllers
         {
             return _providers.Team.RemoveUserFromTeam(userId, teamId);
         }
-        public string UpdateUserMethod(int userId, string name, string email, string password, string contactNumber, int managerUserId, string isAdmin, string isManager)
+        public string UpdateUserMethod(int userId, string name, string email, string contactNumber, int managerUserId, string isAdmin, string isManager)
         {
             var wasManager = IsUserManager(userId);
             int currentUserId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
 
-            return _providers.User.UpdateUserMethod(userId, name, email, password, contactNumber, managerUserId, isAdmin, isManager, currentUserId, wasManager);
+            return _providers.User.UpdateUserMethod(userId, name, email, contactNumber, managerUserId, isAdmin, isManager, currentUserId, wasManager);
         }
 
-        public bool UpdateLocationMethod(int updateLocationId, string locationName, string locationTitle)
+        public bool UpdateLocationMethod(int updateLocationId, string locationValue, string locationTitle)
         {
             int currentUserId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
-            return _providers.Location.UpdateLocationMethod(updateLocationId, locationTitle, locationTitle, currentUserId);
+            return _providers.Location.UpdateLocationMethod(updateLocationId, locationValue, locationTitle, currentUserId);
         }
 
         public bool UpdateTeamMethod(int updateTeamId, string teamName)
@@ -263,6 +361,64 @@ namespace WebAppsNoAuth.Controllers
             {
                 return _providers.Team.DeleteTeam(teamId);
             }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> FileUpload(IFormFile file)
+        {
+            await UploadFile(file);
+            return RedirectToAction("UpdateUser", "Admin");
+        }
+        public async Task<bool> UploadFile(IFormFile file)
+        {
+            var userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
+            var institutionId = _providers.User.GetInstitutionId(userId);
+            List<User> usersToAdd = new List<User>();
+            var path = "";
+            var fileContent = "";
+            try
+            {
+                if (file.Length > 0)
+                {
+                    var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                    path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "Upload"));
+
+                    using (var reader = new StreamReader(file.OpenReadStream()))
+                    {
+                        while (reader.Peek() >= 0)
+                        {
+                            var name = reader.ReadLine();
+                            var contactNumber = reader.ReadLine();
+                            var email = reader.ReadLine();
+
+                            usersToAdd.Add(new User
+                            {
+                                Name = name,
+                                Email = email,
+                                ContactNumber = contactNumber
+                            });
+
+                        }
+
+                    }
+
+                    foreach (var user in usersToAdd)
+                    {
+                        var success = _providers.User.AddNewUser(user.Name, user.Email, "password", user.ContactNumber, -1, "false", "false", userId, institutionId);
+                        if (!success)
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                throw;
+            }
+            return false;
         }
     }
 }

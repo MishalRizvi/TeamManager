@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "rJBz7rHYS+Beptfd+gCJ0i3W2BpW4YWGzsdD6xxQe0CMcv0nikh4o0/Yfio4ddaL/kf1P1Pljd8XZZJPSwzITw==",
+  "dgSpecHash": "TSndvqlqa5WGCqlUvxLSky27KxmGtzX8XFhJQMmQ82MQCNi4hFkYJZSHwEf6pbfSwVdMS+nbg2UBS/73HUOUeQ==",
   "success": true,
   "projectFilePath": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj",
   "expectedPackageFiles": [
@@ -8,9 +8,9 @@
     "/Users/mishalrizvi/.nuget/packages/azure.identity/1.6.0/azure.identity.1.6.0.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/bootstrap/5.2.3/bootstrap.5.2.3.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/entityframework/6.4.4/entityframework.6.4.4.nupkg.sha512",
+    "/Users/mishalrizvi/.nuget/packages/exceldatareader/3.6.0/exceldatareader.3.6.0.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/jquery/3.6.3/jquery.3.6.3.nupkg.sha512",
-    "/Users/mishalrizvi/.nuget/packages/kendouicore/2022.3.1109/kendouicore.2022.3.1109.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/mailkit/3.4.3/mailkit.3.4.3.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/microsoft.aspnetcore.authentication/2.2.0/microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/microsoft.aspnetcore.authentication.abstractions/2.2.0/microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

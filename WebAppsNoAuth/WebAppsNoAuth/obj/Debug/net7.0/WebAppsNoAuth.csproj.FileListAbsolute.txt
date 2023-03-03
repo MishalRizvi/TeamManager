@@ -10,6 +10,7 @@
 /Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/Azure.Identity.dll
 /Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/EntityFramework.SqlServer.dll
 /Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/EntityFramework.dll
+/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/ExcelDataReader.dll
 /Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/Humanizer.dll
 /Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/MailKit.dll
 /Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/Microsoft.AspNetCore.JsonPatch.dll

@@ -7,15 +7,17 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebAppsNoAuth.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     @{
         if (ViewData["Authenticated"] != null)
         {
+            
             <header>
-                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color:maroon">
                     <div class="container-fluid">
-                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebAppsNoAuth</a>
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color:white">ManaTeam</a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                                 aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -23,28 +25,31 @@
                         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                                 <ul class="navbar-nav flex-grow-1">
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index" style="color:white">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Holidays">Holidays</a>
+                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Holidays" style="color:white">Holidays</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Calendar">Calendar</a>
+                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Calendar" style="color:white">Calendar</a>
                                     </li>
+                                    @*<li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ResetPassword" style="color:maroon">Reset Password</a>
+                                    </li>*@
                                     @{
                                         if (ViewData["Admin"] != null && ViewData["Admin"].ToString() == "True")
                                         {
                                             <li class="nav-item">
-                                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="UpdateLocation">Locations</a>
+                                                <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateLocation" style="color:white">Locations</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="UpdateUser">Users</a>
+                                                <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateUser" style="color:white">Users</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="UpdateTeam">Teams</a>
+                                                <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateTeam" style="color:white">Teams</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="UpdateEntitlements">Entitlements</a>
+                                                <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateEntitlements" style="color:white">Entitlements</a>
                                             </li>
                                         }
                                     }
@@ -52,37 +57,113 @@
                                         if (ViewData["Manager"] != null && ViewData["Manager"].ToString() == "True")
                                         {
                                             <li class="nav-item">
-                                                <a class="nav-link text-dark" asp-area="" asp-controller="Manager" asp-action="ApproveRequest">Requests</a>
+                                                <a class="nav-link" asp-area="" asp-controller="Manager" asp-action="ApproveRequest" style="color:white">Requests</a>
                                             </li>
                                         }
                                     }
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">Log Out</a>
-                                    </li>
+                                    @*<li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy" style="color:maroon">Privacy</a>
+        </li>*@
                                 </ul>
-                                <ul class="nav navbar navbar-right">
-                                    <li class="nav-item">
-                                        <label class="nav-link text-dark">Welcome @ViewData["Username"]!</label>
-                                    </li>
-                                    @{
-                                        if (ViewData["Admin"].ToString() == "True")
-                                        {
-                                            <li class="dropdown">
-                                                <a class="dropdown-toggle" data-toggle="dropdown" style="cursor:pointer;">Admin</a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="/Admin/UpdateLocation/">Locations</a></li>
-                                                </ul>
-                                            </li>
-                                        }
-                                    }
-                                </ul>
+                            <ul class="nav navbar navbar-right">
+                                <li>
+                                    <button style="border:none; background-color:maroon; color:white" data-toggle="modal" data-target="#layoutModal">@ViewData["Username"]</button>
+                                </li>
+                                <li>
+                                    <div class="avatar">
+                                        <div class="user-icon font18" style="background-color:white" data-toggle="modal" data-target="#layoutModal" onclick="openProfile()">
+                                            <span class="amber" id="statusColour"></span>
+                                        </div>
+
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">
+                                        <i class="fa fa-sign-out" style="font-size:30px; color:white"></i>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </nav>
             </header>
+            <body>
+
+                    <div id="userStatus" class="sidepanel">
+                    </div>
+                <button class="openbtn" onclick="openSideBar()">☰</button>
+
+            </body>
+            <div class="modal fade" id="layoutModal" tabindex="-1" role="dialog" aria-labelledby="layoutModalLabel" aria-hidden="true" style="display:none">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeLayoutModal()">x</button>
+                            <h4 class="modal-title appModalFont" id="layoutModalLabel">Edit profile</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="name">Status</label>
+                                    @Html.DropDownList("StatusList")
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="location">Location</label>
+                                    @Html.DropDownList("UserLocationsList", "---")
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="isWFH">WFH</label>
+                                    <input type="checkbox" id="isWFH" />
+                                </div>
+                                <div class="form-outline mb-4" id="optionalDiv" style="display:block">
+                                    <label class="form-label" for="wfhContact">OOO Contact Number</label>
+                                    <input type="text" id="wfhContact" class="form-control form-control-lg" />
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <button class="btn btn-primary" style="background-color:white; color:maroon; outline-color: black" onclick="window.open('/Home/ResetPassword');">Click to reset password</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="addLocationButton" style="background-color:maroon" onclick="return setUserStatus()">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeUserModal()">x</button>
+                            <h4 class="modal-title appModalFont" id="userModalLabel">Status</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-outline mb-4">
+                                    <input type="text" id="statusUserName" class="form-control form-control-lg" style="border:2px solid maroon" disabled />
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <label for="statusUserStatus">Status</label>
+                                    <input type="text" id="statusUserStatus" class="form-control form-control-lg" disabled />
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <label for="statusUserLocation">Current Location</label>
+                                    <input type="text" id="statusUserLocation" class="form-control form-control-lg" disabled />
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="statusUserWFH">WFH</label>
+                                    <input type="checkbox" id="statusUserWFH" />
+                                </div>
+                                <div class="form-outline mb-4" id="optionalDiv2" style="display:block">
+                                    <label class="form-label" for="statusUserContact">OOO Contact Number</label>
+                                    <input type="text" id="statusUserContact" class="form-control form-control-lg" disabled />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
     }
     <div class="container">
@@ -93,7 +174,6 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - WebAppsNoAuth - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -103,3 +183,226 @@
 </body>
 </html>
 
+<script>
+    $(document).ready(function () {
+        $("#locationTeams").hide();
+        document.getElementById("userStatus").style.width = '0px';
+        getUserStatus();
+        //to dynamically get the OOO Contact Number field to show 
+        document.getElementById("isWFH").onchange = function () {
+            if (document.getElementById("isWFH").checked) {
+                $("#optionalDiv").show();
+            }
+            else {
+                $("#optionalDiv").hide();
+            }
+        }
+        
+    });
+
+    function closeLayoutModal() {
+        $("#layoutModal").modal("hide");
+    }
+    function closeUserModal() {
+        $("#userModal").modal("hide");
+    }
+    function openProfile() {
+        $("#layoutModal").modal("show");
+        getUserStatus();
+    }
+    function openSideBar() {
+        document.getElementById("userStatus").style.width = "150px";
+        getAllUsersStatus();
+    }
+    function closeSideBar() {
+            document.getElementById("userStatus").style.width = "0px";
+    }
+
+    function getUserStatus() {
+        $.ajax({
+            url: "/Home/GetUserStatus",
+            type: "GET",
+            data: {
+                userId: -1
+            },
+            success: function (result) {
+                console.log(result);
+                //change profile icon colour according to new status
+                if (result.data.statusTypeId == 1) {
+                    document.getElementById("statusColour").className = "green";
+                }
+                if (result.data.statusTypeId == 2) {
+                    document.getElementById("statusColour").className = "red";
+                }
+                if (result.data.statusTypeId == 3) {
+                    document.getElementById("statusColour").className = "amber";
+                }
+                if (result.data.locationId != -1) {
+                    document.getElementById("UserLocationsList").value = result.data.locationId;
+                }
+                document.getElementById("StatusList").value = result.data.statusTypeId;
+                if (result.data.wfh) {
+                    document.getElementById("isWFH").checked = true;
+                }
+                else {
+                    document.getElementById("isWFH").checked = false;
+                }
+                if (result.data.wfh) {
+                    $("#wfhContact").val(result.data.wfhContact); //check 
+                    $("#optionalDiv").show();
+                }
+                else {
+                    $("#optionalDiv").hide();
+                }
+
+            },
+            error: function (error) {
+                alert(error.responseText);
+            }
+        })
+    }
+
+    function validateContact(contact) {
+        var regPhone = /^\(?(\d{4})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+        if (!regPhone.test(contact)) {
+            $("#wfhContact").css("border-color", "red");
+            alert("Please enter the contact number properly.");
+            return false;
+        }
+
+    }
+
+    function setUserStatus() {
+        var statusTypeId = document.getElementById("StatusList").value;
+        console.log(statusTypeId);
+        var locationId = 0;
+        //if there are no locations that blelong to the user 
+        if (!document.getElementById("UserLocationsList").options.length || !document.getElementById("UserLocationsList").value) {
+            locationId = -1;
+        }
+        else {
+            locationId = document.getElementById("UserLocationsList").value;
+        }
+        var isWFH = document.getElementById("isWFH").checked;
+        var wfhContact = "";
+        if (isWFH) {
+            wfhContact = $("#wfhContact").val();
+            var valid = validateContact(wfhContact);
+            if (valid == false) {
+                return false;
+            }
+        }
+        $.ajax({
+            url: "/Home/SetUserStatus",
+            type: "POST",
+            data: {
+                statusTypeId: statusTypeId,
+                locationId: locationId,
+                isWFH: isWFH,
+                wfhContact: wfhContact
+            },
+            success: function (result) {
+                console.log(result);
+                //change profile icon colour accordinf to new status
+                if (statusTypeId == 1) {
+                    document.getElementById("statusColour").className = "green";
+                }
+                if (statusTypeId == 2) {
+                    document.getElementById("statusColour").className = "red";
+                }
+                if (statusTypeId == 3) {
+                    document.getElementById("statusColour").className = "amber";
+                }
+                //$("#layoutModal").modal("hide"); do we want this?
+
+            },
+            error: function (error) {
+                alert(error.responseText);
+            }
+        })
+        closeLayoutModal();
+    }
+    function getAllUsersStatus() {
+        $.ajax({
+            url: "/Home/GetAllUsersStatus",
+            type: "GET",
+            success: function (result) {
+                console.log(result);
+                var html = "<a class='closebtn' href='' onclick='closeSideBar()'>×</a>";
+                for (var i = 0; i < result.data.length; i++) {
+                    var colour = "";
+                 //   html += "<td>" + result.data[i].teamName + "</td>";
+                    if (result.data[i].statusTypeId == 1) {
+                        circleColour = "green";
+                    }
+                    else if (result.data[i].statusTypeId == 2) {
+                        circleColour = "red";
+                    }
+                    else if (result.data[i].statusTypeId == 3) {
+                        circleColour = "orange";
+                    }
+                    else {
+                        circleColour = "white";
+                    }
+                    html += "<a href='#' onclick='return getByUserId(" + result.data[i].userId + ")'>" + result.data[i].userName + "<span class='dot' style='background:" + circleColour + "'></span></a>";
+                }
+                $("#userStatus").html(html);
+
+            },
+            error: function (error) {
+                alert(error.responseText);
+            }
+        })
+    }
+
+    function hideAllUsersStatus() {
+        $("#userStatus").html("");
+    }
+    function getByUserId(userId) {
+        $.ajax({
+            url: "/Home/GetUserStatus",
+            type: "GET",
+            data: {
+                userId: userId
+            },
+            success: function (result) {
+                console.log(result);
+                var name = result.data.userName;
+                var status = "";
+                var statusTypeId = result.data.statusTypeId;
+                var statusTypeName = result.data.statusTypeName;
+                var location = result.data.locationValue;
+                var wfh = result.data.wfh;
+                var wfhContact = result.data.wfhContact;
+
+                $("#statusUserName").val(name);
+                $("#statusUserStatus").val(statusTypeName);
+                $("#statusUserLocation").val(location);
+                if (wfh) {
+                    document.getElementById("statusUserWFH").checked = true;
+                }
+                else {
+                    document.getElementById("statusUserWFH").checked = false;
+                }
+                if (wfh) {
+                    $("#statusUserContact").val(result.data.wfhContact); //check 
+                    $("#optionalDiv2").show();
+                }
+                else {
+                    $("#optionalDiv2").hide();
+                }
+                $("#userModal").modal("show");
+            },
+            error: function (error) {
+                alert(error.responseText);
+            }
+        })
+    }
+
+    function logOut() {
+        $.ajax({
+            url: "/Home/LogOut",
+            type: "POST"
+        })
+    }
+</script>

@@ -76,6 +76,7 @@ namespace WebAppsNoAuth.Providers
             }
         }
 
+        //here contact number is not added, this option is available under profile icon 
         public bool AddUserToTeam(int userId, int teamId)
         {
             try 
@@ -168,6 +169,8 @@ namespace WebAppsNoAuth.Providers
                 return false;
             }
         }
+
+
     }
 }
 

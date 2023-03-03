@@ -3,88 +3,121 @@
 *@
 @{
 }
-@model WebAppsNoAuth.Models.User;
+@*@model WebAppsNoAuth.Models.User;*@
+@using WebAppsNoAuth.Models;
 
 
 <div class="container">
-    <h2>Users</h2>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="clearTextBox();">Add New User</button>
+    <h2 class="appTitle indexHeader">Users</h2>
     <br />
     <br />
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Contact Number</th>
-                <th>Manager</th>
-                <th>Is Admin</th>
-                <th>Is Manager</th>
-            </tr>
-        </thead>
-        <tbody class="tbody">
-        </tbody>
-    </table>
+    <div id="usersInLocation">
+        <button type="button" class="btn btn-primary appButton" data-toggle="modal" data-target="#myModal" onclick="clearTextBox();">Add New User</button>
+        <br />
+        <br />
+        <table class="table table-bordered table-hover styled-table-calendar">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Contact Number</th>
+                    <th>Manager Name</th>
+                    <th>Admin</th>
+                    <th>Manager</th>
+                </tr>
+            </thead>
+            <tbody class="tbody">
+            </tbody>
+        </table>
+    </div>
+</div>
+<br />
+<br />
+<div style="float:left">
+    <form method="post" enctype="multipart/form-data" asp-controller="Admin" asp-action="FileUpload">
+        <div class="form-outline-mb-4">
+            <label>Import</label>
+            <input type="file" name="file" id="firstImport" onchange="toggleImportButton()" />
+        </div>
+        <br />
+        <div class="form-outline-mb-4">
+            <input class="btn btn-primary appButton" type="Submit" value="Add Users From File" id="finalImport" disabled />
+        </div>
+    </form>
 </div>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" onclick="closeModal()">x</button>
-                <h4 class="modal-title" id="myModalLabel">Add User</h4>
+                <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeModal()">x</button>
+                <h4 class="modal-title appModalFont" id="myModalLabel">Add User</h4>
             </div>
             <div class="modal-body">
                 <form method="get">
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="name" asp-for="Name">Name</label>
+                        <label class="form-label" for="name">Name</label>
                         <input type="text" id="name" class="form-control form-control-lg" />
-                        <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="email" asp-for="Email">Email address</label>
+                        <label class="form-label" for="email">Email address</label>
                         <input type="email" id="email" class="form-control form-control-lg" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="password" asp-for="Password">Password</label>
-                        <input type="password" id="password" class="form-control form-control-lg" />
+                        <label class="form-label" style="font-style:italic"for="password">Default password for new user: password</label>
                     </div>
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="contact" asp-for="ContactNumber">Contact Number</label>
+                        <label class="form-label" for="contact">Contact Number</label>
                         <input type="tel" id="contact" class="form-control form-control-lg" />
                     </div>
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="managerUserId" asp-for="Manager">Manager</label>
+                        <label class="form-label" for="managerUserId">Manager</label>
                         @Html.DropDownList("ManagerList", "---")
                     </div>
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="admin" asp-for="Admin">Is Admin</label>
+                        <label class="form-label" for="admin">Is Admin</label>
                         <input type="checkbox" id="admin" />
                     </div>
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="manager" asp-for="Manager">Is Manager</label>
+                        <label class="form-label" for="manager">Is Manager</label>
                         <input type="checkbox" id="manager" />
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="addUserButton" onclick="return addNewUser()">Add</button>
-                <button type="button" class="btn btn-primary" style="display:none;" id="updateUserButton" onclick="updateUser();">Update</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeModal()">Close</button>
+                <button type="button" class="btn btn-primary appButton" id="addUserButton" onclick="return addNewUser()">Add</button>
+                <button type="button" class="btn btn-primary appButton" style="display:none;" id="updateUserButton" onclick="updateUser();">Update</button>
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts {
-    <script>
-        var updateUserId = -1;
+    <script>var updateUserId = -1;
         $(document).ready(function () {
+            //added
+            //$("#usersInLocation").hide();
+            //document.getElementById("LocationList").onchange = function () {
+            //    $("#usersInLocation").show();
+            //    getAllUsers();
+            //}
+            //added finished
             getAllUsers();
+            $("#password").val("password");
 
         });
 
+        function toggleImportButton() {
+            console.log("added file");
+            if (document.getElementById("firstImport").files.length != 0) {
+                document.getElementById("finalImport").disabled = false;
+
+            }
+            else {
+                document.getElementById("finalImport").disabled = true;
+            }
+        }
         function getAllUsers() {
+            //var locationId = document.getElementById("LocationList").value;
             $.ajax({
                 url: "GetAllUsers",
                 type: "GET",
@@ -94,13 +127,16 @@
                     console.log(result);
                     var html = "";
                     for (var i = 0; i < result.data.length; i++) {
+
                         html += "<tr>";
                         html += "<td>" + result.data[i].name + "</td>";
                         html += "<td>" + result.data[i].email + "</td>";
                         html += "<td>" + result.data[i].contactNumber + "</td>";
                         html += "<td>" + result.data[i].managerUserName + "</td>";
-                        html += "<td>" + result.data[i].admin + "</td>";
-                        html += "<td>" + result.data[i].manager + "</td>";
+                        html += "<td><input type='checkbox'"; if (result.data[i].admin) { html += "checked='checked' disabled />"; } else { html += "disabled />"; }
+                        html += "</td>";
+                        html += "<td><input type='checkbox'"; if (result.data[i].manager) { html += "checked='checked' disabled />"; } else { html += "disabled />"; }
+                        html += "</td>";
                         html += "<td><a href='#' onclick='return getById(" + result.data[i].id + ")'>Edit</a> | <a href='#' onclick='deleteUser(" + result.data[i].id + ")'>Delete</a></td>";
                         html += "<tr>";
                     }
@@ -117,7 +153,7 @@
             console.log(userId);
             $("#name").css("border-color", "lightgrey");
             $("#email").css("border-color", "lightgrey");
-            $("#password").css("border-color", "lightgrey");
+           // $("#password").css("border-color", "lightgrey");
             $("#contact").css("border-color", "lightgrey");
             $.ajax({
                 url: "GetUserById",
@@ -127,7 +163,7 @@
                     console.log(result);
                     $("#name").val(result.data.name);
                     $("#email").val(result.data.email);
-                    $("#password").val(result.data.password);
+                  //  $("#password").val(result.data.password);
                     $("#contact").val(result.data.contactNumber);
                     document.getElementById("admin").checked = result.data.admin;
                     document.getElementById("manager").checked = result.data.manager;
@@ -148,7 +184,8 @@
 
             $("#name").val("");
             $("#email").val("");
-            $("#password").val("");
+           // $("#password").val("");
+
             $("#contact").val("");
             document.getElementById("admin").checked = false
             document.getElementById("manager").checked = false
@@ -156,7 +193,7 @@
             $("#addUserButton").show();
             $("#name").css("border-color", "lightgrey");
             $("#email").css("border-color", "lightgrey");
-            $("#password").css("border-color", "lightgrey");
+           // $("#password").css("border-color", "lightgrey");
             $("#contact").css("border-color", "lightgrey");
         }
 
@@ -168,7 +205,7 @@
             }
             var newName = $("#name").val();
             var newEmail = $("#email").val();
-            var newPassword = $("#password").val();
+           // var newPassword = $("#password").val();
             var newContactNumber = $("#contact").val();
             var newManagerUserId = document.getElementById("ManagerList").value;
             console.log(newManagerUserId);
@@ -180,14 +217,14 @@
                 data: {
                     name: newName,
                     email: newEmail,
-                    password: newPassword,
+                    password: "password", //added by default
                     contactNumber: newContactNumber,
                     managerUserId: newManagerUserId,
                     isAdmin: newAdmin,
                     isManager: newManager
                 },
                 success: function (result) {
-                   // getAllUsers();
+                    // getAllUsers();
                     $("#myModal").modal("hide");
                     window.location.reload(); //This makes sure when a new manager is added they now appear in the dropdown
                 },
@@ -201,7 +238,7 @@
         }
 
         function updateUser() {
-           var valid = validateDetails();
+            var valid = validateDetails();
             if (valid == false) {
                 //alert("not valid");
                 return false;
@@ -210,7 +247,7 @@
             if (confirmed) {
                 var newName = $("#name").val();
                 var newEmail = $("#email").val();
-                var newPassword = $("#password").val();
+               // var newPassword = $("#password").val();
                 var newContactNumber = $("#contact").val();
                 var newManagerUserId = document.getElementById("ManagerList").value;
                 var newAdmin = document.getElementById("admin").checked;
@@ -222,7 +259,6 @@
                         userId: updateUserId,
                         name: newName,
                         email: newEmail,
-                        password: newPassword,
                         contactNumber: newContactNumber,
                         managerUserId: newManagerUserId,
                         isAdmin: newAdmin,
@@ -276,43 +312,43 @@
             }
         }
 
-        function validateDetails() { //Add more validation here 
+        //Make sure that the contact number is of appropriate format
+        function validateDetails() { //Add more validation here
 
-            var regPhone = /^\d{10}$/;                                        
+            var regPhone = /^\(?(\d{4})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
             var regName = /\d+$/g;
-
             var newName = $("#name").val();
-            console.log(newName);
             var newEmail = $("#email").val();
-            console.log(newEmail);
-            var newPassword = $("#password").val();
+           // var newPassword = $("#password").val();
             var newContactNumber = $("#contact").val();
             var newManagerUserId = document.getElementById("ManagerList").value;
             var newAdmin = document.getElementById("admin").checked;
             var newManager = document.getElementById("manager").checked;
 
-            if (newName == "" || newName.match(regName) == false) {
+           // if (newName == "" || !regName.test(newName)) {
+
+            if (newName == "") {
                 alert("Please enter the name properly.");
                 $("#name").css("border-color", "red");
                 return false;
             }
-            var atposition= newEmail.indexOf("@@");
+            var atposition = newEmail.indexOf("@@");
             var dotposition = newEmail.lastIndexOf(".");
             if (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= newEmail.length) {
                 $("#email").css("border-color", "red");
                 alert("Please enter a valid e-mail address \n @@ position:" + atposition + "\n . position:" + dotposition);
                 return false;
             }
-            if (newContactNumber == "" || newContactNumber.match(regPhone) == false) { //does not work
+            if (!regPhone.test(newContactNumber)) {
                 $("#contact").css("border-color", "red");
                 alert("Please enter the contact number properly.");
                 return false;
             }
-            if (newName === newPassword) {
-                $("#password").css("border-color", "red");
-                alert("Name cannot be the same as password");
-                return false;
-            }
+            //if (newName === newPassword) {
+            //    $("#password").css("border-color", "red");
+            //    alert("Name cannot be the same as password");
+            //    return false;
+            //}
             return true;
 
         }
@@ -320,5 +356,33 @@
         function closeModal() {
             $("#myModal").modal("hide");
         }
-    </script>
+        function addBulkUsers() {
+            $.ajax({
+                url: "AddBulkUsers",
+                type: "POST",
+                data: {
+                },
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+
+        function uploadFile() {
+            $.ajax({
+                url: "UploadFile",
+                type: "POST",
+                data: {
+                },
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }</script>
 }

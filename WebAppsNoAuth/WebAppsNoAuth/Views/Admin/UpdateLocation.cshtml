@@ -1,10 +1,11 @@
 ﻿
 <div class="container">
-    <h2>Users</h2>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="clearTextBox();">Add New Location</button>
+    <h2 class="appTitle indexHeader">Locations</h2>
+    <br />
+    <button type="button" class="btn btn-primary appButton" data-toggle="modal" data-target="#locationModal" onclick="clearTextBox();">Add New Location</button>
     <br />
     <br />
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover styled-table-calendar">
         <thead>
             <tr>
                 <th>Location</th>
@@ -15,18 +16,18 @@
         </tbody>
     </table>
 </div>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none">
+<div class="modal fade" id="locationModal" tabindex="-1" role="dialog" aria-labelledby="locationModalLabel" aria-hidden="true" style="display:none">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">x</button>
-                <h4 class="modal-title" id="myModalLabel">Add Location</h4>
+                <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeUpdateLocModal()">x</button>
+                <h4 class="modal-title appModalFont" id="locationModalLabel">Add Location</h4>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="name">Location</label>
-                        <select id="name"></select>
+                        <label class="form-label" for="locationName">Location</label>
+                        <select id="locationName"></select>
                     </div>
                     <div class="form-outline mb-4">
                         <label class="form-label" for="title">Location Title</label>
@@ -35,9 +36,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="addLocationButton" onclick="return addNewLocation()">Add</button>
-                <button type="button" class="btn btn-primary" style="display:none;" id="updateLocationButton" onclick="updateLocation();">Update</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary appButton" id="addLocationButton2" onclick="return addNewLocationMethod()">Add</button>
+                <button type="button" class="btn btn-primary appButton" id="updateLocationButton2" onclick="updateLocationMethod()">Update</button>
             </div>
         </div>
     </div>
@@ -61,15 +61,12 @@
                 success: function (result) {
                     console.log(result);
                     var html = "";
-                    //  $.each(result, function (key, item) {
                     for (var i = 0; i < result.data.length; i++) {
                         html += "<tr>";
-                        html += "<td>" + result.data[i].locationName + "</td>";
+                        html += "<td>" + result.data[i].locationValue + "</td>";
                         html += "<td>" + result.data[i].locationTitle + "</td>";
-                        html += "<td><a href='#' onclick='return getById(" + result.data[i].locationId + ")'>Edit</a> | <a href='#' onclick='deleteLocation(" + result.data[i].locationId + ")'>Delete</a></td>";
+                        html += "<td><a href='#' onclick='return getByLocationId(" + result.data[i].locationId + ")'>Edit</a> | <a href='#' onclick='deleteLocation(" + result.data[i].locationId + ")'>Delete</a></td>";
                         html += "<tr>";
-
-                        // });
                     }
                     $(".tbody").html(html);
                 },
@@ -79,9 +76,9 @@
             });
         }
 
-        function getById(locationId) {
+        function getByLocationId(locationId) {
             updateLocationId = locationId;
-            $("#name").css("border-color", "lightgrey");
+            $("#locationName").css("border-color", "lightgrey");
             $("#title").css("border-color", "lightgrey");
             $.ajax({
                 url: "GetLocationById",
@@ -89,11 +86,15 @@
                 data: { locationId: locationId },
                 success: function (result) {
                     console.log(result);
-                    $("#name").val(result.data.locationName);
+                   // $("#name").val(result.data.locationName);
+                    document.getElementById("locationName").value = result.data.locationValue;
                     $("#title").val(result.data.locationTitle);
-                    $("#myModal").modal("show");
-                    $("#updateLocationButton").show();
-                    $("#addLocationButton").hide();
+                    $("#locationModal").modal("show");
+                    $("#updateLocationButton2").show();
+                    $("#addLocationButton2").hide();
+                    //document.getElementById("updateLocationButton").style.display = 'none';
+                    //document.getElementById("addLocationButton").style.display = 'block';
+                    console.log($("#updateLocationButton2"));
                 },
                 error: function (error) {
                     alert(error.responseText);
@@ -104,29 +105,36 @@
 
         function clearTextBox() {
             console.log("called");
-            $("#myModal").modal("show");
+            $("#locationModal").modal("show");
 
-            $("#name").val("");
+            $("#locationName").val("");
             $("#title").val("");
-            $("#updateLocationButton").hide();
-            $("#addLocationButton").show();
-            $("#name").css("border-color", "lightgrey");
+
+            $("#updateLocationButton2").hide();
+
+            $("#addLocationButton2").show();
+
+            //document.getElementById("updateLocationButton").style.display = 'block';
+            //document.getElementById("addLocationButton").style.display = 'none';
+
+            $("#locationName").css("border-color", "lightgrey");
             $("#title").css("border-color", "lightgrey");
         }
 
-        function addNewLocation() {
-            var newLocation = $("#name").val();
+        function addNewLocationMethod() {
+            var newLocation = document.getElementById("locationName").value;
+            console.log(newLocation);
             var newLocationTitle = $("#title").val();
             $.ajax({
                 url: "AddNewLocation",
                 type: "POST",
                 data: {
-                    locationName: newLocation,
+                    locationValue: newLocation,
                     locationTitle: newLocationTitle
                 },
                 success: function (result) {
                     getAllLocations();
-                    $("#myModal").modal("hide");
+                    $("#locationModal").modal("hide");
                 },
                 error: function (error) {
                     alert(error.responseText);
@@ -134,7 +142,7 @@
             })
         }
         function populateLocationsDropdown() {
-            const locationsDropdown = document.querySelector("#name");
+            const locationsDropdown = document.querySelector("#locationName");
             const options = {
                 method: 'GET',
                 headers: {
@@ -161,24 +169,26 @@
             
         }
 
-        function updateLocation() {
+        function updateLocationMethod() {
             var confirmed = confirm("Would you like to update?");
             if (confirmed) {
-                var newLocation = $("#name").val();
+                var newLocation = document.getElementById("locationName").value;
+                console.log(newLocation);
                 var newLocationTitle = $("#title").val();
+                console.log(newLocationTitle);
                 $.ajax({
                     url: "UpdateLocationMethod",
                     type: "POST",
                     data: {
                         updateLocationId: updateLocationId,
-                        locationName: newLocation,
+                        locationValue: newLocation,
                         locationTitle: newLocationTitle
                     },
                     success: function (result) {
                         getAllLocations();
-                        $("#myModal").modal("hide");
-                        $("#name").val("");
-                        $("#title").val("");
+                        $("#locationModal").modal("hide");
+                        //$("#name").val("");
+                        //$("#title").val("");
                     },
                     error: function (error) {
                         alert(error.responseText);
@@ -208,8 +218,8 @@
             }
         }
 
-        function closeModal() {
-            $("#myModal").modal("hide");
+        function closeUpdateLocModal() {
+            $("#locationModal").modal("hide");
         }
     </script>
 }

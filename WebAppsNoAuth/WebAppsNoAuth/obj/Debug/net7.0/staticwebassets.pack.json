@@ -185,6 +185,22 @@
       "PackagePath": "staticwebassets/.DS_Store"
     },
     {
+      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/Images/adminImage.png",
+      "PackagePath": "staticwebassets/Images/adminImage.png"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/Images/calendarImage.png",
+      "PackagePath": "staticwebassets/Images/calendarImage.png"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/Images/checklistImage.jpeg",
+      "PackagePath": "staticwebassets/Images/checklistImage.jpeg"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/Images/checklistImage2.png",
+      "PackagePath": "staticwebassets/Images/checklistImage2.png"
+    },
+    {
       "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/css/site.css",
       "PackagePath": "staticwebassets/css/site.css"
     },

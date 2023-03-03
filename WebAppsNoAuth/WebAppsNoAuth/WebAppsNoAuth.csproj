@@ -33,6 +33,9 @@
     <None Remove="MimeKit" />
     <None Remove="Views\Manager\" />
     <None Remove="Providers\" />
+    <None Remove="Upload\" />
+    <None Remove="ExcelReader" />
+    <None Remove="ExcelDataReader" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Styles\" />
@@ -43,6 +46,8 @@
     <Folder Include="Services\" />
     <Folder Include="Views\Manager\" />
     <Folder Include="Providers\" />
+    <Folder Include="Upload\" />
+    <Folder Include="wwwroot\Images\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
@@ -61,10 +66,13 @@
     <PackageReference Include="jQuery" Version="3.6.3" />
     <PackageReference Include="NuGet.PackageManagement" Version="6.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
-    <PackageReference Include="KendoUICore" Version="2022.3.1109" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.0" />
     <PackageReference Include="bootstrap" Version="5.2.3" />
     <PackageReference Include="MailKit" Version="3.4.3" />
     <PackageReference Include="MimeKit" Version="3.4.3" />
+    <PackageReference Include="ExcelDataReader" Version="3.6.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\Images\" />
   </ItemGroup>
 </Project>

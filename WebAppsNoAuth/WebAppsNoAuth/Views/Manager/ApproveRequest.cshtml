@@ -1,8 +1,11 @@
 ﻿@{
 }
+<h2 class="appTitle indexHeader">Manager Requests</h2>
+<br />
+<br />
 <div>
     <div style="float:left">
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-hover styled-table-calendar">
             <thead>
                 <tr>
                     <th>User</th>
@@ -15,17 +18,13 @@
             </tbody>
         </table>
     </div>
-
-
 </div>
 
 
 
 @section Scripts {
 
-    <script>
-        $(document).ready(function () {
-           // var updateRequestId = -1;
+    <script>$(document).ready(function () {
             getAllManagerRequests();
         })
 
@@ -85,8 +84,7 @@
                     alert(error.responseText);
                 }
             })
-        }
-    </script>
+        }</script>
 }
 
 

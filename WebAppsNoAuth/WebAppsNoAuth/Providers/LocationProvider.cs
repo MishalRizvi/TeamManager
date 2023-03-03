@@ -38,7 +38,7 @@ namespace WebAppsNoAuth.Providers
                     {
                         Location currentLocation = new Location();
                         currentLocation.LocationId = dbReader.GetInt32(0);
-                        currentLocation.LocationName = dbReader.GetString(1);
+                        currentLocation.LocationValue = dbReader.GetString(1);
                         currentLocation.LocationTitle = dbReader.GetString(2);
                         allLocations.Add(currentLocation);
                     }
@@ -60,7 +60,7 @@ namespace WebAppsNoAuth.Providers
             try
             {
                 _connection.Open();
-                var queryString = "SELECT * FROM [Location] WHERE LocationId = @LOCATIONID"; //WHERE INSTITUTION ID = THE SAME ONE AS THE ADMIN WHO IS ON UPDATEUSERPAGE 
+                var queryString = "SELECT LocationId, LocationValue, LocationTitle FROM [Location] WHERE LocationId = @LOCATIONID"; //WHERE INSTITUTION ID = THE SAME ONE AS THE ADMIN WHO IS ON UPDATEUSERPAGE 
                 SqlCommand command = new SqlCommand(queryString, _connection);
                 command.Parameters.AddWithValue("@LOCATIONID", locationId);
                 using (SqlDataReader dbReader = command.ExecuteReader())
@@ -69,7 +69,7 @@ namespace WebAppsNoAuth.Providers
 
                     {
                         currentLocation.LocationId = dbReader.GetInt32(0);
-                        currentLocation.LocationName = dbReader.GetString(1);
+                        currentLocation.LocationValue = dbReader.GetString(1);
                         currentLocation.LocationTitle = dbReader.GetString(2);
                     }
                     _connection.Close();
@@ -114,15 +114,16 @@ namespace WebAppsNoAuth.Providers
             
         }
 
-        public bool AddNewLocation(string locationName, string locationTitle, int userId, int institutionId)
+        public bool AddNewLocation(string locationValue, string locationTitle, int userId, int institutionId)
         {
             try
             {
                 _connection.Open();
+                Debug.WriteLine(locationValue);
 
-                var queryString = "INSERT INTO [Location] VALUES (@LOCATIONNAME,@LOCATIONTITLE,@INSTITUTIONID)";
+                var queryString = "INSERT INTO [Location] VALUES (@LOCATIONVALUE,@LOCATIONTITLE,@INSTITUTIONID)";
                 SqlCommand command = new SqlCommand(queryString, _connection);
-                command.Parameters.AddWithValue("@LOCATIONNAME", locationName);
+                command.Parameters.AddWithValue("@LOCATIONVALUE", locationValue);
                 command.Parameters.AddWithValue("@LOCATIONTITLE", locationTitle);
                 command.Parameters.AddWithValue("@INSTITUTIONID", institutionId);
                 command.ExecuteNonQuery();
@@ -137,16 +138,16 @@ namespace WebAppsNoAuth.Providers
             }
         }
 
-        public bool UpdateLocationMethod(int updateLocationId, string locationName, string locationTitle, int currentUserId)
+        public bool UpdateLocationMethod(int updateLocationId, string locationValue, string locationTitle, int currentUserId)
         {
             try
             {
                 _connection.Open();
 
-                var queryString = "UPDATE [Location] SET LocationName = @LOCATIONNAME, LocationTitle = @LOCATIONTITLE WHERE LocationId = @LOCATIONID";
+                var queryString = "UPDATE [Location] SET LocationValue = @LOCATIONVALUE, LocationTitle = @LOCATIONTITLE WHERE LocationId = @LOCATIONID";
 
                 SqlCommand command = new SqlCommand(queryString, _connection);
-                command.Parameters.AddWithValue("@LOCATIONNAME", locationName);
+                command.Parameters.AddWithValue("@LOCATIONVALUE", locationValue);
                 command.Parameters.AddWithValue("@LOCATIONTITLE", locationTitle);
                 command.Parameters.AddWithValue("@LOCATIONID", updateLocationId);
                 command.ExecuteNonQuery();
@@ -161,19 +162,54 @@ namespace WebAppsNoAuth.Providers
             }
         }
 
+
+        //find all the teams that belong to the location
+        //Delete all team users that belong to these teams
+        //delete all teams that belong to the location
+        //delete the location
         public bool DeleteLocation(int locationId) //will have to update all tables so that instead of deleting you set Active to 0
         {
             try
             {
+                var teamId = -1;
+                List<Int32> teamIds = new List<Int32>();
                 _connection.Open();
 
-                var queryString = "DELETE FROM [Location] WHERE LocationId = @LOCATIONID";
+                var queryString = "SELECT TeamId FROM [Team] WHERE LocationId = @LOCATIONID;";
+
+                var queryString2 = "DELETE FROM [TeamUser] WHERE TeamId = @TEAMID;";
+
+                var queryString3 = "DELETE FROM [Team] WHERE LocationID = @LOCATIONID;" +
+                                   "DELETE FROM [Location] WHERE LocationId = @LOCATIONID";
 
                 SqlCommand command = new SqlCommand(queryString, _connection);
                 command.Parameters.AddWithValue("@LOCATIONID", locationId);
-                command.ExecuteNonQuery();
-
+                using (SqlDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        teamId = dbReader.GetInt32(0);
+                        teamIds.Add(teamId);
+                    }
+                    _connection.Close();
+                }
                 _connection.Close();
+
+                foreach (var team in teamIds)
+                {
+                    _connection.Open();
+                    SqlCommand command2 = new SqlCommand(queryString2, _connection);
+                    command2.Parameters.AddWithValue("@TEAMID", team);
+                    command2.ExecuteNonQuery();
+                    _connection.Close();
+                }
+
+                SqlCommand command3 = new SqlCommand(queryString3, _connection);
+                command3.Parameters.AddWithValue("@LOCATIONID", locationId);
+                _connection.Open();
+                command3.ExecuteNonQuery();
+                _connection.Close();
+
                 return true;
             }
             catch (Exception e)

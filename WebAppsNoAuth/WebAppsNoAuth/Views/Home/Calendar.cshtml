@@ -1,43 +1,42 @@
-﻿<div class="form-outline mb-4">
-    <label class="form-label" for="userId">Users</label>
-    @Html.DropDownList("UsersList")
+﻿<div float="right">
+    <h2 class="appTitle indexHeader">Calendar</h2>
+    <br />
+    <br />
+    <div>
+        <label class="form-label-style" for="userId" style="">Users:  </label>
+        @Html.DropDownList("UsersList")
+    </div>
+</div>
+<br />
+<br>
+<div float="left">
+        <div class="row" style="display:inline-block;">
+            <div class="column" id="month0"></div>
+            <div class="column" id="month1"></div>
+            <div class="column" id="month2"></div>
+        </div>
+        <div class="row" style="display:inline-block;">
+            <div class="column" id="month3"></div>
+            <div class="column" id="month4"></div>
+            <div class="column" id="month5"></div>
+        </div>
+        <div class="row" style="display:inline-block;">
+            <div class="column" id="month6"></div>
+            <div class="column" id="month7"></div>
+            <div class="column" id="month8"></div>
+        </div>
+        <div class="row" style="display:inline-block;">
+            <div class="column" id="month9"></div>
+            <div class="column" id="month10"></div>
+            <div class="column" id="month11"></div>
+        </div>
 </div>
 
-<head>
-    <style>
-
-    </style>
-</head>
-<body>
-    <div class="row" style="display:inline-block">
-        <div class="column" id="month0"></div>
-        <div class="column" id="month1"></div>
-        <div class="column" id="month2"></div>
-    </div>
-    <div class="row" style="display:inline-block">
-        <div class="column" id="month3"></div>
-        <div class="column" id="month4"></div>
-        <div class="column" id="month5"></div>
-    </div>
-    <div class="row" style="display:inline-block">
-        <div class="column" id="month6"></div>
-        <div class="column" id="month7"></div>
-        <div class="column" id="month8"></div>
-    </div>
-    <div class="row" style="display:inline-block">
-        <div class="column" id="month9"></div>
-        <div class="column" id="month10"></div>
-        <div class="column" id="month11"></div>
-    </div>
-</body>
-
 @section Scripts {
-    <script>
-        var monthsList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    <script>var monthsList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         $(document).ready(function () {
             document.getElementById("UsersList").onchange = function () {
                 loadPage(); //reset calendar
-                getAllApprovedRequests(); 
             }
             loadPage();
             getAllApprovedRequests();
@@ -46,31 +45,44 @@
         function loadPage() {
             for (var i = 0; i < 12; i++) {
                 var elemStr = "month" + i;
-                createCalendar(elemStr, 2023, i + 1);
+                createCalendar(elemStr, 2023, i+1);
             }
         }
         function createCalendar(elem, year, month) {
 
             let mon = month - 1; // months in JS are 0..11, not 1..12
+
             let d = new Date(year, mon);
+            console.log("month", mon);
+            console.log("year", year);
+            console.log(d.getDate());
+            console.log(d.getMonth());
 
-            let table = '<h2>' + monthsList[mon] + '</h2>'
-            table += '<table><tr><th>Mon</th><th>Tues</th><th>Wed</th><th>Thurs</th><th>Fri</th><th>Sat</th><th>Sun</th></tr><tr>';
+            let table = '<h4 class="form-label-style">' + monthsList[mon] + '</h4>'
+            table += '<table class="styled-table-calendar"><tr><th style="color:white">Mon</th><th style="color:white">Tue</th><th style="color:white">Wed</th><th style="color:white">Thu</th><th style="color:white">Fri</th><th style="color:white">Sat</th><th style="color:white">Sun</th></tr><tr>';
 
-                // spaces for the first row
-                // from Monday till the first day of the month
-                // * * * 1  2  3  4
+            // spaces for the first row
+            // from Monday till the first day of the month
+            // * * * 1  2  3  4
             for (let i = 0; i < getDay(d); i++) {
                 table += '<td></td>';
             }
 
             while (d.getMonth() == mon) {
                 var dateString = '';
-                if (d.getDate() < 10) {
-                    dateString = '0' + d.getDate() + '/' + d.getMonth() + 1 + '/' + year;
+                var adjustedMonth = d.getMonth() + 1;
+                var adjustedMonthStr = '';
+                if (adjustedMonth < 10) {
+                    adjustedMonthStr = '0' + adjustedMonth;
                 }
                 else {
-                    dateString = d.getDate() + '/' + d.getMonth() + 1 + '/' + year;
+                    adjustedMonthStr = adjustedMonth;
+                }
+                if (d.getDate() < 10) {
+                    dateString = '0' + d.getDate() + '/' + adjustedMonthStr + '/' + year;
+                }
+                else {
+                    dateString = d.getDate() + '/' + adjustedMonthStr + '/' + year;
                 }
                 table += '<td id=' + dateString + '>' + d.getDate() + '</td>'; //this is to add the 0 in front of a single digit date i.e. 09/04/2023
 
@@ -164,6 +176,5 @@
                     console.log(error.responseText);
                 }
             });
-        }
-    </script>
+        }</script>
 }

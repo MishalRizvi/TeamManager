@@ -351,7 +351,6 @@ namespace WebAppsNoAuth.Providers
                 command.ExecuteNonQuery();
 
                 _connection.Close();
-
                 return true;
             }
             catch (Exception e)
