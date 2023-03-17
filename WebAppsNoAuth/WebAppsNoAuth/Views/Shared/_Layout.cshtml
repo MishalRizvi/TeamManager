@@ -31,11 +31,14 @@
                                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Holidays" style="color:white">Holidays</a>
                                     </li>
                                     <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Meetings" style="color:white">Meetings</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Calendar" style="color:white">Calendar</a>
                                     </li>
                                     @*<li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ResetPassword" style="color:maroon">Reset Password</a>
-                                    </li>*@
+            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ResetPassword" style="color:maroon">Reset Password</a>
+        </li>*@
                                     @{
                                         if (ViewData["Admin"] != null && ViewData["Admin"].ToString() == "True")
                                         {
@@ -153,7 +156,7 @@
                                 </div>
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="statusUserWFH">WFH</label>
-                                    <input type="checkbox" id="statusUserWFH" />
+                                    <input type="checkbox" id="statusUserWFH" disabled/>
                                 </div>
                                 <div class="form-outline mb-4" id="optionalDiv2" style="display:block">
                                     <label class="form-label" for="statusUserContact">OOO Contact Number</label>
@@ -241,6 +244,7 @@
                     document.getElementById("UserLocationsList").value = result.data.locationId;
                 }
                 document.getElementById("StatusList").value = result.data.statusTypeId;
+                $("#wfhContact").val(result.data.wfhContact); 
                 if (result.data.wfh) {
                     document.getElementById("isWFH").checked = true;
                 }
@@ -248,7 +252,6 @@
                     document.getElementById("isWFH").checked = false;
                 }
                 if (result.data.wfh) {
-                    $("#wfhContact").val(result.data.wfhContact); //check 
                     $("#optionalDiv").show();
                 }
                 else {
@@ -274,7 +277,6 @@
 
     function setUserStatus() {
         var statusTypeId = document.getElementById("StatusList").value;
-        console.log(statusTypeId);
         var locationId = 0;
         //if there are no locations that blelong to the user 
         if (!document.getElementById("UserLocationsList").options.length || !document.getElementById("UserLocationsList").value) {
@@ -285,12 +287,15 @@
         }
         var isWFH = document.getElementById("isWFH").checked;
         var wfhContact = "";
-        if (isWFH) {
+        if (isWFH == true) {
             wfhContact = $("#wfhContact").val();
             var valid = validateContact(wfhContact);
             if (valid == false) {
                 return false;
             }
+        }
+        else {
+            wfhContact = "-1";
         }
         $.ajax({
             url: "/Home/SetUserStatus",
@@ -303,7 +308,7 @@
             },
             success: function (result) {
                 console.log(result);
-                //change profile icon colour accordinf to new status
+                //change profile icon colour according to new status
                 if (statusTypeId == 1) {
                     document.getElementById("statusColour").className = "green";
                 }

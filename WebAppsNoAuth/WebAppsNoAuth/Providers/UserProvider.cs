@@ -325,11 +325,17 @@ namespace WebAppsNoAuth.Providers
                         currentUser.Password = dbReader.GetString(3);
                         currentUser.ContactNumber = dbReader.IsDBNull(4) ? "" : dbReader.GetString(4);
                         currentUser.ManagerUserId = dbReader.IsDBNull(5) ? -1 : dbReader.GetInt32(5); //if manager id is -1, then return as empty string
-
                         currentUser.ManagerUserName = dbReader.IsDBNull(6) ? "" : dbReader.GetString(6);
                         currentUser.Admin = dbReader.IsDBNull(7) ? false : dbReader.GetBoolean(7);
                         currentUser.Manager = dbReader.IsDBNull(8) ? false : dbReader.GetBoolean(8);
-                        allUsers.Add(currentUser);
+                        if (currentUser.Id == userId)
+                        {
+                            allUsers.Prepend(currentUser);
+                        }
+                        else
+                        {
+                            allUsers.Add(currentUser);
+                        }
                     }
                     _connection.Close();
                     return allUsers;
@@ -386,11 +392,13 @@ namespace WebAppsNoAuth.Providers
             }
         }
 
-        public List<User> GetAllUsersAsObject(int userId)
+        public IEnumerable<User> GetAllUsersAsObject(int userId)
         {
             var institutionId = GetInstitutionId(userId);
+            User user = new User();
 
             List<User> allUsers = new List<User>();
+            IEnumerable<User> toReturn = new List<User>();
             try
             {
                 _connection.Open();
@@ -406,11 +414,21 @@ namespace WebAppsNoAuth.Providers
                         User currentUser = new User();
                         currentUser.Id = dbReader.GetInt32(0);
                         currentUser.Name = dbReader.GetString(1);
-                        allUsers.Add(currentUser);
+                        if (currentUser.Id == userId)
+                        {
+                            user.Id = currentUser.Id;
+                            user.Name = currentUser.Name;
+                            continue;
+                        }
+                        else
+                        {
+                            allUsers.Add(currentUser);
+                        }
                     }
                     _connection.Close();
+                    toReturn = allUsers.Prepend(user);
                 }
-                return allUsers;
+                return toReturn;
             }
             catch (Exception e)
             {
@@ -629,7 +647,6 @@ namespace WebAppsNoAuth.Providers
                 SqlCommand command = new SqlCommand(queryString, _connection);
                 command.Parameters.AddWithValue("@NAME", name);
                 command.Parameters.AddWithValue("@EMAIL", email);
-               // var passwordHashed = HashPassword(password);
                 command.Parameters.AddWithValue("@PASSWORD", password);
                 command.Parameters.AddWithValue("@CONTACTNUMBER", contactNumber);
                 command.Parameters.AddWithValue("@MANAGERUSERID", managerUserId);
@@ -662,6 +679,76 @@ namespace WebAppsNoAuth.Providers
                 return false;
             }
             
+        }
+
+        public bool AddNewMeeting(string title, DateTime meetingDate, string startTime, string endTime, IEnumerable<Int32> attendeesList)
+        {
+            var addedMeetingId = -1;
+            var hostUserId = attendeesList.First(); //from controller method, the first of the list is always the host 
+            try
+            {
+                _connection.Open();
+
+                var queryString = "INSERT INTO [Meeting] VALUES (@TITLE, @HOSTUSERID, @DATE, @STARTTIME, @ENDTIME); " +
+                                  "SELECT CAST(SCOPE_IDENTITY() AS INT);";
+                SqlCommand command = new SqlCommand(queryString, _connection);
+                command.Parameters.AddWithValue("@TITLE", title);
+                command.Parameters.AddWithValue("@HOSTUSERID", hostUserId);
+                command.Parameters.AddWithValue("@DATE", meetingDate);
+                command.Parameters.AddWithValue("@STARTTIME", startTime);
+                command.Parameters.AddWithValue("@ENDTIME", endTime);
+                using (SqlDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        addedMeetingId = dbReader.GetInt32(0);
+                    }
+                } 
+                _connection.Close();
+
+                for (var i = 0; i < attendeesList.Count(); i++)
+                {
+                    if (i == 0)
+                    {
+                        AddNewMeetingAttendee(addedMeetingId, attendeesList.ElementAt(i), 1); //make it active for the host of the meeting 
+                    }
+                    else
+                    {
+                        AddNewMeetingAttendee(addedMeetingId, attendeesList.ElementAt(i));
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return false;
+            }
+
+        }
+
+        public void AddNewMeetingAttendee(int meetingId, int userId, int active = 0) //if the meeting is not active, on meeting page will come up with 'Accept' option 
+        {
+            try
+            {
+                _connection.Open();
+
+                var queryString = "INSERT INTO [MeetingAttendee] VALUES (@MEETINGID, @USERID, @ACTIVE); "; //set active as 0 by default 
+                SqlCommand command = new SqlCommand(queryString, _connection);
+                command.Parameters.AddWithValue("@MEETINGID", meetingId);
+                command.Parameters.AddWithValue("@USERID", userId);
+                command.Parameters.AddWithValue("@ACTIVE", active);
+                command.ExecuteNonQuery();
+                _connection.Close();
+                return;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return;
+            }
+
         }
 
         public bool SetUserPassword(int userId, string password) 
@@ -734,17 +821,31 @@ namespace WebAppsNoAuth.Providers
 
         public bool SetUserStatus(int userId, int statusTypeId, int locationId, bool isWFH, string wfhContact) //set default as unavailable
         {
+            var queryString = "";
             try
             {
                 _connection.Open();
-                var queryString = "";
                 if (locationId != -1)
                 {
-                    queryString = "UPDATE [Status] SET StatusTypeId = @STATUSTYPEID, CurrentLocationId = @LOCATIONID, WFH = @ISWFH, WFHContact = @WFHCONTACT WHERE UserId = @USERID";
+                    if (isWFH)
+                    {
+                        queryString = "UPDATE [Status] SET StatusTypeId = @STATUSTYPEID, CurrentLocationId = @LOCATIONID, WFH = @ISWFH, WFHContact = @WFHCONTACT WHERE UserId = @USERID";
+                    }
+                    else
+                    {
+                        queryString = "UPDATE [Status] SET StatusTypeId = @STATUSTYPEID, CurrentLocationId = @LOCATIONID, WFH = @ISWFH WHERE UserId = @USERID";
+                    }
                 }
                 else
                 {
-                    queryString = "UPDATE [Status] SET StatusTypeId = @STATUSTYPEID, CurrentLocationId = NULL, WFH = @ISWFH, WFHContact = @WFHCONTACT WHERE UserId = @USERID";
+                    if (isWFH)
+                    {
+                        queryString = "UPDATE [Status] SET StatusTypeId = @STATUSTYPEID, CurrentLocationId = NULL, WFH = @ISWFH, WFHContact = @WFHCONTACT WHERE UserId = @USERID";
+                    }
+                    else
+                    {
+                        queryString = "UPDATE [Status] SET StatusTypeId = @STATUSTYPEID, CurrentLocationId = NULL, WFH = @ISWFH WHERE UserId = @USERID";
+                    }
                 }
                 
                 SqlCommand command = new SqlCommand(queryString, _connection);
@@ -838,6 +939,8 @@ namespace WebAppsNoAuth.Providers
                         allUsersStatus.Add(currentUserStatus);
                     }
                     _connection.Close();
+
+                    allUsersStatus = allUsersStatus.OrderBy(e => e.UserName).ToList();
                     return allUsersStatus;
                 }
             }
@@ -931,6 +1034,53 @@ namespace WebAppsNoAuth.Providers
             }
         }
 
+        public bool AcceptMeeting(int userId, int meetingId) //will have to update all tables so that instead of deleting you set Active to 0
+        {
+            try
+            {
+                _connection.Open();
+
+                var queryString = "UPDATE [MeetingAttendee] SET Active = @TRUE WHERE UserId = @USERID AND MeetingId = @MEETINGID;";
+
+                SqlCommand command = new SqlCommand(queryString, _connection);
+                command.Parameters.AddWithValue("@USERID", userId);
+                command.Parameters.AddWithValue("@MEETINGID", meetingId);
+                command.Parameters.AddWithValue("@TRUE", true);
+                command.ExecuteNonQuery();
+
+                _connection.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return false;
+            }
+        }
+
+        public bool DeleteMeeting(int userId, int meetingId) //will have to update all tables so that instead of deleting you set Active to 0
+        {
+            try
+            {
+                _connection.Open();
+
+                var queryString = "DELETE FROM [MeetingAttendee] WHERE UserId = @USERID AND MeetingId = @MEETINGID;";
+
+                SqlCommand command = new SqlCommand(queryString, _connection);
+                command.Parameters.AddWithValue("@USERID", userId);
+                command.Parameters.AddWithValue("@MEETINGID", meetingId);
+                command.ExecuteNonQuery();
+
+                _connection.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return false;
+            }
+        }
+
         public List<StatusType> GetAllStatusTypes()
         {
             List<StatusType> allStatuses = new List<StatusType>();
@@ -984,6 +1134,183 @@ namespace WebAppsNoAuth.Providers
                     }
                     _connection.Close();
                     return userLocations;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return null;
+            }
+        }
+
+        public List<Meeting> GetAllMeetings(int userId)
+        {
+            List<Meeting> userMeetings = new List<Meeting>();
+            try
+            {
+                _connection.Open();
+                var queryString = "SELECT M.[MeetingId], M.[Title], U.[Name], M.[Date], M.[StartTime], M.[EndTime], MA.[Active] FROM [Meeting] M " +
+                                  "JOIN [MeetingAttendee] MA ON M.[MeetingId] = MA.[MeetingId] " +
+                                  "JOIN [Users] U ON M.[HostUserId] = U.[Id] " +
+                                  "WHERE MA.[UserId] = @USERID";
+                SqlCommand command = new SqlCommand(queryString, _connection);
+                command.Parameters.AddWithValue("@USERID", userId);
+                using (SqlDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+
+                    {
+                        Meeting currentMeeting = new Meeting();
+                        currentMeeting.MeetingId = dbReader.GetInt32(0);
+                        currentMeeting.Title = dbReader.GetString(1);
+                        currentMeeting.HostUserName = dbReader.GetString(2);
+                        currentMeeting.MeetingDate = dbReader.GetDateTime(3).ToString("dd/MM/yyyy");
+                        currentMeeting.StartTime = dbReader.GetString(4);
+                        currentMeeting.EndTime = dbReader.GetString(5);
+                        currentMeeting.Active = dbReader.GetBoolean(6);                        
+                        userMeetings.Add(currentMeeting);
+                    }
+                    _connection.Close();
+
+                    for (var i=0; i<userMeetings.Count(); i++)
+                    {
+                        userMeetings.ElementAt(i).Attendees = GetMeetingAttendees(userMeetings.ElementAt(i).MeetingId);
+                    }
+
+                    userMeetings = userMeetings.OrderBy(e => e.MeetingDate).ThenBy(e => e.StartTime).ToList();
+
+                    return userMeetings;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return null;
+            }
+        }
+
+        public Meeting GetMeetingById(int meetingId) //slightly different to GetAllMeetings as we want the host user id so we can email the host from SendAcceptMeetingToHost
+        {
+            Meeting currentMeeting = new Meeting();
+            try
+            {
+                _connection.Open();
+
+                var queryString = "SELECT M.[MeetingId], M.[Title], M.[HostUserId], U.[Name], M.[Date], M.[StartTime], M.[EndTime] FROM [Meeting] M " +
+                                  "JOIN [Users] U ON M.[HostUserId] = U.[Id] " +
+                                  "WHERE M.[MeetingId] = @MEETINGID";
+
+                SqlCommand command = new SqlCommand(queryString, _connection);
+                command.Parameters.AddWithValue("@MEETINGID", meetingId);
+                using (SqlDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+
+                    {
+                        currentMeeting.MeetingId = dbReader.GetInt32(0);
+                        currentMeeting.Title = dbReader.GetString(1);
+                        currentMeeting.HostUserId = dbReader.GetInt32(2);
+                        currentMeeting.HostUserName = dbReader.GetString(3);
+                        currentMeeting.MeetingDate = dbReader.GetDateTime(4).ToString("dd/MM/yyyy");
+                        currentMeeting.StartTime = dbReader.GetString(5);
+                        currentMeeting.EndTime = dbReader.GetString(6);
+                    }
+                    _connection.Close();
+
+                    currentMeeting.Attendees = GetMeetingAttendees(meetingId);
+
+                    return currentMeeting;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return null;
+            }
+        }
+
+        public string GetMeetingAttendees(int meetingId) //this method gets all attendees WHO HAVE NOT REJECTED THE MEETING, if they reject the meeting their entry in MA table
+                                                            //will be deleted hence won't be retrieved in this method
+        {
+            List<String> attendeeNames = new List<String>();
+            var hostNameTwo = "";
+            string toReturn = "";
+            try
+            {
+                _connection.Open();
+                var queryString = "SELECT U.[Name], MA.[Active] FROM Users U " +
+                                  "JOIN MeetingAttendee MA ON U.[Id] = MA.[UserId] " +
+                                  "WHERE MA.[MeetingId] = @MEETINGID";
+
+                SqlCommand command = new SqlCommand(queryString, _connection);
+                command.Parameters.AddWithValue("@MEETINGID", meetingId);
+                using (SqlDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        var attendeeName = dbReader.GetString(0);
+                        var active = dbReader.GetBoolean(1);
+                        //if (attendeeName.Equals(hostName)) do we need host name first 
+                        //{
+                        //    hostNameTwo = attendeeName;
+                        //    continue;
+                        //}
+                        if (!active)
+                        {
+                            attendeeNames.Add(attendeeName + " Tentative"); //if they have not accepted yet, they have Tentatively accepted 
+                        }
+                        else
+                        {
+                            attendeeNames.Add(attendeeName);
+                        }
+                    }
+                    _connection.Close();
+                    attendeeNames.Prepend(hostNameTwo); //add host name first
+
+                    for (var i=0; i<attendeeNames.Count; i++)
+                    {
+                        toReturn += attendeeNames.ElementAt(i);
+                        if (i == attendeeNames.Count-1)
+                        {
+                            break;
+                        }
+                        toReturn += ",";
+                    }
+                    return toReturn;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return null;
+            }
+        }
+
+        public List<Int32> GetMeetingAttendeesIdList(int meetingId) //this method gets all attendees WHO HAVE NOT REJECTED THE MEETING, if they reject the meeting their entry in MA table
+                                                         //will be deleted hence won't be retrieved in this method
+        {
+            var hostUserIdTwo = -1;
+
+            List<Int32> attendeeIds = new List<Int32>();
+            try
+            {
+                _connection.Open();
+                var queryString = "SELECT U.[Id] FROM Users U " +
+                                  "JOIN MeetingAttendee MA ON U.[Id] = MA.[UserId] " +
+                                  "WHERE MA.[MeetingId] = @MEETINGID";
+
+                SqlCommand command = new SqlCommand(queryString, _connection);
+                command.Parameters.AddWithValue("@MEETINGID", meetingId);
+                using (SqlDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        var attendeeId = dbReader.GetInt32(0);
+                        attendeeIds.Add(attendeeId);
+                    }
+                    _connection.Close();
+
+                    return attendeeIds;
                 }
             }
             catch (Exception e)

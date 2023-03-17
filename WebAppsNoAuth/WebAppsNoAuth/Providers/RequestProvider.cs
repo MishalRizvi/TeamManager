@@ -92,6 +92,8 @@ namespace WebAppsNoAuth.Providers
                         allRequests.Add(currentRequest);
                     }
                     _connection.Close();
+
+                    allRequests = allRequests.OrderBy(e => e.StartDate).ToList();
                     return allRequests;
                 }
             }

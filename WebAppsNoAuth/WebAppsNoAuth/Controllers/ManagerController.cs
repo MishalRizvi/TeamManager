@@ -86,20 +86,6 @@ namespace WebAppsNoAuth.Controllers
             return _providers.User.GetUserName(userId);
 
         }
-        //public string GetUserEmail(int userId)
-        //{
-        //    return _providers.User.GetUserEmail(userId);
-        //}
-
-        //public int GetManager(int userId)
-        //{
-        //    return _providers.User.GetManager(userId);
-        //}
-
-        //public int GetInstitutionId(int userId)
-        //{
-        //    return _providers.User.GetInstitutionId(userId);
-        //}
 
         //Manager getting another users requests
         public Request GetRequestById(int requestId)

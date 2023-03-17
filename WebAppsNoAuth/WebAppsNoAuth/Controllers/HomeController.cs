@@ -52,13 +52,9 @@ namespace WebAppsNoAuth.Controllers
 
         public bool SendNewRequestEmailToManagers(int userId, int requestTypeId, DateTime startDate, DateTime endDate)
         {
-            Debug.WriteLine("sendnewreqemailtomanagers"); ;
-            EmailTemplate emailTemplate = new EmailTemplate();
-            emailTemplate.Subject = "New Request";
-
             User currentUser = _providers.User.GetUserById(userId);
             var userName = currentUser.Name;
-            var userEmail = currentUser.Email;
+            //var userEmail = currentUser.Email;
             var managerId = currentUser.ManagerUserId;
             if (managerId == -1)
             {
@@ -72,11 +68,70 @@ namespace WebAppsNoAuth.Controllers
             return _providers.Email.SendNewRequestEmailToManagers(userId, requestTypeId, startDate, endDate, userName, managerId, managerName, managerEmail);
         }
 
-        public List<User> GetAllUsersAsObject()
+        public void SendMeetingInviteEmail(int userId, int hostUserId, string title, DateTime meetingDate, string startTime, string endTime)
+        {
+            User currentUser = _providers.User.GetUserById(userId);
+            var userName = currentUser.Name;
+            var userEmail = currentUser.Email;
+            User hostUser = _providers.User.GetUserById(hostUserId);
+            var hostName = hostUser.Name;
+
+            _providers.Email.SendMeetingInviteEmail(userId, userName, userEmail, hostName, title, meetingDate, startTime, endTime);
+        }
+
+        public void SendAcceptMeetingEmailToHost(int userId, int meetingId)
+        {
+            Meeting meeting = _providers.User.GetMeetingById(meetingId);
+            var meetingTitle = meeting.Title;
+
+            var hostUserId = meeting.HostUserId;
+            var hostUser = _providers.User.GetUserById(hostUserId);
+            var hostName = hostUser.Name;
+            var hostEmail = hostUser.Email;
+
+            var attendee = _providers.User.GetUserById(userId);
+            var attendeeName = attendee.Name;
+
+            _providers.Email.SendAcceptMeetingEmailToHost(meetingTitle, hostName, hostEmail, attendeeName);
+        }
+
+        public void SendRejectMeetingEmailToHost(int userId, int meetingId)
+        {
+            Meeting meeting = _providers.User.GetMeetingById(meetingId);
+            var meetingTitle = meeting.Title;
+
+            var hostUserId = meeting.HostUserId;
+            var hostUser = _providers.User.GetUserById(hostUserId);
+            var hostName = hostUser.Name;
+            var hostEmail = hostUser.Email;
+
+            var attendee = _providers.User.GetUserById(userId);
+            var attendeeName = attendee.Name;
+
+            _providers.Email.SendRejectMeetingEmailToHost(meetingTitle, hostName, hostEmail, attendeeName);
+        }
+
+        public void SendCancelMeetingEmail(int userId, int meetingId)
+        {
+            Meeting meeting = _providers.User.GetMeetingById(meetingId);
+            var meetingTitle = meeting.Title;
+
+            var hostUserId = meeting.HostUserId;
+            var hostUser = _providers.User.GetUserById(hostUserId);
+            var hostName = hostUser.Name;
+
+            var attendee = _providers.User.GetUserById(userId);
+            var attendeeName = attendee.Name;
+            var attendeeEmail = attendee.Email;
+
+            _providers.Email.SendCancelMeetingEmail(meetingTitle, attendeeName, attendeeEmail, hostName);
+        }
+
+        public IEnumerable<User> GetAllUsersAsObject()
         {
             int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
             //var institutionId = _providers.User.GetInstitutionId(userId);
-            List<User> allUsers = _providers.User.GetAllUsersAsObject(userId);
+            IEnumerable<User> allUsers = _providers.User.GetAllUsersAsObject(userId);
 
             return allUsers;
         }
@@ -170,6 +225,42 @@ namespace WebAppsNoAuth.Controllers
             ViewData["UsersList"] = new SelectList(allUsers, "Id", "Name");
             var requestTypes = _providers.Request.GetAllRequestTypes();
             ViewData["RequestTypeList"] = new SelectList(requestTypes, "RequestTypeId", "RequestTypeName");
+
+            var statusTypes = GetAllStatusTypes();
+            ViewData["StatusList"] = new SelectList(statusTypes, "StatusTypeId", "StatusTypeName");
+            var userLocationsList = GetAllUserLocations();
+            if (userLocationsList.Count != 0)
+            {
+                ViewData["UserLocationsList"] = new SelectList(userLocationsList, "LocationId", "LocationValue");
+            }
+            else
+            {
+                Location fake = new Location { LocationId = -1, LocationValue = "", LocationTitle = "" };
+                List<Location> fakeLocationsList = new List<Location>();
+                fakeLocationsList.Add(fake);
+                ViewData["UserLocationsList"] = new SelectList(fakeLocationsList, "LocationId", "LocationValue");
+            }
+
+            return View();
+        }
+
+        public IActionResult Meetings()
+        {
+            ViewData["Authenticated"] = "true";
+            int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
+
+            ViewData["Username"] = HttpContext.User.Claims.ToList()[2].ToString().Split(":")[1];
+
+            var allUsers = GetAllUsersAsObject();
+            var allUsersExHost = new List<User>();
+            for (var i=1; i<allUsers.Count(); i++)
+            {
+                allUsersExHost.Add(allUsers.ElementAt(i));
+            }
+            var currentUser = _providers.User.GetUserById(userId);
+            ViewData["Admin"] = currentUser.Admin;
+            ViewData["Manager"] = currentUser.Manager;
+            ViewData["UsersList"] = new SelectList(allUsersExHost, "Id", "Name");
 
             var statusTypes = GetAllStatusTypes();
             ViewData["StatusList"] = new SelectList(statusTypes, "StatusTypeId", "StatusTypeName");
@@ -301,6 +392,13 @@ namespace WebAppsNoAuth.Controllers
             List<Request> allRequests = _providers.Request.GetAllApprovedRequests(userId);
             return Json(new { data = allRequests });
         }
+
+        public ActionResult GetAllMeetings()
+        {
+            int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
+            List<Meeting> allMeetings = _providers.User.GetAllMeetings(userId);
+            return Json(new { data = allMeetings });
+        }
         //Manager getting another users requests
         public ActionResult GetUserRequests(int userId)
         {
@@ -337,9 +435,83 @@ namespace WebAppsNoAuth.Controllers
             return false;
         }
 
+        public bool AddNewMeeting(string title, DateTime meetingDate, DateTime startTime, DateTime endTime, string attendees)
+        {
+            var userId = HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1];
+            Debug.WriteLine(userId);
+            var attendeesList = attendees.Replace("(", "").Replace(")", "");
+            var attendeesListTwo = attendeesList.Split(",");
+            var attendeesListThree = attendeesListTwo.Prepend<string>(userId);
+            var attendeesListFour = new List<Int32>();
+
+            var startTimeStr = startTime.ToString("hh:mm tt");
+            var endTimeStr = endTime.ToString("hh:mm tt");
+
+            //Convert a new list to map strings representing ints to ints 
+            for (var i=0; i<attendeesListThree.Count(); i++)
+            {
+                attendeesListFour.Add(Convert.ToInt32(attendeesListThree.ElementAt(i)));
+            }
+            var success = _providers.User.AddNewMeeting(title, meetingDate, startTimeStr, endTimeStr, attendeesListFour);
+            if (success)
+            {
+                var hostUserId = attendeesListFour[0];
+                for (var i=1; i<attendeesListFour.Count(); i++) //dont need to send meeting invite to the host 
+                {
+                    SendMeetingInviteEmail(attendeesListFour[i], hostUserId, title, meetingDate, startTimeStr, endTimeStr);
+                }   
+                return true;
+            }
+
+            return false;
+        }
+
         public bool DeleteRequest(int requestId)
         {
             return _providers.Request.DeleteRequest(requestId);
+        }
+
+        public bool AcceptMeeting(int meetingId)
+        {
+            int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
+            var success = _providers.User.AcceptMeeting(userId, meetingId);
+            if (success)
+            {
+                SendAcceptMeetingEmailToHost(userId, meetingId);
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteMeeting(int meetingId)
+        {
+            int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
+
+            var meeting = _providers.User.GetMeetingById(meetingId);
+            var meetingAttendees = meeting.Attendees;
+
+            meetingAttendees = meetingAttendees.Replace("Tentative", "");
+            var attendeesList = meetingAttendees.Split(",");
+            var attendeesIds = _providers.User.GetMeetingAttendeesIdList(meetingId);
+
+            if (meeting.HostUserId == userId) //if the host is the one cancelling the meeting, need to delete all meeting attendees of this meeting 
+            {
+                for (var i=1; i<attendeesIds.Count(); i++) //i = 1 because dont need to send to host 
+                {
+                    if (attendeesIds.ElementAt(i) == meeting.HostUserId)
+                    {
+                        continue;
+                    }
+                    SendCancelMeetingEmail(attendeesIds[i], meetingId);
+                }
+            }
+            var success = _providers.User.DeleteMeeting(userId, meetingId);
+            if (success)
+            {
+                SendRejectMeetingEmailToHost(userId, meetingId);
+                return true;
+            }
+            return false;
         }
 
         public ActionResult ValidateRequest(int userId, int requestTypeId, DateTime startDate, DateTime endDate)
@@ -375,12 +547,9 @@ namespace WebAppsNoAuth.Controllers
                 }
             }
             
-            Debug.WriteLine("NUMBER OF DAYS IN REQ: " + requestAmount);
-
             //Check if enough entitlements for the year, if the requestType is 'Annual'
             if (requestTypeId == 1)
             {
-                Debug.WriteLine(requestsList);
                 for (var i = 0; i < requestsList.Count(); i++)
                 {
                     if (requestsList[i].RequestTypeId == 1)
@@ -399,7 +568,6 @@ namespace WebAppsNoAuth.Controllers
                        for (var j = requestsList[i].StartDate; j <= requestsList[i].EndDate; j = j.AddDays(1))
                        {
                             var dayOfWeek = j.ToString("dddd");
-                            Debug.WriteLine(dayOfWeek);
                             if (dayOfWeek.Equals("Saturday") || dayOfWeek.Equals("Sunday")) //Don't count Weekend 
                             {
                                 continue;
@@ -411,7 +579,6 @@ namespace WebAppsNoAuth.Controllers
                         }
                     }
                 }
-                Debug.WriteLine(usedAmount + " is used amount");
                 if (usedAmount + requestAmount > totalAmount)
                 {
                     toReturn.Id = 3;
@@ -429,7 +596,6 @@ namespace WebAppsNoAuth.Controllers
                 return Json(new { data = toReturn });
             }
             var success = AddNewRequest(currentUserId, requestTypeId, startDate, endDate);
-            Debug.WriteLine("validatereq result of addnewreq: " + success);
             if (success)
             {
                 toReturn.Id = 1;
@@ -448,6 +614,11 @@ namespace WebAppsNoAuth.Controllers
         public bool SetUserStatus(int statusTypeId, int locationId, bool isWFH, string wfhContact)
         {
             int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
+            Debug.WriteLine(userId);
+            Debug.WriteLine(statusTypeId);
+            Debug.WriteLine(locationId);
+            Debug.WriteLine(isWFH);
+            Debug.WriteLine(wfhContact);
             return _providers.User.SetUserStatus(userId, statusTypeId, locationId, isWFH, wfhContact);
         }
 

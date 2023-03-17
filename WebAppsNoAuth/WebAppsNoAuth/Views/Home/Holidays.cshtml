@@ -51,13 +51,17 @@
 
 @section Scripts {
 
-    <script>var isManager = false;
+    <script>
+        var isManager = false;
+        var managerUserId = -1;
         $(document).ready(function () {
             var updateRequestId = -1;
             if (document.getElementById("ManagerUsersList") != null) {
                 isManager = true;
+                managerUserId = document.getElementById("ManagerUsersList").value;
+
                 document.getElementById("ManagerUsersList").onchange = function () {
-                    getUserRequests(); //this function is for
+                    getUserRequests();
                 }
             }
             getAllRequests();
@@ -104,11 +108,11 @@
                     var html = "";
                     for (var i = 0; i < result.data.length; i++) {
                         html += "<tr>";
-                        html += "<td>" + result.data[i].startDate + "</td>";
-                        html += "<td>" + result.data[i].endDate + "</td>";
+                        html += "<td>" + result.data[i].startDateStr + "</td>";
+                        html += "<td>" + result.data[i].endDateStr + "</td>";
                         html += "<td>" + result.data[i].requestTypeName + "</td>";
                         html += "<td>" + result.data[i].approvedMessage + "</td>";
-                        html += "<td><a href='#' onclick='return getById(" + result.data[i].requestId + ")'>Edit</a> | <a href='#' onclick='deleteRequest(" + result.data[i].requestId + ")'>Delete</a></td>";
+                        html += "<td><a href='#' onclick='deleteRequest(" + result.data[i].requestId + ")' style=color:'maroon'>Cancel</a></td>";
                         html += "<tr>";
                     }
                     $(".tbody").html(html);
@@ -146,8 +150,7 @@
                         return false;
                     }
                     resetPage()
-                    getAllRequests();
-
+                    getUserRequests();
                 },
                 error: function (error) {
                     alert(error.responseText);
@@ -163,7 +166,7 @@
                     requestId: requestId
                 },
                 success: function (result) {
-                    getAllRequests();
+                    getUserRequests();
                 },
                 error: function (error) {
                     alert(error.responseText);

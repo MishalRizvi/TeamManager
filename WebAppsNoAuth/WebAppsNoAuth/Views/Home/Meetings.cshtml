@@ -1,11 +1,238 @@
-﻿{
-  "ConnectionStrings": {
-    "DefaultConnection": "DataSource=app.db"
-  },
-  "Logging": {
-    "LogLevel": {
-      "Default": "Warning"
+﻿<div>
+    <h2 class="appTitle indexHeader">Meetings</h2>
+    <br />
+    <div style="position:absolute;left:100px;">
+        <table class="table table-bordered table-hover styled-table-calendar">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Host</th>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Attendees</th>
+                </tr>
+            </thead>
+            <tbody class="tbody">
+            </tbody>
+        </table>
+    </div>
+
+    <div style="position: absolute; right: 200px; top: 200px; bottom:100px; outline:solid maroon; outline-offset:85px">
+        <label class="form-label appLabel" style="font-size:x-large">Set Up Meeting</label>
+        <br />
+        <form method="get">
+            <div class="form-outline mb-4">
+                <label class="form-label appLabel" for="meetingTitle">Title:</label>
+                <input type="text" id="meetingTitle" class="form-control form-control-lg" required />
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label appLabel" for="meetingDate">Date:</label>
+                <input type="date" id="meetingDate" class="form-control form-control-lg" required />
+            </div>
+            <div class="row">
+                <div class="form-outline mb-4 column">
+                    <label class="form-label appLabel" for="startTime">Start Time:</label>
+                    <input type="time" id="startTime" class="form-control form-control-lg" required />
+                </div>
+                <div class="form-outline mb-4 column">
+                    <label class="form-label appLabel" for="endTime">End Time:</label>
+                    <input type="time" id="endTime" class="form-control form-control-lg" required />
+                </div>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label appLabel" for="meetingUsers" required>Attendees: </label>
+                <br />
+                <label style="font-size:smaller; font-style:italic">For Mac Users: press on Cmd and select users.</label>
+                <br />
+                <label style="font-size:smaller; font-style:italic">For Window Users: press on Ctrl and select users.</label>
+                <br />
+                @Html.ListBox("UsersList")
+            </div>
+        </form>
+        <button type="button" class="btn btn-primary appButton" id="addMeetingButton" onclick="return addNewMeeting()">Submit</button>
+        <div id="messageBox" style="outline:none"></div>
+    </div>
+</div>
+<style>
+    #UsersList {
+        height: 150px;
     }
-  },
-  "AllowedHosts": "*"
+
+</style>
+
+
+@section Scripts {
+
+    <script>
+
+        $(document).ready(function () {
+            getAllMeetings();
+
+        })
+
+        function getAllMeetings() {
+            $.ajax({
+                url: "GetAllMeetings",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    var html = "";
+                    for (var i = 0; i < result.data.length; i++) {
+                        html += "<tr>";
+                        html += "<td>" + result.data[i].title + "</td>";
+                        html += "<td>" + result.data[i].hostUserName + "</td>";
+                        html += "<td>" + result.data[i].meetingDate + "</td>";
+                        html += "<td>" + result.data[i].startTime + "</td>";
+                        html += "<td>" + result.data[i].endTime + "</td>";
+                        var attendees = result.data[i].attendees;
+                        var attendeesStr = "";
+                        html += "<td>";
+                        for (var j = 0; j < attendees.length; j++) {
+                            if (attendees[j] == ',') { //add a new line for the next name
+
+                                attendeesStr += '<br/>';
+                                continue;
+                            }
+                            attendeesStr += attendees[j];
+                        }
+                        attendeesStr = attendeesStr.replace(/Tentative/g, '<span style="color:red; font-style:italic; font-size:smaller">Tentative</span>');
+                        html += attendeesStr;
+                        html += "</td>";
+                        if (result.data[i].active == false) {
+                            html += "<td><a href='#' onclick='acceptMeeting(" + result.data[i].meetingId + ")' style=color:'maroon;'>Accept</a></td>";
+                        }
+                        else {
+                            html += "<td><a href='#' onclick='deleteMeeting(" + result.data[i].meetingId + ")' style=color:'maroon'>Cancel</a></td>";
+                        }
+
+                        html += "<tr>";
+                    }
+                    $(".tbody").html(html);
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+        function addNewMeeting() {
+            var valid = validateDetails();
+            if (valid == false) {
+                return false;
+            }
+            var meetingTitle = document.getElementById("meetingTitle").value;
+            var meetingDate = document.getElementById("meetingDate").value;
+            var startTime = document.getElementById("startTime").value;
+            console.log(startTime);
+            var endTime = document.getElementById("endTime").value;
+            var attendeesText = $('#UsersList option:selected').text();
+            var attendeesVal = Array.from(document.getElementById('UsersList').selectedOptions).map(({value}) => value);
+
+            var attendeesStr = "(";
+            for (var i = 0; i < attendeesVal.length; i++) {
+                attendeesStr += attendeesVal[i];
+                if (i == attendeesVal.length-1) {
+                    break;
+                }
+                attendeesStr += ",";
+            }
+            attendeesStr += ")";
+            console.log(attendeesStr);
+            $.ajax({
+                url: "AddNewMeeting",
+                type: "POST",
+                data: {
+                    title: meetingTitle,
+                    meetingDate: meetingDate,
+                    startTime: startTime,
+                    endTime: endTime,
+                    attendees: attendeesStr
+                },
+                success: function (result) { //do we want to add validation for meetings to ensure there is no conflict
+                    console.log(result);
+                    resetPage()
+                    getAllMeetings();
+
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+
+        function acceptMeeting(meetingId) {
+            $.ajax({
+                url: "AcceptMeeting",
+                type: "POST",
+                data: {
+                    meetingId: meetingId
+                },
+                success: function (result) {
+                    getAllMeetings();
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+
+        function deleteMeeting(meetingId) {
+            $.ajax({
+                url: "DeleteMeeting",
+                type: "POST",
+                data: {
+                    meetingId: meetingId
+                },
+                success: function (result) {
+                    getAllMeetings();
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+
+        function resetPage() {
+            document.getElementById("meetingDate").value = "";
+            document.getElementById("startTime").value = "";
+            document.getElementById("endTime").value = "";
+           // $("#messageBox").html("");
+
+            $("#startTime").css("border-color", "lightgrey");
+            $("#endTime").css("border-color", "lightgrey");
+        }
+
+        function validateDetails() {
+
+            var meetingDate = document.getElementById("meetingDate").value;
+            var startTime = document.getElementById("startTime").value;
+            var endTime = document.getElementById("endTime").value;
+
+            if (meetingDate == "") {
+                $("#meetingDate").css("border-color", "red");
+                alert("Please enter a date.");
+                return false;
+            }
+            if (startTime == "") {
+                $("#startTime").css("border-color", "red");
+                alert("Please enter a start time.");
+                return false;
+            }
+            if (endTime == "") {
+                $("#endTime").css("border-color", "red");
+                alert("Please enter an end time.");
+                return false;
+            }
+            if (startTime > endTime) {
+                $("#startTime").css("border-color", "red");
+                $("#endTime").css("border-color", "red");
+                alert("End time can't be before start time");
+                return false;
+            }
+        }
+    </script>
 }
+
+
