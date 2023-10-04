@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2+GaWIQv7zgvVBSiYohjwzV1bN2fdWpJ4tlcvbXSDpBsfa9js96lAucz9TldOf5+cYeZmF59PSrrRLumEqSieQ==",
+  "dgSpecHash": "j9PAIH9prdMHWINN3CDGk7RhaFWLR+5X5Sc5nuKoPvU4c2gbapFCY3JJS6P0Q5egVBKk7oc2Q7SnMWQIVmI0Yg==",
   "success": true,
   "projectFilePath": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj",
   "expectedPackageFiles": [
@@ -91,6 +91,9 @@
     "/Users/mishalrizvi/.nuget/packages/microsoft.identitymodel.protocols/6.21.0/microsoft.identitymodel.protocols.6.21.0.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/6.21.0/microsoft.identitymodel.protocols.openidconnect.6.21.0.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/microsoft.identitymodel.tokens/6.21.0/microsoft.identitymodel.tokens.6.21.0.nupkg.sha512",
+    "/Users/mishalrizvi/.nuget/packages/microsoft.ml/2.0.1/microsoft.ml.2.0.1.nupkg.sha512",
+    "/Users/mishalrizvi/.nuget/packages/microsoft.ml.cpumath/2.0.1/microsoft.ml.cpumath.2.0.1.nupkg.sha512",
+    "/Users/mishalrizvi/.nuget/packages/microsoft.ml.dataview/2.0.1/microsoft.ml.dataview.2.0.1.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/microsoft.net.http.headers/2.2.0/microsoft.net.http.headers.2.2.0.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/microsoft.net.stringtools/17.3.2/microsoft.net.stringtools.17.3.2.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/microsoft.netcore.platforms/1.1.1/microsoft.netcore.platforms.1.1.1.nupkg.sha512",
@@ -235,6 +238,7 @@
     "/Users/mishalrizvi/.nuget/packages/system.text.json/7.0.0/system.text.json.7.0.0.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/system.text.regularexpressions/4.3.0/system.text.regularexpressions.4.3.0.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/system.threading/4.3.0/system.threading.4.3.0.nupkg.sha512",
+    "/Users/mishalrizvi/.nuget/packages/system.threading.channels/4.7.1/system.threading.channels.4.7.1.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/system.threading.tasks/4.3.0/system.threading.tasks.4.3.0.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/system.threading.tasks.dataflow/6.0.0/system.threading.tasks.dataflow.6.0.0.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512",
