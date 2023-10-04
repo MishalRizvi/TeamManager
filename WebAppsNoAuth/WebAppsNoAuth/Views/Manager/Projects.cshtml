@@ -1,0 +1,300 @@
+﻿
+<div class="container">
+    <h2 class="appTitle indexHeader">Projects</h2>
+    <br />
+    <br />
+    <table class="table table-hover styled-table-calendar">
+        <thead>
+            <tr>
+                <th><button class="btn btn-primary appButton" onclick="redirect()"><i class="fa fa-plus"></i> Add new project </button></th>
+            </tr>
+            <tr style="color:maroon">
+                <th>Name</th>
+                <th>Description</th>
+                <th>Difficulty</th>
+                <th>Project Manager</th>
+                <th>Created Date</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="tbody" id="projectsTable">
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="projectModal" tabindex="-1" role="dialog" aria-labelledby="projectModalLabel" aria-hidden="true" style="display:none">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeUpdateProjModal()">x</button>
+                <h4 class="modal-title appModalFont" id="projectModalLabel">Add Project</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="projectName">Project Name</label>
+                        <input type="text" id="projectName" class="form-control form-control-lg" />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="projectDescription">Project Description</label>
+                        <input type="textbox" id="projectDescription" class="form-control form-control-lg" />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="projectDifficulty">Level of difficulty</label>
+                        <input type="number" id="projectDifficulty" class="form-control form-control-lg" />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="projectManager">Project Manager</label>
+                        @Html.DropDownList("UsersListComplete")
+                    </div>
+                    <div id="usersInProject">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Employees on project: </th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody" id="usersInProjectTable" style="height:100px;overflow-y:scroll;display:block">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="usersNotInProject">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Other employees:</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody" id="usersNotInProjectTable" style="height:100px;overflow-y:scroll;display:block">
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary appButton" id="addProjectButton" onclick="return addNewProjectMethod()">Add</button>
+                <button type="button" class="btn btn-primary appButton" id="updateProjectButton" onclick="updateProjectMethod()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        var updateProjectId = -1;
+        $(document).ready(function () {
+            getAllProjects();
+        });
+
+        function getAllProjects() {
+            $.ajax({
+                url: "GetAllProjectsAsJson",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    var html = "";
+                    if (result.data != null) {
+                        for (var i = 0; i < result.data.length; i++) {
+                            html += "<tr>";
+                            html += "<td><p class='fw-bold mb-1'>" + result.data[i].name + "</p></td>";
+                            html += "<td>" + result.data[i].description + "</td>";
+                            html += "<td>" + result.data[i].difficulty + "</td>";
+                            html += "<td>" + result.data[i].managerUserName + "</td>";
+                            html += "<td>" + result.data[i].createdDate + "</td>";
+                            html += "<td><button class='btn btn-primary px-3' onclick='return getByProjectId(" + result.data[i].projectId + ")'><i class='fa fa-edit'></i></button> <button class='btn btn-danger px-3' onclick='deleteProject(" + result.data[i].projectId + ")'><i class='fa fa-times'></i></button></td>";
+                            html += "<tr>";
+                        }
+                    }
+                    $("#projectsTable").html(html);
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+
+        function getByProjectId(projectId) {
+            updateProjectId = projectId;
+            console.log(updateProjectId);
+            $("#projectName").css("border-color", "lightgrey");
+            $("#title").css("border-color", "lightgrey");
+            $.ajax({
+                url: "GetProjectById",
+                type: "GET",
+                data: { projectId: projectId },
+                success: function (result) {
+                    console.log(result);
+                    $("#projectName").val(result.data.name);
+                    $("#projectDescription").val(result.data.description);
+                    $("#projectDifficulty").val(result.data.difficulty);
+                    document.getElementById("UsersListComplete").value = result.data.managerUserId;
+                    getAllUsersInProject();
+                    getAllUsersNotInProject();
+                    $("#projectModal").modal("show");
+                    $("#updateProjectButton").show();
+                    $("#addProjectButton").hide();
+                    //document.getElementById("updateLocationButton").style.display = 'none';
+                    //document.getElementById("addLocationButton").style.display = 'block';
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+            return false; //May change
+        }
+
+        function redirect() {
+            window.location.href = "/Manager/UpdateProject"
+        }
+
+        function getAllUsersInProject() {
+            console.log(updateProjectId);
+            $.ajax({
+                url: "GetAllUsersInProjectAsJson",
+                type: "GET",
+                data: {
+                    projectId: updateProjectId,
+                },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    var html = "";
+                    for (var i = 0; i < result.data.length; i++) {
+                        html += "<tr>";
+                        html += "<td style='width:100%'>" + result.data[i].name + "</td>";
+                        html += "<td><a href='#' onclick='removeUserFromProject(" + result.data[i].id + ")'>Remove</a></td>"; //COMPLETE
+                        html += "<tr>";
+                    }
+                    $("#usersInProjectTable").html(html);
+                    $("#usersInProject").show();
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+
+        function getAllUsersNotInProject() {
+            console.log(updateProjectId);
+            $.ajax({
+                url: "GetAllUsersNotInProjectAsJson",
+                type: "GET",
+                data: {
+                    projectId: updateProjectId,
+                },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    var html = "";
+                    for (var i = 0; i < result.data.length; i++) {
+                        html += "<tr>";
+                        html += "<td style='width:100%'>" + result.data[i].name + "</td>";
+                        html += "<td><a href='#' onclick='addUserToProject(" + result.data[i].id + ")'>Add</a></td>"; //COMPLETE
+                        html += "<tr>";
+                    }
+                    $("#usersNotInProjectTable").html(html);
+                    $("#usersNotInProject").show();
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+
+        function updateProjectMethod() {
+            var confirmed = confirm("Would you like to update?");
+            if (confirmed) {
+                var projectName = $("#projectName").val();
+                var projectDes = $("#projectDescription").val();
+                var projectDiff = $("#projectDifficulty").val();
+                var projectMan = document.getElementById("UsersListComplete").value;
+                $.ajax({
+                    url: "UpdateProjectMethod",
+                    type: "POST",
+                    data: {
+                        projectId: updateProjectId,
+                        projectName: projectName,
+                        projectDescription: projectDes,
+                        projectDifficulty: projectDiff,
+                        projectManager: projectMan
+                    },
+                    success: function (result) {
+                        getAllProjects();
+                        $("#projectModal").modal("hide");
+                    },
+                    error: function (error) {
+                        alert(error.responseText);
+                    }
+                })
+            }
+            updateProjectId = -1;
+            closeUpdateProjModal();
+        }
+
+        function deleteProject(projectId) {
+            var confirmed = confirm("Would you like to delete?");
+            if (confirmed) {
+                $.ajax({
+                    url: "DeleteProject",
+                    type: "POST",
+                    data: {
+                        projectId: projectId
+                    },
+                    success: function (result) {
+                        getAllProjects();
+                    },
+                    error: function (error) {
+                        alert(error.responseText);
+                    }
+                })
+            }
+        }
+
+        function addUserToProject(userId) {
+            var newProject = $("#projectName").val(); //refers to team name 
+            $.ajax({
+                url: "AddUserToProject",
+                type: "POST",
+                data: {
+                    userId: userId,
+                    projectId: updateProjectId
+                },
+                success: function (result) {
+                    getAllProjects();
+                    getAllUsersInProject();
+                    getAllUsersNotInProject();
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+
+        function removeUserFromProject(userId) {
+            $.ajax({
+                url: "RemoveUserFromProject",
+                type: "POST",
+                data: {
+                    userId: userId,
+                    projectId: updateProjectId
+                },
+                success: function (result) {
+                    getAllProjects();
+                    getAllUsersInProject();
+                    getAllUsersNotInProject();
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+
+        function closeUpdateProjModal() {
+            $("#projectModal").modal("hide");
+        }</script>
+}

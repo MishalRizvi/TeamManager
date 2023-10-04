@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj": {}
+    "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj": {}
   },
   "projects": {
-    "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj": {
+    "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj",
+        "projectUniqueName": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj",
         "projectName": "WebAppsNoAuth",
-        "projectPath": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj",
+        "projectPath": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj",
         "packagesPath": "/Users/mishalrizvi/.nuget/packages/",
-        "outputPath": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/obj/",
+        "outputPath": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/mishalrizvi/.nuget/NuGet/NuGet.Config"
@@ -20,8 +20,8 @@
           "net7.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {},
-          "https://nuget.telerik.com/v3/index.json": {}
+          "/usr/local/share/dotnet/sdk/7.0.308/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
@@ -79,6 +79,38 @@
               "target": "Package",
               "version": "[7.0.0, )"
             },
+            "Microsoft.Extensions.ML": {
+              "target": "Package",
+              "version": "[2.0.1, )"
+            },
+            "Microsoft.ML": {
+              "target": "Package",
+              "version": "[2.0.1, )"
+            },
+            "Microsoft.ML.AutoML": {
+              "target": "Package",
+              "version": "[0.20.1, )"
+            },
+            "Microsoft.ML.CodeGenerator": {
+              "target": "Package",
+              "version": "[0.20.1, )"
+            },
+            "Microsoft.ML.DataView": {
+              "target": "Package",
+              "version": "[2.0.1, )"
+            },
+            "Microsoft.ML.FastTree": {
+              "target": "Package",
+              "version": "[2.0.1, )"
+            },
+            "Microsoft.ML.LightGbm": {
+              "target": "Package",
+              "version": "[2.0.1, )"
+            },
+            "Microsoft.ML.Mkl.Redist": {
+              "target": "Package",
+              "version": "[2.0.1, )"
+            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[7.0.1, )"
@@ -123,7 +155,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.308/RuntimeIdentifierGraph.json"
         }
       }
     }

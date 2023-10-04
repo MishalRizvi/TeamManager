@@ -1,49 +1,113 @@
-﻿<h2 class="appTitle indexHeader">Holidays</h2>
+﻿<head>
+    <link rel="stylesheet" href="~/css/card.css"/>
+</head>
+<h2 class="appTitle indexHeader">Holidays</h2>
 <br />
 @{
     if (ViewData["Manager"].ToString() == "True")
     {
-        <div class="form-outline mb-4">
+    <div class="row">
+        <div class="col">
             <label class="form-label" for="userId" style="color:maroon">Select User: </label>
             @Html.DropDownList("ManagerUsersList")
         </div>
+        <div class="col">
+            <button class="btn btn-primary appButton" data-toggle="modal" data-target="#modal-view-event-add" onclick="clearTextBox()"><i class="fa fa-plus"> Add New Request</i></button>
+        </div>
+    </div>
     }
 }
-<div>
-    <div style="position:absolute;left:100px;">
-        <table class="table table-bordered table-hover styled-table-calendar">
-            <thead>
-                <tr>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Request Type</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody class="tbody">
-            </tbody>
-        </table>
+<div class="row gy-5">
+    <div class="col-6 overflow-auto" id="cardSection">
+        <h4>Upcoming</h4>
+        <ul style="--length: 5; width: 549px; height: 500px" role="list" class="cardClass overflow-auto" id="currentRequests">
+        </ul>
+    </div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Dashboard</h3>
+                <h6 class="card-subtitle mb-2 text-muted">As of today</h6>
+                <div class="row">
+                    <div class="col">
+                        <p class="dashboardTitle text-muted">Total entitlements</p>
+                        <p class="dashboardStat" id="totalEntitlements"></p>
+                    </div>
+                    <div class="col">
+                        <p class="dashboardTitle text-muted">Entitlements remaining</p>
+                        <p class="dashboardStat" id="remainingEntitlements"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h6 class="dashboardTitle text-muted">Total Requests</h6>
+                        <p class="dashboardStat" id="totalEntitlementsUsed"></p>
+                    </div>
+                    <div class="col">
+                        <p class="dashboardTitle text-muted">Annual</p>
+                        <p class="dashboardStat" id="totalAnnualUsed"></p>
+                    </div>
+                    <div class="col">
+                        <p class="dashboardTitle text-muted">Study</p>
+                        <p class="dashboardStat" id="totalStudyUsed"></p>
+                    </div>
+                    <div class="col">
+                        <p class="dashboardTitle text-muted">WFH</p>
+                        <p class="dashboardStat" id="totalWFHUsed"></p>
+                    </div>
+                    <div class="col" id="statsSection">
+                        <canvas id="statsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <a href="/Home/Calendar" class="card-link">View calendar</a>
+        </div>
     </div>
 
-    <div style="position: absolute; right: 300px; top: 300px; outline:solid maroon; outline-offset:85px">
-        <label class="form-label appLabel" style="font-size:x-large">New Request</label>
-        <br />
-        <form method="get">
-            <div class="form-outline mb-4">
-                <label class="form-label appLabel" for="startDate">Start Date:</label>
-                <input type="date" id="startDate" class="form-control form-control-lg" required />
-            </div>
-            <div class="form-outline mb-4">
-                <label class="form-label appLabel" for="endDate">End Date:</label>
-                <input type="date" id="endDate" class="form-control form-control-lg" required />
-            </div>
-            <div class="form-outline mb-4">
-                <label class="form-label appLabel" for="requestType" required>Type: </label>
-                @Html.DropDownList("RequestTypeList", "---")
-            </div>
-        </form>
-        <button type="button" class="btn btn-primary appButton" id="addRequestButton" onclick="return addNewRequest()">Submit</button>
-        <div id="messageBox" style="outline:none"></div>
+    <div class="col-6" id="cardSection">
+        <h4>Previous Requests</h4>
+        <ul style="--length: 5; width:549px; height:400px" role="list" class="cardClass overflow-auto" id="previousRequests">
+        </ul>
+    </div>
+
+    <div class="col-6">
+    </div>
+
+    <div class="col-6">
+    </div>
+</div>
+
+<div id="modal-view-event-add" class="modal modal-top fade calendar-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="add-event" method="get">
+                <div class="modal-body">
+                    <h4>Add Event Detail</h4>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="startDate">Start Date:</label>
+                        <input type="date" id="startDate" class="form-control form-control-lg" required />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="endDate">End Date:</label>
+                        <input type="date" id="endDate" class="form-control form-control-lg" required />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="requestType" required>Type: </label>
+                        @Html.DropDownList("RequestTypeList", "---")
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="requestDescription">Description:</label>
+                        <input type="text" id="requestDescription" class="form-control form-control-lg" required />
+                    </div>
+                    <div id="messageBox" style="outline:none">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="return addNewRequest()">Save</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -54,6 +118,10 @@
     <script>
         var isManager = false;
         var managerUserId = -1;
+        var months = { "01": 0, "02": 0, "03": 0, "04": 0, "05": 0, "06": 0, "07": 0, "08": 0, "09": 0, "10": 0, "11": 0, "12": 0 };
+        var monthValues = [];
+        var barChart;
+        //var months = { "Jan": 0, "Feb": 0, "Mar": 0, "Apr": 0, "May": 0, "Jun": 0, "Jul": 0, "Aug": 0, "Sep": 0, "Oct": 0, "Nov": 0, "Dec": 0 };
         $(document).ready(function () {
             var updateRequestId = -1;
             if (document.getElementById("ManagerUsersList") != null) {
@@ -62,9 +130,14 @@
 
                 document.getElementById("ManagerUsersList").onchange = function () {
                     getUserRequests();
+                    getRequestsStats();
+                    getAllApprovedRequests();
+
                 }
             }
             getAllRequests();
+            getRequestsStats()
+            getAllApprovedRequests();
         })
 
         function getAllRequests() {
@@ -76,16 +149,67 @@
                 success: function (result) {
                     console.log(result);
                     var html = "";
+                    var oldRequests = []; 
                     for (var i = 0; i < result.data.length; i++) {
-                        html += "<tr>";
-                        html += "<td>" + result.data[i].startDateStr + "</td>";
-                        html += "<td>" + result.data[i].endDateStr + "</td>";
-                        html += "<td>" + result.data[i].requestTypeName + "</td>";
-                        html += "<td>" + result.data[i].approvedMessage + "</td>";
-                        html += "<td><a href='#' onclick='deleteRequest(" + result.data[i].requestId + ")' style=color:'maroon'>Cancel</a></td>";
-                        html += "<tr>";
+                        var fetchedSDate = result.data[i].startDate;
+                        var fetchedEDate = result.data[i].endDate;
+                        var todayDate = new Date().toISOString();
+                        var newSDate = moment(fetchedSDate).format('MMMM Do YYYY');
+                        var newEDate = moment(fetchedEDate).format('MMMM Do YYYY');
+                        if (todayDate > fetchedEDate) {
+                            oldRequests.push(result.data[i]);
+                            continue;
+                        }
+                        else {
+                            console.log(result.data[i]);
+                        }
+                        //html += '<li style="--i:1">';
+                        if (result.data[i].requestTypeId == 1) {
+                            html += '<li style="--i:1">';
+                        }
+                        if (result.data[i].requestTypeId == 2) {
+                            html += '<li style="--i:2">';
+                        }
+                        if (result.data[i].requestTypeId == 3) {
+                            html += '<li style="--i:3">';
+                        }
+                        html += '<h5>';
+                        html += result.data[i].requestTypeName + '</h5>';
+                        html += '<p>' + newSDate + ' - ' + newEDate + '</p>';
+                        html += "<p>" + result.data[i].approvedMessage + "</p>";
+                        html += "<p>"; if (result.data[i].description === "") { html += "No description available"; } else { html += result.data[i].description; }
+                        html += "</p>";
+                        html += "<p><a href='#' onclick='deleteRequest(" + result.data[i].requestId + ")' style='color:maroon; text-decoration:none'>CANCEL</a></p>";
+                        html += "</li>";
                     }
-                    $(".tbody").html(html);
+                    $("#currentRequests").html(html);
+
+                    var htmlO = "";
+                    for (var i = 0; i < oldRequests.length; i++) {
+                        //html += '<li style="--i:1">';
+                        if (oldRequests[i].requestTypeId == 1) {
+                            htmlO += '<li style="--i:1">';
+                        }
+                        if (oldRequests[i].requestTypeId == 2) {
+                            htmlO += '<li style="--i:2">';
+                        }
+                        if (oldRequests[i].requestTypeId == 3) {
+                            htmlO += '<li style="--i:3">';
+                        }
+                        htmlO += '<h5>';
+                        htmlO += oldRequests[i].requestTypeName + '</h5>';
+                        var fetchedSDateO = oldRequests[i].startDate;
+                        var fetchedEDateO = oldRequests[i].endDate;
+                        var newSDateO = moment(fetchedSDateO).format('MMMM Do YYYY');
+                        var newEDateO = moment(fetchedEDateO).format('MMMM Do YYYY');
+                        htmlO += '<p>' + newSDateO + ' - ' + newEDateO + '</p>';
+                        htmlO += "<p>" + oldRequests[i].approvedMessage + "</p>";
+                        htmlO += "<p>"; if (oldRequests[i].description === "") { htmlO += "No description available"; } else { htmlO += oldRequests[i].description; }
+                        htmlO += "</p>";
+                        //htmlO += "<p><a href='#' onclick='deleteRequest(" + oldRequests[i].requestId + ")' style=color:'maroon'>Cancel</a></p>";
+                        htmlO += "</li>";
+                    }
+                    $("#previousRequests").html(htmlO);
                 },
                 error: function (error) {
                     console.log(error.responseText);
@@ -106,16 +230,67 @@
                 success: function (result) {
                     console.log(result);
                     var html = "";
+                    var oldRequests = [];
                     for (var i = 0; i < result.data.length; i++) {
-                        html += "<tr>";
-                        html += "<td>" + result.data[i].startDateStr + "</td>";
-                        html += "<td>" + result.data[i].endDateStr + "</td>";
-                        html += "<td>" + result.data[i].requestTypeName + "</td>";
-                        html += "<td>" + result.data[i].approvedMessage + "</td>";
-                        html += "<td><a href='#' onclick='deleteRequest(" + result.data[i].requestId + ")' style=color:'maroon'>Cancel</a></td>";
-                        html += "<tr>";
+                        var fetchedSDate = result.data[i].startDate;
+                        var fetchedEDate = result.data[i].endDate;
+                        var todayDate = new Date().toISOString();
+                        var newSDate = moment(fetchedSDate).format('MMMM Do YYYY');
+                        var newEDate = moment(fetchedEDate).format('MMMM Do YYYY');
+                        if (todayDate > fetchedEDate) {
+                            oldRequests.push(result.data[i]);
+                            continue;
+                        }
+                        else {
+                            console.log(result.data[i]);
+                        }
+                        //html += '<li style="--i:1">';
+                        if (result.data[i].requestTypeId == 1) {
+                            html += '<li style="--i:1">';
+                        }
+                        if (result.data[i].requestTypeId == 2) {
+                            html += '<li style="--i:2">';
+                        }
+                        if (result.data[i].requestTypeId == 3) {
+                            html += '<li style="--i:3">';
+                        }
+                        html += '<h5>';
+                        html += result.data[i].requestTypeName + '</h5>';
+                        html += '<p>' + newSDate + ' - ' + newEDate + '</p>';
+                        html += "<p>" + result.data[i].approvedMessage + "</p>";
+                        html += "<p>"; if (result.data[i].description === "") { html += "No description available"; } else { html += result.data[i].description; }
+                        html += "</p>";
+                        html += "<p><a href='#' onclick='deleteRequest(" + result.data[i].requestId + ")' style='color:maroon; text-decoration:none'>CANCEL</a></p>";
+                        html += "</li>";
                     }
-                    $(".tbody").html(html);
+                    $("#currentRequests").html(html);
+
+                    var htmlO = "";
+                    for (var i = 0; i < oldRequests.length; i++) {
+                        //html += '<li style="--i:1">';
+                        if (oldRequests[i].requestTypeId == 1) {
+                            htmlO += '<li style="--i:1">';
+                        }
+                        if (oldRequests[i].requestTypeId == 2) {
+                            htmlO += '<li style="--i:2">';
+                        }
+                        if (oldRequests[i].requestTypeId == 3) {
+                            htmlO += '<li style="--i:3">';
+                        }
+                        htmlO += '<h5>';
+                        htmlO += oldRequests[i].requestTypeName + '</h5>';
+                        var fetchedSDateO = oldRequests[i].startDate;
+                        var fetchedEDateO = oldRequests[i].endDate;
+                        var newSDateO = moment(fetchedSDateO).format('MMMM Do YYYY');
+                        var newEDateO = moment(fetchedEDateO).format('MMMM Do YYYY');
+                        htmlO += '<p>' + newSDateO + ' - ' + newEDateO + '</p>';
+                        htmlO += "<p>" + oldRequests[i].approvedMessage + "</p>";
+                        htmlO += "<p>"; if (oldRequests[i].description === "") { htmlO += "No description available"; } else { htmlO += oldRequests[i].description; }
+                        htmlO += "</p>";
+                        //htmlO += "<p><a href='#' onclick='deleteRequest(" + oldRequests[i].requestId + ")' style=color:'maroon'>Cancel</a></p>";
+                        htmlO += "</li>";
+                    }
+                    $("#previousRequests").html(htmlO);
                 },
                 error: function (error) {
                     console.log(error.responseText);
@@ -134,6 +309,13 @@
             if (isManager) {
                 selectedUserId = document.getElementById("ManagerUsersList").value;
             }
+            var requestDescription = document.getElementById("requestDescription").value;
+            if (requestDescription === "") {
+                requestDescription = "NONE";
+            }
+            else {
+                console.log("notemp");
+            }
             $.ajax({
                 url: "ValidateRequest",
                 type: "POST",
@@ -141,10 +323,11 @@
                     userId: selectedUserId,
                     requestTypeId: requestTypeId,
                     startDate: startDate,
-                    endDate: endDate
+                    endDate: endDate,
+                    requestDescription: requestDescription
                 },
                 success: function (result) {
-                    console.log(result);
+                    console.log("Message of request ");
                     if (result.data.id == 3) {
                         $("#messageBox").html(result.data.messageStr);
                         return false;
@@ -153,6 +336,7 @@
                     getUserRequests();
                 },
                 error: function (error) {
+                    alert("there is an error");
                     alert(error.responseText);
                 }
             })
@@ -178,6 +362,7 @@
             document.getElementById("startDate").value = "";
             document.getElementById("endDate").value = "";
             document.getElementById("RequestTypeList").value = "";
+            document.getElementById("requestDescription").value = "";
             $("#messageBox").html("");
             $("#startDate").css("border-color", "lightgrey");
             $("#endDate").css("border-color", "lightgrey");
@@ -212,7 +397,167 @@
                 alert("End date can't be before start date");
                 return false;
             }
-        }</script>
+        }
+
+        function getRequestsStats() {
+            var selectedUserId = -1;
+            if (isManager) {
+                selectedUserId = document.getElementById("ManagerUsersList").value;
+            }
+            var allEvents = [];
+            $.ajax({
+                url: "GetRequestStats",
+                type: "GET",
+                data: {
+                    userId: selectedUserId //do we need to pass this in? think of manager choosing a different user
+                },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    var totalUsed = result.data.totalUsed;
+                    var annualUsed = result.data.annualUsed; 
+                    var studyUsed = result.data.studyUsed; 
+                    var wfhUsed = result.data.wfhUsed;
+                    var entitlementAmount = result.data.entitlementAmount;
+
+                    $("#totalEntitlementsUsed").html(totalUsed);
+                    $("#totalAnnualUsed").html(annualUsed);
+                    $("#totalStudyUsed").html(studyUsed);
+                    $("#totalWFHUsed").html(wfhUsed);
+                    $("#totalEntitlements").html(entitlementAmount);
+                    $("#remainingEntitlements").html(entitlementAmount-annualUsed);
+
+
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+
+        }
+        function clearTextBox() {
+            $("#modal-view-event-add").modal("show");
+
+            $("#startDate").val("");
+            $("#endDate").val("");
+            $("#requestDescription").val("");
+            document.getElementById("RequestTypeList").value = 0;
+        }
+
+        function getAllApprovedRequests() {
+            //var oldcanv = document.getElementById('statsChart');
+            //document.removeChild(oldcanv)
+            monthValues = [];
+            months = { "01": 0, "02": 0, "03": 0, "04": 0, "05": 0, "06": 0, "07": 0, "08": 0, "09": 0, "10": 0, "11": 0, "12": 0 };
+            console.log(barChart);
+            if (barChart != undefined) {
+                barChart.destroy();
+            }
+            var selectedUserId = -1;
+            if (isManager) {
+                selectedUserId = document.getElementById("ManagerUsersList").value;
+            }
+            var allEvents = [];
+            $.ajax({
+                url: "GetAllApprovedRequestsAsJson",
+                type: "GET",
+                data: {
+                    userId: selectedUserId
+                },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    for (var i = 0; i < result.data.length; i++) {
+                        var requestType = result.data[i].requestTypeName;
+                        var icon = '';
+                        var bgCol = '';
+                        if (requestType === "Annual") {
+                            icon = "plane";
+                            bgCol = "pinkred";
+                        }
+                        if (requestType === "Study") {
+                            icon = "book";
+                            bgCol = "blue";
+                        }
+                        if (requestType === "WFH") {
+                            icon = "home";
+                            bgCol = "deepskyblue";
+                        }
+
+                        var requestStartDateStr = result.data[i].startDateStr;
+                        var requestEndDateStr = result.data[i].endDateStr;
+
+                        var differenceInTime = new Date(result.data[i].endDate).getTime() - new Date(result.data[i].startDate).getTime();
+                        var differenceInDays = differenceInTime / (1000 * 3600 * 24);
+
+                        for (var j = 0; j < differenceInDays + 1; j++) {
+
+                            var [curDay, curMonth, curYear] = requestStartDateStr.split('/');
+                            var nextDay = new Date(curYear, curMonth - 1, curDay);
+                            if (nextDay.getDay() != 0 && nextDay.getDay() != 6) {
+                                months[curMonth] += 1;
+                            }
+                            nextDay.setDate(nextDay.getDate() + 1);
+                            requestStartDateStr = (nextDay).toLocaleDateString('en-GB');
+                        }
+                    }
+                    var items = Object.keys(months).map(function (key) {
+                        return months[key];
+                    });
+                    monthValues = items.slice(3,);
+                    for (var i = 0; i < 3; i++) {
+                        monthValues.push(items[i]);
+                    }
+                    console.log(monthValues);
+                    const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                    const data = {
+                        labels: labels,
+                        datasets: [{
+                            label: 'This year - ',
+                            data: monthValues,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                //'rgba(255, 159, 64, 0.2)',
+                                //'rgba(255, 205, 86, 0.2)',
+                                //'rgba(75, 192, 192, 0.2)',
+                                //'rgba(54, 162, 235, 0.2)',
+                                //'rgba(153, 102, 255, 0.2)',
+                                //'rgba(201, 203, 207, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgb(255, 99, 132)',
+                                //'rgb(255, 159, 64)',
+                                //'rgb(255, 205, 86)',
+                                //'rgb(75, 192, 192)',
+                                //'rgb(54, 162, 235)',
+                                //'rgb(153, 102, 255)',
+                                //'rgb(201, 203, 207)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    };
+                    const config = {
+                        type: 'bar',
+                        data: data,
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        },
+                    };
+                    barChart = new Chart(document.getElementById("statsChart"), config);
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+
+    </script>
 }
 
 

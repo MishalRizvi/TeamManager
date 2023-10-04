@@ -4,77 +4,85 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Team Management</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/WebAppsNoAuth.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-grid.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/WebAppsNoAuth.styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.css" />
 </head>
 <body>
     @{
         if (ViewData["Authenticated"] != null)
         {
-            
+
             <header>
-                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color:maroon">
+                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3" style="opacity:1">
                     <div class="container-fluid">
-                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color:white">ManaTeam</a>
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color:maroon">ManaTeam</a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                                 aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                                <ul class="navbar-nav flex-grow-1">
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index" style="color:white">Home</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Holidays" style="color:white">Holidays</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Meetings" style="color:white">Meetings</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Calendar" style="color:white">Calendar</a>
-                                    </li>
-                                    @*<li class="nav-item">
-            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ResetPassword" style="color:maroon">Reset Password</a>
-        </li>*@
-                                    @{
-                                        if (ViewData["Admin"] != null && ViewData["Admin"].ToString() == "True")
-                                        {
-                                            <li class="nav-item">
-                                                <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateLocation" style="color:white">Locations</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateUser" style="color:white">Users</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateTeam" style="color:white">Teams</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateEntitlements" style="color:white">Entitlements</a>
-                                            </li>
-                                        }
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Holidays" style="color:maroon">Holidays</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Meetings" style="color:maroon">Meetings</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Calendar" style="color:maroon">Calendar</a>
+                                </li>
+                                @*<li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="MyProjects" style="color:maroon">My Projects</a>
+                                </li>*@
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="PMTasks" style="color:maroon">PM Tasks</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="MyTasks" style="color:maroon">Tasks</a>
+                                </li>
+                                @*<li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ResetPassword" style="color:maroon">Reset Password</a>
+                                    </li>*@
+                                @{
+                                    if (ViewData["Admin"] != null && ViewData["Admin"].ToString() == "True")
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateLocation" style="color:maroon">Locations</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateUser" style="color:maroon">Users</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateTeam" style="color:maroon">Teams</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateEntitlements" style="color:maroon">Entitlements</a>
+                                        </li>
                                     }
-                                    @{
-                                        if (ViewData["Manager"] != null && ViewData["Manager"].ToString() == "True")
-                                        {
-                                            <li class="nav-item">
-                                                <a class="nav-link" asp-area="" asp-controller="Manager" asp-action="ApproveRequest" style="color:white">Requests</a>
-                                            </li>
-                                        }
+                                }
+                                @{
+                                    if (ViewData["Manager"] != null && ViewData["Manager"].ToString() == "True")
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="Manager" asp-action="ApproveRequest" style="color:maroon">Requests</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="Manager" asp-action="Projects" style="color:maroon">Projects</a>
+                                        </li>
                                     }
-                                    @*<li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy" style="color:maroon">Privacy</a>
-        </li>*@
-                                </ul>
+                                }
+                            </ul>
                             <ul class="nav navbar navbar-right">
                                 <li>
                                     <button style="border:none; background-color:maroon; color:white" data-toggle="modal" data-target="#layoutModal">@ViewData["Username"]</button>
                                 </li>
                                 <li>
                                     <div class="avatar">
-                                        <div class="user-icon font18" style="background-color:white" data-toggle="modal" data-target="#layoutModal" onclick="openProfile()">
+                                        <div class="user-icon font18" style="opacity:1" data-toggle="modal" data-target="#layoutModal" onclick="openProfile()">
                                             <span class="amber" id="statusColour"></span>
                                         </div>
 
@@ -82,7 +90,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">
-                                        <i class="fa fa-sign-out" style="font-size:30px; color:white"></i>
+                                        <i class="fa fa-sign-out" style="font-size:30px; color:maroon"></i>
                                     </a>
                                 </li>
                             </ul>
@@ -92,10 +100,9 @@
             </header>
             <body>
 
-                    <div id="userStatus" class="sidepanel">
-                    </div>
+                <div id="userStatus" class="sidepanel">
+                </div>
                 <button class="openbtn" onclick="openSideBar()">☰</button>
-
             </body>
             <div class="modal fade" id="layoutModal" tabindex="-1" role="dialog" aria-labelledby="layoutModalLabel" aria-hidden="true" style="display:none">
                 <div class="modal-dialog">
@@ -156,7 +163,7 @@
                                 </div>
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="statusUserWFH">WFH</label>
-                                    <input type="checkbox" id="statusUserWFH" disabled/>
+                                    <input type="checkbox" id="statusUserWFH" disabled />
                                 </div>
                                 <div class="form-outline mb-4" id="optionalDiv2" style="display:block">
                                     <label class="form-label" for="statusUserContact">OOO Contact Number</label>
@@ -169,7 +176,7 @@
             </div>
         }
     }
-    <div class="container">
+    <div class="container bg-image">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -180,14 +187,33 @@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
+
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/datepicker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/i18n/datepicker.en.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.20.0/js/mdb.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/virtual-select-master/dist/virtual-select.min.js"></script>
+
+
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
 
 <script>
     $(document).ready(function () {
+
         $("#locationTeams").hide();
         document.getElementById("userStatus").style.width = '0px';
         getUserStatus();

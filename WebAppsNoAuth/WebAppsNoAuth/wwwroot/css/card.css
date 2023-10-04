@@ -1,0 +1,101 @@
+﻿
+
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
+
+
+#cardSection * {
+    box-sizing: border-box;
+}
+
+#cardSection body {
+    --h: 212deg;
+    --l: 43%;
+    --brandColor: hsl(var(--h), 71%, var(--l));
+    font-family: Montserrat, sans-serif;
+    margin: 0;
+    background-color: whitesmoke;
+}
+#cardSection p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+
+#cardSection ul {
+    list-style: none;
+    counter-reset: list;
+    padding: 0 1rem;
+}
+
+#cardSection li {
+    --stop: calc(100% / var(--length) * var(--i));
+    --l: 62%;
+    --l2: 88%;
+    --h: calc((var(--i) - 1) * (180 / var(--length)));
+    --c1: hsl(var(--h), 71%, var(--l));
+    --c2: hsl(var(--h), 71%, var(--l2));
+    position: relative;
+    counter-increment: list;
+    max-width: 45rem;
+    margin: 2rem auto;
+    padding: 2rem 1rem 1rem;
+    box-shadow: 0.1rem 0.1rem 1.5rem rgba(0, 0, 0, 0.3);
+    border-radius: 0.25rem;
+    overflow: hidden;
+    background-color: white;
+}
+
+    #cardSection li::before {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 1rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: linear-gradient(to right, var(--c1) var(--stop), var(--c2) var(--stop));
+    }
+
+#cardSection h5 {
+    display: flex;
+    align-items: baseline;
+    margin: 0 0 1rem;
+    color: rgb(70 70 70);
+}
+
+    #cardSection h5::before {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 0 0 auto;
+        margin-right: 1rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        content: counter(list);
+        padding: 1rem;
+        border-radius: 50%;
+        background-color: var(--c1);
+        color: white;
+    }
+
+.dashboardTitle {
+    font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+    font-size: 15px;
+}
+
+.dashboardStat {
+    font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.date-circle {
+    border-radius: 50%;
+}
+
+.circle1 {
+    width: 100px;
+    height: 100px;
+    background: #4bc475;
+    border: 1px solid #000;
+}

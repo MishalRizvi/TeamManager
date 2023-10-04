@@ -4,15 +4,16 @@
 @{
 }
 
-<div class="container">
+<div>
     <h2 class="appTitle indexHeader">Entitlements</h2>
     <br />
     <br />
-    <table class="table table-bordered table-hover styled-table-calendar">
+    <table class="table table-hover styled-table-calendar">
         <thead>
-            <tr>
+            <tr style="color:maroon">
                 <th>Name</th>
                 <th>Amount</th>
+                <th></th>
             </tr>
         </thead>
         <tbody class="tbody">
@@ -64,9 +65,9 @@
                     var html = "";
                     for (var i = 0; i < result.data.length; i++) {
                         html += "<tr>";
-                        html += "<td>" + result.data[i].name + "</td>";
-                        html += "<td>" + result.data[i].amount + "</td>";
-                        html += "<td><a href='#' onclick='return getById(" + result.data[i].userId + ")'>Edit</a></td>";
+                        html += "<td><p class='fw-bold mb-1'>" + result.data[i].name + "</p></td>";
+                        html += "<td><p class='fw-normal mb-1'>" + result.data[i].amount + "</p></td>";
+                        html += "<td style='width:15px'><button class='btn btn-primary px-3' onclick='return getById(" + result.data[i].userId + ")'><i class='fa fa-edit'></i></button></td>";
                         html += "<tr>";
                     }
                     $(".tbody").html(html);

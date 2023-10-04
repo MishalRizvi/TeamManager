@@ -18,6 +18,7 @@ namespace WebAppsNoAuth.Models
         public string RequestTypeName { get; set; }
         public Boolean Approved { get; set; }
         public string ApprovedMessage { get; set; }
+		public string Description { get; set; }
     }
 }
 

@@ -72,30 +72,30 @@
             <div class="modal-body">
                 <form method="get">
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="name">Name</label>
+                        <label class="form-label appLabel" for="name">Name</label>
                         <input type="text" id="name" class="form-control form-control-lg" />
                     </div>
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="email">Email address</label>
+                        <label class="form-label appLabel" for="email">Email address</label>
                         <input type="email" id="email" class="form-control form-control-lg" />
                     </div>
                     <div class="form-outline mb-4">
-                        <label class="form-label" style="font-style:italic"for="password">Default password for new user: password</label>
+                        <label class="form-label appLabel" style="font-style:italic"for="password">Default password for new user: password</label>
                     </div>
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="contact">Contact Number</label>
+                        <label class="form-label appLabel" for="contact">Contact Number</label>
                         <input type="tel" id="contact" class="form-control form-control-lg" />
                     </div>
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="managerUserId">Manager</label>
+                        <label class="form-label appLabel" for="managerUserId">Manager</label>
                         @Html.DropDownList("ManagerList", "---")
                     </div>
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="admin">Is Admin</label>
+                        <label class="form-label appLabel" for="admin">Is Admin</label>
                         <input type="checkbox" id="admin" />
                     </div>
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="manager">Is Manager</label>
+                        <label class="form-label appLabel" for="manager">Is Manager</label>
                         <input type="checkbox" id="manager" />
                     </div>
                 </form>

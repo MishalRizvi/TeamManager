@@ -1,0 +1,231 @@
+﻿
+<div class="container">
+    <h2 class="appTitle indexHeader">Create New Project</h2>
+    <button type="button" class="btn btn-primary appButton" id="goBackButton" onclick="return redirectBack()">Back</button>
+    <br />
+    <div class="modal-body">
+        <form>
+            <div class="form-outline mb-4">
+                <label class="form-label appLabel" for="projectName">Project Name</label>
+                <input type="text" id="projectName" class="form-control form-control-lg" />
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label appLabel" for="projectDescription">Project Description</label>
+                <input type="textbox" id="projectDescription" class="form-control form-control-lg" />
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label appLabel" for="projectDifficulty">Level of difficulty</label>
+                <input type="number" id="projectDifficulty" class="form-control form-control-lg" />
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label appLabel" for="projectManager">Project Manager</label>
+                @Html.DropDownList("UsersListComplete")
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label appLabel" required>Skills involved: </label>
+                <div id="multiselectSkills">
+                </div>
+                <button type="button" class="btn btn-primary appButton" data-toggle="modal" data-target="#myModal" onclick="clearSkillTextBox();">Add New Skill</button>
+                <input type="text" id="newSkill" class="form-control form-control-lg" style="display:none" />
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label appLabel" required>Employees working on this project: </label>
+                <div id="multiselectUsers">
+
+                </div>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label appLabel" for="suggestions">Suggestions</label>
+                <div id="suggestionsMessageBox" style="outline:none"></div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary appButton" id="getSuggestionsButton" onclick="return getProjectSuggestions()">Generate Suggestions</button>
+        <button type="button" class="btn btn-primary appButton" id="addProjectButton" onclick="return addNewProjectMethod()">Add</button>
+    </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeModal()">x</button>
+                <h4 class="modal-title appModalFont" id="myModalLabel">Add User</h4>
+            </div>
+            <div class="modal-body">
+                <form method="get">
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="name">Add Skill: </label>
+                        <input type="text" id="name" class="form-control form-control-lg" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary appButton" id="addUserButton" onclick="return addNewSkill()">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    #SkillsList {
+        height: 150px;
+    }
+
+    #UsersListComplete2 {
+        height: 150px;
+    }
+</style>
+
+@section Scripts {
+    <link rel="stylesheet" href="~/lib/virtual-select-master/dist/virtual-select.min.css" />
+    <script>var updateLocationId = -1;
+        $(document).ready(function () {
+            getAllUsers();
+            getAllSkills();
+        });
+
+
+        function addNewProjectMethod() {
+            var newProject = document.getElementById("projectName").value;
+            var newProjectDes = document.getElementById("projectDescription").value;
+            var newProjectDiff = document.getElementById("projectDifficulty").value;
+            var newProjectManager = document.getElementById("UsersListComplete").value;
+            var usersVal = document.getElementById("multiselectUsers").value;
+            var usersListStr = "(";
+            for (var i = 0; i < usersVal.length; i++) {
+                usersListStr += usersVal[i];
+                if (i == usersVal.length - 1) {
+                    break;
+                }
+                usersListStr += ",";
+            }
+            usersListStr += ")";
+            $.ajax({
+                url: "AddNewProject",
+                type: "POST",
+                data: {
+                    projectName: newProject,
+                    projectDes: newProjectDes,
+                    projectDiff: newProjectDiff,
+                    projectManager: newProjectManager,
+                    projectPpl: usersListStr
+                },
+                success: function (result) {
+                    clearTextBox();
+                    window.location.href = "/Manager/Projects";
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+
+        function addNewSkill() {
+            var confirmA = confirm("By adding this new skill, the page will refresh and you will lose all the changes made. Would you like to continue?");
+            if (confirmA == false) {
+                closeModal();
+                return;
+            }
+            var newSkill = $("#name").val();
+            $.ajax({
+                url: "AddNewSkill",
+                type: "POST",
+                data: {
+                    skillName: newSkill
+                },
+                success: function (result) {
+                    // getAllUsers();
+                    closeModal();
+                    var newProject = document.getElementById("projectName").value;
+                    console.log(newProject);
+                    var newProjectDes = document.getElementById("projectDescription").value;
+                    var newProjectDiff = document.getElementById("projectDifficulty").value;
+                    window.location.reload(); //is this what is required in order to refresh the skillset list
+                    document.getElementById("projectName").value = newProject;
+                    document.getElementById("projectDescription").value = newProjectDes;
+                    document.getElementById("projectDifficulty").value = newProjectDiff;
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+        function closeModal() {
+            $("#myModal").modal("hide");
+        }
+
+        function clearSkillTextBox() {
+            $("#myModal").modal("show");
+            $("#name").val("");
+        }
+
+        function clearTextBox() {
+            document.getElementById("projectName").value = "";
+            document.getElementById("projectDescription").value = "";
+            document.getElementById("projectDifficulty").value = "";
+            $("#suggestionsMessageBox").html("");
+        }
+        function redirectBack() {
+            window.location.href = "/Manager/Projects"
+        }
+
+        function getAllUsers() {
+            var usersArray = [];
+            $.ajax({
+                url: "GetAllUsersAsJson",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    var html = "";
+                    for (var i = 0; i < result.data.length; i++) {
+                        if (i == 0) {
+                            currentUserId = result.data[i].id;
+                        }
+                        var currentUser = { label: result.data[i].name, value: result.data[i].id };
+                        usersArray.push(currentUser);
+                    }
+                    console.log(usersArray);
+                    VirtualSelect.init({
+                        ele: '#multiselectUsers',
+                        options: usersArray,
+                        multiple: true
+                    });
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+
+
+        function getAllSkills() {
+            var skillsArray = [];
+            $.ajax({
+                url: "GetAllSkills",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    var html = "";
+                    for (var i = 0; i < result.data.length; i++) {
+                        if (i == 0) {
+                            currentUserId = result.data[i].id;
+                        }
+                        var currentUser = { label: result.data[i].skillName, value: result.data[i].skillId };
+                        skillsArray.push(currentUser);
+                    }
+                    VirtualSelect.init({
+                        ele: '#multiselectSkills',
+                        options: skillsArray,
+                        multiple: true
+                    });
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+    </script>
+}

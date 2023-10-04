@@ -1,7 +1,6 @@
 ﻿
-<div class="container">
+<div>
     <h2 class="appTitle indexHeader">Teams</h2>
-    <br />
     <br />
     <div class="form-outline mb-4">
         <label class="form-label-style" for="locationId">Location</label>
@@ -10,13 +9,16 @@
     <br />
     <br />
     <div id="locationTeams">
-        <button type="button" class="btn btn-primary appButton" data-toggle="modal" data-target="#teamModal" onclick="clearTextBox();">Add New Team</button>
         <br />
-        <br />
-        <table class="table table-bordered table-hover styled-table-calendar">
+        <table class="table table-hover styled-table-calendar">
             <thead>
                 <tr>
+                    <th><button class="btn btn-primary appButton" data-toggle="modal" data-target="#locationModal" onclick="clearTextBox()"><i class="fa fa-plus"></i> Add new location </button></th>
+                    <th></th>
+                </tr>
+                <tr style="color:maroon">
                     <th>Team Name</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody class="tbody" id="teamsTable">
@@ -97,8 +99,8 @@
                     var html = "";
                     for (var i = 0; i < result.data.length; i++) {
                         html += "<tr>";
-                        html += "<td>" + result.data[i].teamName + "</td>";
-                        html += "<td><a href='#' onclick='return getById(" + result.data[i].teamId + ")'>Edit</a> | <a href='#' onclick='deleteTeam(" + result.data[i].teamId + ")'>Delete</a></td>";
+                        html += "<td><p class='fw-bold mb-1'>" + result.data[i].teamName + "</td>";
+                        html += "<td><button class='btn btn-primary px-3' onclick='return getById(" + result.data[i].teamId + ")'><i class='fa fa-edit'></i></button> <button class='btn btn-danger px-3' onclick='deleteTeam(" + result.data[i].teamId + ")'><i class='fa fa-times'></i></button></td>";
                         html += "<tr>";
                     }
                     $("#teamsTable").html(html);
@@ -110,14 +112,15 @@
         }
 
         function getById(teamId) {
-            console.log("gbid");
             updateTeamId = teamId;
             $("#name").css("border-color", "lightgrey");
+            console.log("TeamId is " + teamId);
             $.ajax({
                 url: "GetTeamById",
                 type: "GET",
                 data: { teamId: teamId },
                 success: function (result) {
+                    console.log(result);
                     $("#name").val(result.data.teamName);
 
                     $("#teamModal").modal("show");
@@ -181,9 +184,10 @@
                         teamName: newTeam,
                     },
                     success: function (result) {
+                        console.log(result);
                         getAllLocationTeams();
                         $("#teamModal").modal("hide");
-                        window.location.reload();
+                        //window.location.reload();
                     },
                     error: function (error) {
                         alert(error.responseText);
@@ -191,7 +195,7 @@
                 })
             }
             updateTeamId = -1;
-            closeModal();
+            closeUpdateTeamModal();
         }
 
         function deleteTeam(teamId) {
@@ -241,7 +245,7 @@
             });
         }
 
-        function getAllUsersNotInTeam(teamId) {
+        function getAllUsersNotInTeam() { //originally this has teamId as param
             console.log(updateTeamId);
             $.ajax({
                 url: "GetAllUsersNotInTeamAsJson",

@@ -1,74 +1,96 @@
 ﻿<div>
     <h2 class="appTitle indexHeader">Meetings</h2>
     <br />
-    <div style="position:absolute;left:100px;">
-        <table class="table table-bordered table-hover styled-table-calendar">
+    <div>
+        <table class="table table-hover styled-table-calendar">
             <thead>
                 <tr>
-                    <th>Title</th>
+                    <th><button class="btn btn-primary appButton" data-toggle="modal" data-target="#meetingModal" onclick="clearTextBox()"><i class="fa fa-plus"></i> Add new meeting </button></th>
+                </tr>
+                <tr style="color:maroon">
+                    <th>Item</th>
                     <th>Host</th>
+                    <th>Description</th>
+                    <th>Priority</th>
                     <th>Date</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
+                    <th>Time</th>
                     <th>Attendees</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody class="tbody">
             </tbody>
         </table>
     </div>
-
-    <div style="position: absolute; right: 200px; top: 200px; bottom:100px; outline:solid maroon; outline-offset:85px">
-        <label class="form-label appLabel" style="font-size:x-large">Set Up Meeting</label>
-        <br />
-        <form method="get">
-            <div class="form-outline mb-4">
-                <label class="form-label appLabel" for="meetingTitle">Title:</label>
-                <input type="text" id="meetingTitle" class="form-control form-control-lg" required />
+</div>
+<div class="modal fade" id="meetingModal" tabindex="-1" role="dialog" aria-labelledby="meetingModalLabel" aria-hidden="true" style="display:none">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label class="form-label appLabel" style="font-size:x-large">New Meeting</label>
+                <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeMeetingModal()">x</button>
             </div>
-            <div class="form-outline mb-4">
-                <label class="form-label appLabel" for="meetingDate">Date:</label>
-                <input type="date" id="meetingDate" class="form-control form-control-lg" required />
+            <div class="modal-body">
+                <form method="get">
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="meetingTitle">Title: </label>
+                        <input type="text" id="meetingTitle" class="form-control form-control-lg" required />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="meetingDescription">Description: </label>
+                        <input type="text" id="meetingDescription" class="form-control form-control-lg" required />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="meetingPriority">Priority: </label>
+                        <select id="meetingPriority">
+                            <option value="Low">LOW</option>
+                            <option value="Medium">MEDIUM</option>
+                            <option value="High">HIGH</option>
+                        </select>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="meetingDate">Date: </label>
+                        <input type="date" id="meetingDate" class="form-control form-control-lg" required />
+                    </div>
+                    <div class="row">
+                        <div class="form-outline mb-4 column">
+                            <label class="form-label appLabel" for="startTime">Start Time: </label>
+                            <input type="time" id="startTime" class="form-control form-control-lg" required />
+                        </div>
+                        <div class="form-outline mb-4 column">
+                            <label class="form-label appLabel" for="endTime">End Time: </label>
+                            <input type="time" id="endTime" class="form-control form-control-lg" required />
+                        </div>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel">Attendees: </label>
+                        <div id="multiselectUsers"></div>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <div id="messageBox" style="outline:none"></div>
+                    </div>
+                </form>
             </div>
-            <div class="row">
-                <div class="form-outline mb-4 column">
-                    <label class="form-label appLabel" for="startTime">Start Time:</label>
-                    <input type="time" id="startTime" class="form-control form-control-lg" required />
-                </div>
-                <div class="form-outline mb-4 column">
-                    <label class="form-label appLabel" for="endTime">End Time:</label>
-                    <input type="time" id="endTime" class="form-control form-control-lg" required />
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary appButton" id="addLocationButton2" onclick="return addNewMeeting()">Add</button>
             </div>
-            <div class="form-outline mb-4">
-                <label class="form-label appLabel" for="meetingUsers" required>Attendees: </label>
-                <br />
-                <label style="font-size:smaller; font-style:italic">For Mac Users: press on Cmd and select users.</label>
-                <br />
-                <label style="font-size:smaller; font-style:italic">For Window Users: press on Ctrl and select users.</label>
-                <br />
-                @Html.ListBox("UsersList")
-            </div>
-        </form>
-        <button type="button" class="btn btn-primary appButton" id="addMeetingButton" onclick="return addNewMeeting()">Submit</button>
-        <div id="messageBox" style="outline:none"></div>
+        </div>
     </div>
 </div>
+
+
 <style>
     #UsersList {
         height: 150px;
     }
-
 </style>
 
 
 @section Scripts {
-
-    <script>
-
-        $(document).ready(function () {
+    <link rel="stylesheet" href="~/lib/virtual-select-master/dist/virtual-select.min.css" />
+    <script>$(document).ready(function () {
             getAllMeetings();
-
+            getAllUsers();
         })
 
         function getAllMeetings() {
@@ -78,39 +100,58 @@
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 success: function (result) {
-                    console.log(result);
                     var html = "";
                     for (var i = 0; i < result.data.length; i++) {
                         html += "<tr>";
-                        html += "<td>" + result.data[i].title + "</td>";
-                        html += "<td>" + result.data[i].hostUserName + "</td>";
-                        html += "<td>" + result.data[i].meetingDate + "</td>";
-                        html += "<td>" + result.data[i].startTime + "</td>";
-                        html += "<td>" + result.data[i].endTime + "</td>";
+                        html += "<td><p class='fw-bold mb-1'>" + result.data[i].title + "</p></td>";
+                        html += "<td><p class='fw-normal mb-1'>" + result.data[i].hostUserName + "</p></td>";
+                        html += "<td>" + result.data[i].description + "</td>";
+                        var priorityBadge = "";
+                        if (result.data[i].priority == "Low") {
+                            priorityBadge = 'bg-success';
+                        }
+                        if (result.data[i].priority == "Medium") {
+                            priorityBadge = 'bg-warning text-dark';
+                        }
+                        if (result.data[i].priority == "High") {
+                            priorityBadge = 'bg-danger';
+                        }
+                        html += "<td><h5><span class='badge rounded-pill " + priorityBadge + "'>" + result.data[i].priority + "</span></h5></td>";
+                        var meetingDate = result.data[i].meetingDate;
+                        var meetingDateNew = moment(meetingDate).format('MMMM Do YYYY');
+                        html += "<td>" + meetingDate + "</td>";
+                        html += "<td>Start: " + result.data[i].startTime + "</br>End: " + result.data[i].endTime + "</td>";
                         var attendees = result.data[i].attendees;
-                        var attendeesStr = "";
                         html += "<td>";
+                        var attendeesStr = "";
+                        //attendeesStr = '<ul><li>';
+
                         for (var j = 0; j < attendees.length; j++) {
                             if (attendees[j] == ',') { //add a new line for the next name
-
-                                attendeesStr += '<br/>';
+                                //attendeesStr += '</li><li">';
+                                attendeesStr += "<br />";
                                 continue;
                             }
                             attendeesStr += attendees[j];
                         }
-                        attendeesStr = attendeesStr.replace(/Tentative/g, '<span style="color:red; font-style:italic; font-size:smaller">Tentative</span>');
+                        attendeesStr += "</li></ul>"
+                        attendeesStr = attendeesStr.replace(/Tentative/g, '<span class="badge bg-info text-dark" style="font-size:10px">Tentative</span>');
+                        console.log(attendeesStr);
+                        //html += "<button data-mdb-toggle='popover' title='Attendees' data-mdb-html='true' data-mdb-container='body' data-mdb-content='";
+                        //html += attendeesStr + "'><i class='fa-solid fa-people'></i>People</button>";
                         html += attendeesStr;
                         html += "</td>";
                         if (result.data[i].active == false) {
-                            html += "<td><a href='#' onclick='acceptMeeting(" + result.data[i].meetingId + ")' style=color:'maroon;'>Accept</a></td>";
+                            html += "<td><button type='button' class='btn btn-link btn-sm btn-rounded' href='#' onclick='acceptMeeting(" + result.data[i].meetingId + ")'>Accept</button></td>";
                         }
                         else {
-                            html += "<td><a href='#' onclick='deleteMeeting(" + result.data[i].meetingId + ")' style=color:'maroon'>Cancel</a></td>";
+                            html += "<td><button type='button' class='btn btn-link btn-sm btn-rounded' href='#' onclick='deleteMeeting(" + result.data[i].meetingId + ")'><i class='fa fa-trash' aria-hidden='true' style='color:red; font-size:25px'></i></button></td>";
                         }
-
                         html += "<tr>";
                     }
                     $(".tbody").html(html);
+                    $("[data-mdb-toggle=popover]").popover();
+
                 },
                 error: function (error) {
                     console.log(error.responseText);
@@ -123,36 +164,38 @@
                 return false;
             }
             var meetingTitle = document.getElementById("meetingTitle").value;
+            var meetingDescription = document.getElementById("meetingDescription").value;
             var meetingDate = document.getElementById("meetingDate").value;
+            var meetingPriority = document.getElementById("meetingPriority").value;
             var startTime = document.getElementById("startTime").value;
-            console.log(startTime);
             var endTime = document.getElementById("endTime").value;
-            var attendeesText = $('#UsersList option:selected').text();
-            var attendeesVal = Array.from(document.getElementById('UsersList').selectedOptions).map(({value}) => value);
-
-            var attendeesStr = "(";
-            for (var i = 0; i < attendeesVal.length; i++) {
-                attendeesStr += attendeesVal[i];
-                if (i == attendeesVal.length-1) {
+            var usersVal = document.getElementById("multiselectUsers").value;
+            if (usersVal.length == 0) {
+                return;
+            }
+            var usersListStr = "(";
+            for (var i = 0; i < usersVal.length; i++) {
+                usersListStr += usersVal[i];
+                if (i == usersVal.length - 1) {
                     break;
                 }
-                attendeesStr += ",";
+                usersListStr += ",";
             }
-            attendeesStr += ")";
-            console.log(attendeesStr);
+            usersListStr += ")";
             $.ajax({
                 url: "AddNewMeeting",
                 type: "POST",
                 data: {
                     title: meetingTitle,
+                    description: meetingDescription,
+                    priority: meetingPriority,
                     meetingDate: meetingDate,
                     startTime: startTime,
                     endTime: endTime,
-                    attendees: attendeesStr
+                    attendees: usersListStr
                 },
                 success: function (result) { //do we want to add validation for meetings to ensure there is no conflict
-                    console.log(result);
-                    resetPage()
+                    $("#meetingModal").modal("hide");
                     getAllMeetings();
 
                 },
@@ -179,6 +222,7 @@
         }
 
         function deleteMeeting(meetingId) {
+            console.log("deleting");
             $.ajax({
                 url: "DeleteMeeting",
                 type: "POST",
@@ -194,22 +238,32 @@
             })
         }
 
-        function resetPage() {
+        function clearTextBox() {
+            $("#meetingModal").modal("show");
+            document.getElementById("meetingTitle").value = "";
             document.getElementById("meetingDate").value = "";
             document.getElementById("startTime").value = "";
             document.getElementById("endTime").value = "";
-           // $("#messageBox").html("");
+            document.getElementById("meetingPriority").value = "";
+            document.getElementById("meetingDescription").value = "";
+            $("#messageBox").html("");
 
             $("#startTime").css("border-color", "lightgrey");
             $("#endTime").css("border-color", "lightgrey");
         }
 
         function validateDetails() {
-
+            var meetingTitle = document.getElementById("meetingTitle").value;
             var meetingDate = document.getElementById("meetingDate").value;
             var startTime = document.getElementById("startTime").value;
             var endTime = document.getElementById("endTime").value;
+            var meetingDescription = document.getElementById("meetingDescription").value;
 
+            if (meetingTitle == "") {
+                $("#meetingTitle").css("border-color", "red");
+                alert("Please enter a title.");
+                return false;
+            }
             if (meetingDate == "") {
                 $("#meetingDate").css("border-color", "red");
                 alert("Please enter a date.");
@@ -231,6 +285,40 @@
                 alert("End time can't be before start time");
                 return false;
             }
+            if (meetingDescription == "") {
+                $("#meetingDescription").css("border-color", "red");
+                alert("Please enter a description.");
+                return false;
+            }
+        }
+
+        function getAllUsers() {
+            var usersArray = [];
+            $.ajax({
+                url: "GetAllUsersAsJsonMeeting",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    var html = "";
+                    for (var i = 0; i < result.data.length; i++) {
+                        if (i == 0) {
+                            currentUserId = result.data[i].id;
+                        }
+                        var currentUser = { label: result.data[i].name, value: result.data[i].id };
+                        usersArray.push(currentUser);
+                    }
+                    VirtualSelect.init({
+                        ele: '#multiselectUsers',
+                        options: usersArray,
+                        multiple: true
+                    });
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
         }
     </script>
 }

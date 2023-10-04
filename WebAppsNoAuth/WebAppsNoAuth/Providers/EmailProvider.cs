@@ -21,7 +21,7 @@ namespace WebAppsNoAuth.Providers
 
         }
 
-        public bool SendNewRequestEmail(int userId, int requestTypeId, DateTime startDate, DateTime endDate, string userName, string userEmail)
+        public bool SendNewRequestEmail(int userId, int requestTypeId, DateTime startDate, DateTime endDate, string userName, string userEmail, string requestDescription)
         {
             EmailTemplate emailTemplate = new EmailTemplate();
             emailTemplate.Subject = "New Request";
@@ -44,7 +44,8 @@ namespace WebAppsNoAuth.Providers
                                  "You have submitted a new request." + Environment.NewLine +
                                  "Request Type: " + requestTypeName + Environment.NewLine +
                                  "Start Date: " + startDate.ToString("dd/MM/yyyy") + Environment.NewLine +
-                                 "End Date: " + endDate.ToString("dd/MM/yyyy") + Environment.NewLine;
+                                 "End Date: " + endDate.ToString("dd/MM/yyyy") + Environment.NewLine +
+                                 "Description: " + requestDescription + Environment.NewLine;
             emailTemplate.To = userEmail;
             emailTemplate.ToName = userName;
             var success = SendEmail(emailTemplate);
@@ -55,7 +56,7 @@ namespace WebAppsNoAuth.Providers
             return false;
         }
 
-        public bool SendNewRequestEmailToManagers(int userId, int requestTypeId, DateTime startDate, DateTime endDate, string userName, int managerId, string managerName, string managerEmail)
+        public bool SendNewRequestEmailToManagers(int userId, int requestTypeId, DateTime startDate, DateTime endDate, string userName, int managerId, string managerName, string managerEmail, string requestDescription)
         {
             EmailTemplate emailTemplate = new EmailTemplate();
             emailTemplate.Subject = "New Request";
@@ -84,7 +85,8 @@ namespace WebAppsNoAuth.Providers
                                  userName + " has submitted a new request." + Environment.NewLine +
                                  "Request Type: " + requestTypeName + Environment.NewLine +
                                  "Start Date: " + startDate.ToString("dd/MM/yyyy") + Environment.NewLine +
-                                 "End Date: " + endDate.ToString("dd/MM/yyyy") + Environment.NewLine + Environment.NewLine +
+                                 "End Date: " + endDate.ToString("dd/MM/yyyy") + Environment.NewLine +
+                                 "Description: " + requestDescription + Environment.NewLine + Environment.NewLine + 
                                  "Please go to the Managers page to Approve or Reject this request";
 
             emailTemplate.To = managerEmail;
@@ -141,7 +143,7 @@ namespace WebAppsNoAuth.Providers
             return false;
         }
 
-        public void SendMeetingInviteEmail(int userId, string userName, string userEmail, string hostName, string title, DateTime meetingDate, string startTime, string endTime)
+        public void SendMeetingInviteEmail(int userId, string userName, string userEmail, string hostName, string title, string description, string priority, DateTime meetingDate, string startTime, string endTime)
         {
             EmailTemplate emailTemplate = new EmailTemplate();
             emailTemplate.Subject = "Meeting invite";
@@ -152,7 +154,9 @@ namespace WebAppsNoAuth.Providers
                                  "Meeting Details:" + Environment.NewLine +
                                  "Date: " + meetingDate.ToString("dd/MM/yyyy") + Environment.NewLine +
                                  "Title: " + title + Environment.NewLine +
-                                 "Host: " + hostName + Environment.NewLine + 
+                                 "Host: " + hostName + Environment.NewLine +
+                                 "Description: " + description + Environment.NewLine +
+                                 "Priority: " + priority + Environment.NewLine + 
                                  "Start Time: " + startTime + Environment.NewLine +
                                  "End Time: " + endTime + Environment.NewLine + Environment.NewLine +
                                  "Please go to the Meetings page to Approve or Reject this invite.";
@@ -209,6 +213,22 @@ namespace WebAppsNoAuth.Providers
             var success = SendEmail(emailTemplate); //chosen to not return anything for this method, can change in the future
         }
 
+        public void SendProjectInviteEmail(int userId, string userName, string userEmail, int managerUserId, string managerName, string projectName)
+        {
+            EmailTemplate emailTemplate = new EmailTemplate();
+            emailTemplate.Subject = "Meeting invite";
+
+
+            emailTemplate.Body = "Hi " + userName + "," + Environment.NewLine +
+                                 "You have been added to a new project by your manager." + Environment.NewLine + Environment.NewLine +
+                                 "Manager: " + managerName + Environment.NewLine +
+                                 "Project: " + projectName + Environment.NewLine;
+            emailTemplate.To = userEmail;
+            emailTemplate.ToName = userName;
+
+            var success = SendEmail(emailTemplate); //chosen to not return anything for this method, can change in the future
+        }
+
         public bool SendEmail(EmailTemplate emailTemplate)
         {
 
@@ -237,6 +257,7 @@ namespace WebAppsNoAuth.Providers
 
             return false;
         }
+
     }
 }
 

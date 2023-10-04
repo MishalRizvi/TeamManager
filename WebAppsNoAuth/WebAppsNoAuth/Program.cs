@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Net;
 using System.Diagnostics;
 using WebAppsNoAuth.Providers;
+using Microsoft.ML.Data;
+using Microsoft.Extensions.ML;
 
 var builder = WebApplication.CreateBuilder(args);
 

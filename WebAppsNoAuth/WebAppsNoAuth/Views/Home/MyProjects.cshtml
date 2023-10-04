@@ -1,0 +1,170 @@
+﻿<head>
+    <style>
+        .chart-container {
+            display: inline-block;
+            position: relative;
+            width: 500px;
+            height: 500px;
+        }
+/*        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to bottom, #f2f2f2, #e0e0e0);  Gradient background 
+            box-sizing: border-box;  Include padding and border in the width 
+        }*/
+        .card-container {
+            display: flex;
+            flex-wrap: wrap; /* Allow cards to wrap to the next row */
+            justify-content: space-between; /* Distribute cards evenly */
+            gap: 20px; /* Add spacing between cards */
+            padding: 20px; /* Add padding around the container */
+            max-width: 960px; /* Set a maximum width for the container */
+            margin: 0 auto; /* Center the container horizontally */
+        }
+        .chartMenu {
+            width: 100vw;
+            height: 40px;
+            background: #1A1A1A;
+            color: rgba(54, 162, 235, 1);
+        }
+
+            .chartMenu p {
+                padding: 10px;
+                font-size: 20px;
+            }
+
+        .chartCard {
+            width: 100vw;
+            height: calc(100vh - 40px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chartCard2 {
+            max-width: 960px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 0 auto;
+            padding: 20px;
+            gap:20px;
+            flex-wrap:wrap;
+        }
+
+        .chartBox {
+            width: 700px;
+            padding: 20px;
+            border-radius: 20px;
+            border: solid 3px rgba(54, 162, 235, 1);
+            background: white;
+        }
+    </style>
+</head>
+<div>
+    <h2 class="appTitle indexHeader">My Projects</h2>
+    <br />
+    <br />
+    <div class="chartCard2">
+        @{
+            int N = (int)ViewData["NumberOfProjects"];
+            for (int i = 0; i < N; i++)
+            {
+                @:<div class="chartBox">
+                        @:<label @Html.Raw(string.Format("id= label{0} class='form-label appLabel'", i))></label>
+                        @:<canvas @Html.Raw(string.Format("id= pie{0}", i))></canvas>
+                @:</div>
+            }
+        }
+    </div>
+    @*<table class="table table-bordered table-hover styled-table-calendar">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Difficulty</th>
+                <th>Project Manager</th>
+                <th>Created Date</th>
+            </tr>
+        </thead>
+        </thead>
+        <tbody class="tbody">
+        </tbody>
+    </table>*@
+    @*<canvas id="myChart"></canvas>*@
+    </div>
+
+@section Scripts {
+    <script>var updateProjectId = -1;
+        var projectStats = [];
+        $(document).ready(function () {
+            //createPieArray();
+            $.ajax({
+                url: "GetAllProjectsStats",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    projectStats = result.data;
+                    if (projectStats != null) {
+                        for (var i = 0; i < projectStats.length; i++) {
+                            const config = {
+                                type: 'pie',
+                                data: {
+                                    labels: [
+                                        'Completed Tasks',
+                                        'Incomplete Tasks'
+                                    ],
+                                    datasets: [{
+                                        label: result.data[i].name,
+                                        data: [result.data[i].completedTasks, result.data[i].totalTasks - result.data[i].completedTasks],
+                                        backgroundColor: [
+                                            'rgb(255, 99, 132)',
+                                            'rgb(54, 162, 235)',
+                                        ],
+                                        hoverOffset: 4,
+                                        radius: 300
+                                    }]
+                                },
+                                options: {
+                                    onClick: (e) => { //when user clicks on pie chart
+                                        getTaskDetails(projectStats[i].projectId);
+                                    },
+                                    responsive: true
+                                }
+                            };
+                            var curChart = new Chart(document.getElementById("pie" + i), config);
+                            document.getElementById("label" + i).innerHTML = projectStats[i].name;
+                        }
+                    }
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+
+
+
+        });
+        function createPieArray() {
+            console.log(projectStats);
+            $.ajax({
+                url: "GetAllProjectsStats",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    projectStats = result.data;
+                    console.log(projectStats);
+                    //$(".tbody").html(html);
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+
+        }
+
+        function getAllProjects() {
+
+        }</script>
+}

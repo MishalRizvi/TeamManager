@@ -178,8 +178,9 @@ namespace WebAppsNoAuth.Providers
                 var queryString = "SELECT TeamId FROM [Team] WHERE LocationId = @LOCATIONID;";
 
                 var queryString2 = "DELETE FROM [TeamUser] WHERE TeamId = @TEAMID;";
+                var queryString3 = "DELETE FROM [Status] WHERE CurrentLocationId = @LOCATIONID;";
 
-                var queryString3 = "DELETE FROM [Team] WHERE LocationID = @LOCATIONID;" +
+                var queryString4 = "DELETE FROM [Team] WHERE LocationID = @LOCATIONID;" +
                                    "DELETE FROM [Location] WHERE LocationId = @LOCATIONID";
 
                 SqlCommand command = new SqlCommand(queryString, _connection);
@@ -208,6 +209,12 @@ namespace WebAppsNoAuth.Providers
                 command3.Parameters.AddWithValue("@LOCATIONID", locationId);
                 _connection.Open();
                 command3.ExecuteNonQuery();
+                _connection.Close();
+
+                SqlCommand command4 = new SqlCommand(queryString4, _connection);
+                command4.Parameters.AddWithValue("@LOCATIONID", locationId);
+                _connection.Open();
+                command4.ExecuteNonQuery();
                 _connection.Close();
 
                 return true;

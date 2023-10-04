@@ -4,14 +4,15 @@
 <br />
 <br />
 <div>
-    <div style="float:left">
-        <table class="table table-bordered table-hover styled-table-calendar">
+    <div>
+        <table class="table table-hover styled-table-calendar">
             <thead>
-                <tr>
+                <tr style="color:maroon">
                     <th>User</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
+                    <th>Dates</th>
                     <th>Request Type</th>
+                    <th>Description</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody class="tbody">
@@ -39,11 +40,11 @@
                     var html = "";
                     for (var i = 0; i < result.data.length; i++) {
                         html += "<tr>";
-                        html += "<td>" + result.data[i].userName + "</td>";
-                        html += "<td>" + result.data[i].startDateStr + "</td>";
-                        html += "<td>" + result.data[i].endDateStr + "</td>";
+                        html += "<td><p class='fw-bold mb-1'>" + result.data[i].userName + "</td>";
+                        html += "<td>Start: " + result.data[i].startDateStr + "</br>End: " + result.data[i].endDateStr + "</td>";
                         html += "<td>" + result.data[i].requestTypeName + "</td>";
-                        html += "<td><a href='#' onclick='return approveRequest(" + result.data[i].requestId + ")'>Approve</a> | <a href='#' onclick='rejectRequest(" + result.data[i].requestId + ")'>Reject</a></td>";
+                        html += "<td>" + result.data[i].description + "</td>";
+                        html += "<td style='text-align:center'><button class='btn btn-success px-3' onclick='return approveRequest(" + result.data[i].requestId + ")'><i class='fa fa-check'></i></button> <button class='btn btn-danger px-3' onclick='rejectRequest(" + result.data[i].requestId + ")'><i class='fa fa-times'></i></button></td>";
                         html += "<tr>";
                     }
                     $(".tbody").html(html);

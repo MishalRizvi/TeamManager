@@ -1,0 +1,238 @@
+﻿<head>
+    <link rel="stylesheet" href="~/css/card-tasks.css" asp-append-version="true" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.1/tinycolor.min.js"></script>
+</head>
+<h3>Incomplete Tasks</h3>
+<div class="card-container" id="incompleteTasks">
+
+</div>
+<h3>Complete Tasks</h3>
+<div class="card-container" id="completeTasks">
+
+</div>
+<div>
+        <div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true" style="display:none">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeTaskModal()">x</button>
+                        <h4 class="modal-title appModalFont" id="taskModalLabel">Edit Task</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-outline mb-4">
+                                <label class="form-label appLabel" for="task">Task:</label>
+                                <input type="text" id="task" class="form-control form-control-lg" required />
+                            </div>
+                            <div class="form-outline mb-4">
+                                <label class="form-label appLabel" for="deadline">Deadline:</label>
+                                <input type="date" id="deadline" class="form-control form-control-lg" required disabled/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary appButton" id="updateTaskButton" onclick="updateTaskMethod()">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@section Scripts {
+
+    <script>$(document).ready(function () {
+            var updateTaskId = -1;
+            getAllTasks();
+        })
+        function getAllTasks() {
+            $.ajax({
+                url: "GetAllTasksAsJson",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    var html = "";
+                    var completedList = [];
+                    for (var i = 0; i < result.data.length; i++) {
+                        if (result.data[i].completed) {
+                            completedList.push(result.data[i]);
+                            continue;
+                        }
+                        var formattedDate = moment(result.data[i].deadline).format('MMM Do');
+                        var todayDate = new Date().toISOString();
+                        var overdue = false;
+                        if (result.data[i].deadline < todayDate) {
+                            html += "<div class='card' style='border:2px solid #FF0000'><div class='deadline-circle' id='circle" + result.data[i].taskId + "'>" + formattedDate + "</div><div class='card-content'>";
+                            overdue = true;
+                        }
+                        else {
+                            html += "<div class='card'><div class='deadline-circle' id='circle" + result.data[i].taskId + "'>" + formattedDate + "</div><div class='card-content'>";
+                            overdue = false;
+                        }
+                        html += "<div class='project-info'><span class='project-info-label'>" + result.data[i].taskText + "</span></div>";
+                        html += "<div class='project-info'><span class='project-info-label'>Project: </span><span class='project-info-value'>" + result.data[i].projectName + "</span></div>";
+                        if (overdue) {
+                            html += "<div class='project-info'><span class='project-info-value'>Overdue by " + moment(todayDate).diff(moment(result.data[i].deadline)+1, 'days') + " days</span></div>";
+                        }
+                        else {
+                            html += "<div class='project-info'><span class='project-info-value'>Due in " + moment(result.data[i].deadline).diff(moment(todayDate)+1, 'days') + " days</span></div>";
+                        }
+                        html += "<br /><div style='text-align:center'><button class='btn btn-success px-3' onclick='completeTask(" + result.data[i].taskId + ")'><i class='fa fa-check'></i></button> <button class='btn btn-primary px-3' onclick='return getByTaskId(" + result.data[i].taskId + ")'><i class='fa fa-edit'></i></button> <button class='btn btn-danger px-3' onclick='deleteTask(" + result.data[i].taskId + ")'><i class='fa fa-times'></i></button></div>";
+                        html += "</div></div>";
+                    }
+                    $("#incompleteTasks").html(html);
+                    var html2 = "";
+                    for (var i = 0; i < completedList.length; i++) {
+                        var formattedDate2 = moment(completedList[i].deadline).format('MMM Do');
+                        html2 += "<div class='card'><div class='deadline-circle' id='circle" + completedList[i].taskId + "'>" + formattedDate2 + "</div><div class='card-content'>";
+                        html2 += "<div class='project-info'><span class='project-info-label'>" + completedList[i].taskText + "</span></div>";
+                        html2 += "<div class='project-info'><span class='project-info-label'>Project: </span><span class='project-info-value'>" + completedList[i].projectName + "</span></div>";
+                        html2 += "<br /><div style='text-align:center'><button class='btn btn-warning px-3' onclick='incompleteTask(" + completedList[i].taskId + ")'><i class='fa-solid fa-pencil'></i></button> <button class='btn btn-danger px-3' onclick='deleteTask(" + completedList[i].taskId + ")'><i class='fa fa-times'></i></button></div>";
+                        html2 += "</div></div>";
+                    }
+                    $("#completeTasks").html(html2);
+
+                    for (i = 0; i < result.data.length; i++) {
+                        changeColour("circle" + result.data[i].taskId, moment(result.data[i].deadline).format("MM"));
+                    }
+
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+        function changeColour(circleId, monthNumber) {
+            console.log(circleId);
+            var bg = "";
+            switch (monthNumber) {
+                case "01": bg = "#809bce"; break;
+                case "02": bg = "#95b8d1"; break;
+                case "03": bg = "#b8e0d2"; break;
+                case "04": bg = "#d6eadf"; break;
+                case "05": bg = "#eac4d5"; break;
+                case "06": bg = "#e8dff5"; break;
+                case "07": bg = "#fcf4dd"; break;
+                case "08": bg = "#d4afb9"; break;
+                case "09": bg = "#7ec4cf"; break;
+                case "10": bg = "#52b2cf"; break;
+                case "11": bg = "#ffc09f "; break;
+                case "12": bg = "#adf7b6"; break;
+            }
+            document.getElementById(circleId).style.backgroundColor = bg;
+            var originalColor = tinycolor(bg);
+            var newColor = originalColor.darken(50).toString();
+            document.getElementById(circleId).style.color = newColor;
+        }
+        function getByTaskId(taskId) {
+            updateTaskId = taskId;
+            $.ajax({
+                url: "GetTaskById",
+                type: "GET",
+                data: { taskId: taskId },
+                success: function (result) {
+                    $("#task").val(result.data.taskText);
+                    //parse deadline date
+                    var dateStr = result.data.deadlineStr.split("/");
+                    var date = dateStr[0];
+                    var month = dateStr[1];
+                    var year = dateStr[2];
+                    var newDate = year + "-" + month + "-" + date;
+                    $("#deadline").val(newDate);
+                    $("#taskModal").modal("show");
+                    $("#updateTaskButton").show();
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+            return false; //May change
+        }
+
+        function completeTask(taskId) {
+            $.ajax({
+                url: "ToggleCompleteTask",
+                type: "POST",
+                data: {
+                    taskId: taskId,
+                    complete: true
+                },
+                success: function (result) {
+                    getAllTasks();
+                    closeTaskModal();
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+
+        function incompleteTask(taskId) {
+            $.ajax({
+                url: "ToggleCompleteTask",
+                type: "POST",
+                data: {
+                    taskId: taskId,
+                    complete: false
+                },
+                success: function (result) {
+                    getAllTasks();
+                    closeTaskModal();
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+
+        function deleteTask(taskId) {
+            var confirmed = confirm("Are you sure you would like to delete this task?");
+            if (confirmed) {
+                $.ajax({
+                    url: "DeleteTask",
+                    type: "POST",
+                    data: {
+                        taskId: taskId
+                    },
+                    success: function (result) {
+                        getAllTasks();
+                        closeTaskModal();
+                    },
+                    error: function (error) {
+                        alert(error.responseText);
+                    }
+                })
+            }
+        }
+
+        function updateTaskMethod() {
+            var confirmed = confirm("Would you like to update?");
+            if (confirmed) {
+                var newTask = $("#task").val();
+                $.ajax({
+                    url: "UpdateTaskMethod",
+                    type: "POST",
+                    data: {
+                        updateTaskId: updateTaskId,
+                        updateTask: newTask                  
+                    },
+                    success: function (result) {
+                        getAllTasks();
+                        closeTaskModal();
+                    },
+                    error: function (error) {
+                        alert(error.responseText);
+                    }
+                })
+            }
+            updateTaskId = -1;
+        }
+
+        function closeTaskModal() {
+            $("#taskModal").modal("hide");
+        }</script>
+}
+
+

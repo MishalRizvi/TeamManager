@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Utilities.Zlib;
 using WebAppsNoAuth.Data;
 using WebAppsNoAuth.Models;
 
@@ -47,7 +48,7 @@ namespace WebAppsNoAuth.Providers
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e);
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -71,7 +72,7 @@ namespace WebAppsNoAuth.Providers
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e);
+                Console.WriteLine(e);
                 return false;
             }
         }
@@ -143,7 +144,7 @@ namespace WebAppsNoAuth.Providers
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e);
+                Console.WriteLine(e);
                 return false;
             }
         }
@@ -154,7 +155,8 @@ namespace WebAppsNoAuth.Providers
             {
                 _connection.Open();
 
-                var queryString = "DELETE FROM [Team] WHERE TeamId = @TEAMID";
+                var queryString = "DELETE FROM [TeamUser] WHERE TeamId = @TEAMID;" +
+                                   "DELETE FROM [Team] WHERE TeamId = @TEAMID";
 
                 SqlCommand command = new SqlCommand(queryString, _connection);
                 command.Parameters.AddWithValue("@TEAMID", teamId);

@@ -1,0 +1,456 @@
+﻿<head>
+    <style>
+        .chartCard2 {
+            width: 500px;
+            display: flex;
+            justify-content: space-between;
+            margin: 0 auto;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .chartBox {
+            width: 200px;
+            padding: 20px;
+            border-radius: 20px;
+            border: solid 3px rgba(54, 162, 235, 1);
+            background: white;
+        }
+
+        .flex-container {
+            display: flex;
+        }
+
+        .flex-child {
+            flex: 1;
+        }
+
+            .flex-child:first-child {
+            }
+    </style>
+</head>
+
+<h2 class="appTitle indexHeader">Managed Projects</h2>
+<br />
+<div class="row">
+    <div class="col">
+        <label class="form-label" for="userId" style="color:maroon">Select Projects: </label>
+        @Html.DropDownList("ProjectsList")
+    </div>
+    <div class="col">
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div id="projectPersonsDiv">
+        </div>
+    </div>
+</div>
+<div class="flex-container">
+    <div class="flex-child">
+        <div class="chartCard2">
+            <canvas class="chartBox" id="chartCanvas"></canvas>
+        </div>
+    </div>
+    <div class="flex-child">
+        <div>
+            <table class="table table-hover styled-table-calendar" id="tasksTable">
+                <thead>
+                    <tr>
+                        <th>
+                            <button type="button" class="btn btn-primary appButton" data-toggle="modal" data-target="#taskModal" onclick="clearTextBox()"><i class="fa fa-plus"> Add New Task </i></button>
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>
+                            <button type="button" class="btn btn-outline-info" id="allocateButton" onclick="return allocateTasks()">Allocate Incomplete Tasks</button>
+                        </th>
+                    </tr>
+                    <tr style="color:maroon">
+                        <th>Task</th>
+                        <th>Deadline</th>
+                        <th>Completed</th>
+                        <th>Allocated</th>
+                        <th>Completion Date</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="tbody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true" style="display:none">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeTaskModal()">x</button>
+                <h4 class="modal-title appModalFont" id="taskModalLabel">Edit Task</h4>
+            </div>
+            <div class="modal-body">
+                <form method="get">
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="newTask">Task:</label>
+                        <input type="text" id="newTask" class="form-control form-control-lg" required />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="newDeadline">Deadline:</label>
+                        <input type="date" id="newDeadline" class="form-control form-control-lg" required />
+                    </div>
+                    <div id="projectPersonsDropdown" style="display:none">
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary appButton" id="addTaskButton" onclick="return addNewTask()">Add</button>
+                <button type="button" class="btn btn-primary appButton" id="updateTaskButton" onclick="updateTaskMethod()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script>
+        var curChart;
+        var currentProjectId;
+
+        $(document).ready(function () {
+            var updateTaskId = -1;
+            var projectPersons = "";
+            var tasks;
+            currentProjectId = document.getElementById("ProjectsList").value;
+            document.getElementById("ProjectsList").onchange = function () {
+                getAllTasks();
+                getProjectPersons();
+                getProjectPie();
+                currentProjectId = document.getElementById("ProjectsList").value;
+            }
+            getAllTasks();
+            getProjectPersons();
+            getProjectPie();
+        })
+
+        function divTaskAppear() {
+            $("#taskDiv").show();
+        }
+
+        function clearTextBox() {
+            $("#taskModal").modal("show");
+            $("#updateTaskButton").hide();
+            $("#addTaskButton").show();
+            $("#projectPersonsDropdown").show();
+
+            $("#newTask").val("");
+            $("#newDeadline").val("");
+            document.getElementById("projectPersonsDropdown").value = 0;
+        }
+
+        function getAllTasks() {
+            var selectedProjectId = document.getElementById("ProjectsList").value;
+
+            $.ajax({
+                url: "GetAllPMTasksAsJson",
+                type: "GET",
+                data: {
+                    projectId: selectedProjectId //do we need to pass this in? think of manager choosing a different user
+                },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    tasks = result.data;
+                    var html = "";
+                    var todayDate = new Date().toISOString();
+                    for (var i = 0; i < result.data.length; i++) {
+                        html += "<tr>";
+                        html += "<td><p class='fw-bold mb-1'>" + result.data[i].taskText + "</p></td>";
+                        html += "<td>" + result.data[i].deadlineStr + "</td>";
+                        html += "<td><input type='checkbox'"; if (result.data[i].completed) { html += "checked='checked' disabled />"; } else { html += "disabled />"; }
+                        html += "</td>";
+                        html += "<td><p class='fw-normal mb-1'>" + result.data[i].userName + "</p></td>";
+                        if (result.data[i].completedDateStr == "01/01/0001") {
+                            html += "<td></td>"
+                        }
+                        else {
+                            html += "<td><p class='fw-normal mb-1'>" + result.data[i].completedDateStr + "</p></td>";
+                        }
+                        console.log("date of completion: ", result.data[i].completedDateStr);
+                        if (result.data[i].deadline < todayDate && result.data[i].completed == false) {
+                            html += "<td><p class='fw-normal mb-1'>Overdue by " + moment(todayDate).diff(moment(result.data[i].deadline) + 1, 'days') + " days</p></td>";
+                        }
+                        else {
+                            html += "<td></td>";
+                        }                        
+                        html += "<td><button class='btn btn-primary px-3' onclick='return getByTaskId(" + result.data[i].taskId + ")'><i class='fa fa-edit'></i></button> <button class='btn btn-danger px-3' onclick='deleteTask(" + result.data[i].taskId + ")'><i class='fa fa-times'></i></button></td>";
+                        html += "<tr>";
+                    }
+                    $(".tbody").html(html);
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+        function getProjectPie() {
+            if (curChart != undefined) {
+                curChart.destroy();
+            }
+            var selectedProjectId = document.getElementById("ProjectsList").value;
+            console.log(selectedProjectId);
+            $.ajax({
+                url: "GetProjectsStatsById",
+                type: "GET",
+                data: {
+                    projectId: selectedProjectId
+                },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    projectStats = result.data;
+                    if (projectStats != null) {
+                        const config = {
+                            type: 'pie',
+                            data: {
+                                labels: [
+                                    'Completed Tasks',
+                                    'Incomplete Tasks'
+                                ],
+                                datasets: [{
+                                    label: $('#ProjectsList option:selected').text(), //chamge this to get name of project here
+                                    data: [result.data.completedTasks, result.data.totalTasks - result.data.completedTasks],
+                                    backgroundColor: [
+                                        'rgb(255, 99, 132)',
+                                        'rgb(54, 162, 235)',
+                                    ],
+                                    hoverOffset: 4,
+                                    radius: 150
+                                }]
+                            },
+                            options: {
+                                onClick: (e) => { //when user clicks on pie chart
+                                    getTaskDetails(projectStats.projectId);
+                                },
+                                responsive: true
+                            }
+                        };
+                        curChart = new Chart(document.getElementById("chartCanvas"), config);
+                        document.getElementById("chartCanvas").height = 100;
+                    }
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+
+        function getProjectPersons() {
+            var selectedProjectId = document.getElementById("ProjectsList").value;
+            $.ajax({
+                url: "GetProjectPersonsById",
+                type: "GET",
+                data: {
+                    projectId: selectedProjectId //do we need to pass this in? think of manager choosing a different user
+                },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result != undefined) {
+                        //now create the dropdown for adding tasks
+                        var htmlDropdown = '<label class="form-label appLabel">Allocate (optional):</label>';
+                        var htmlDiv = '';
+                        htmlDropdown += '<select id="selectedUser">';
+                        htmlDropdown += '<option value="0"></option>';
+                        for (var i = 0; i < result.data.length; i++) {
+                            htmlDropdown += '<option value="' + result.data[i].id + '">' + result.data[i].name + '</option>';
+                            htmlDiv += result.data[i].name;
+                            htmlDiv += '<br />';
+                        }
+                        htmlDropdown += '</select>';
+                        $("#projectPersonsDiv").html(htmlDiv);
+                        $("#projectPersonsDropdown").html(htmlDropdown);
+                    }
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+
+        function addNewTask() {
+            var task = $("#newTask").val();
+            var deadline = document.getElementById("newDeadline").value;
+            var selectedProjectId = -1;
+            selectedUserId = document.getElementById("selectedUser").value;
+            $.ajax({
+                url: "AddNewTask",
+                type: "POST",
+                data: {
+                    projectId: currentProjectId,
+                    task: task,
+                    deadline: deadline,
+                    userId: selectedUserId
+                },
+                success: function (result) {
+                    $("#taskModal").modal("hide");
+                    getAllTasks();
+                    getProjectPie();
+
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+
+        function deleteTask(taskId) {
+            $.ajax({
+                url: "DeleteTask",
+                type: "POST",
+                data: {
+                    taskId: taskId
+                },
+                success: function (result) {
+                    getAllTasks();
+                    getProjectPie();
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+
+        function getByTaskId(taskId) {
+            updateTaskId = taskId;
+            console.log(taskId);
+            $.ajax({
+                url: "GetTaskById",
+                type: "GET",
+                data: { taskId: taskId },
+                success: function (result) {
+                    console.log(result);
+                    $("#newTask").val(result.data.taskText);
+                    //parse deadline date
+
+                    var dateStr = result.data.deadlineStr.split("/");
+                    var date = dateStr[0];
+                    var month = dateStr[1];
+                    var year = dateStr[2];
+                    var newDate = year + "-" + month + "-" + date;
+                    $("#newDeadline").val(newDate);
+
+                    document.getElementById("selectedUser").value = result.data.userId;
+                    if (result.data.completed == false) {
+                        $("#projectPersonsDropdown").show();
+                    }
+                    else {
+                        $("#projectPersonsDropdown").hide();                        
+                    }
+                    $("#taskModal").modal("show");
+                    $("#updateTaskButton").show();
+                    $("#addTaskButton").hide();
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+            return false; //May change
+        }
+
+        function updateTaskMethod() {
+            var confirmed = confirm("Would you like to update?");
+            if (confirmed) {
+                var newTask = $("#newTask").val();
+                var newDeadline = $("#newDeadline").val();
+                var newUser = document.getElementById("selectedUser").value;
+                console.log(newUser);
+                $.ajax({
+                    url: "UpdateTaskMethodPM",
+                    type: "POST",
+                    data: {
+                        updateTaskId: updateTaskId,
+                        updateTask: newTask,
+                        updateDeadline: newDeadline,
+                        updateUser: newUser
+                    },
+                    success: function (result) {
+                        getAllTasks();
+                        closeTaskModal();
+                    },
+                    error: function (error) {
+                        alert(error.responseText);
+                    }
+                })
+            }
+            updateTaskId = -1;
+        }
+
+        function closeTaskModal() {
+            $("#taskModal").modal("hide");
+        }
+
+        function allocateTasks() {
+            //create list of incomplete tasks
+            var incompleteTaskIds = [];
+            for (var i = 0; i < tasks.length; i++) {
+                if (tasks[i].completed == false && tasks[i].userName == "") {
+                    incompleteTaskIds.push(tasks[i].taskId);
+                }
+            }
+            selectedProjectId = document.getElementById("ProjectsList").value;
+            var orderedUsers = [];
+            //get all users in order of least busy to most busy
+            $.ajax({
+                url: "GetOrderedProjectPersonsById",
+                type: "GET",
+                data: {
+                    projectId: selectedProjectId //do we need to pass this in? think of manager choosing a different user
+                },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    orderedUsers = result.data;
+                    var j = 0;
+                    for (var i = 0; i < incompleteTaskIds.length; i++) {
+                        allocateTaskToUser(incompleteTaskIds[i], orderedUsers[j].id);
+                        j += 1;
+                        if (j > orderedUsers.length - 1) {
+                            j = 0;
+                        }
+                    }
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+
+        function allocateTaskToUser(taskId, userId) {
+            console.log(taskId);
+            console.log(userId);
+            $.ajax({
+                url: "AllocateTask",
+                type: "POST",
+                data: {
+                    taskId: taskId,
+                    userId: userId
+                },
+                success: function (result) {
+                    getAllTasks(); //this may slow things down in which case move it to allocatetasks function
+                    return result;
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }</script>
+}
+
+

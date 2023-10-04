@@ -177,268 +177,724 @@
       "PackagePath": "staticwebassets/js/bootstrap.min.js.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/obj/Debug/net7.0/scopedcss/projectbundle/WebAppsNoAuth.bundle.scp.css",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/obj/Debug/net7.0/scopedcss/projectbundle/WebAppsNoAuth.bundle.scp.css",
       "PackagePath": "staticwebassets/WebAppsNoAuth.bundle.scp.css"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/.DS_Store",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/.DS_Store",
       "PackagePath": "staticwebassets/.DS_Store"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/Images/adminImage.png",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/Images/BlueGradientBackground.webp",
+      "PackagePath": "staticwebassets/Images/BlueGradientBackground.webp"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/Images/BlueGradientBackground2.jpeg",
+      "PackagePath": "staticwebassets/Images/BlueGradientBackground2.jpeg"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/Images/GradientBackgroundPurple.jpeg",
+      "PackagePath": "staticwebassets/Images/GradientBackgroundPurple.jpeg"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/Images/PurpleGradientBackground.jpeg",
+      "PackagePath": "staticwebassets/Images/PurpleGradientBackground.jpeg"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/Images/adminImage.png",
       "PackagePath": "staticwebassets/Images/adminImage.png"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/Images/calendarImage.png",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/Images/calendarImage.png",
       "PackagePath": "staticwebassets/Images/calendarImage.png"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/Images/checklistImage.jpeg",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/Images/checklistImage.jpeg",
       "PackagePath": "staticwebassets/Images/checklistImage.jpeg"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/Images/checklistImage2.png",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/Images/checklistImage2.png",
       "PackagePath": "staticwebassets/Images/checklistImage2.png"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/css/site.css",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/css/card-tasks.css",
+      "PackagePath": "staticwebassets/css/card-tasks.css"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/css/card.css",
+      "PackagePath": "staticwebassets/css/card.css"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/css/site.css",
       "PackagePath": "staticwebassets/css/site.css"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/favicon.ico",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/employee_comments_train_set.csv",
+      "PackagePath": "staticwebassets/employee_comments_train_set.csv"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/favicon.ico",
       "PackagePath": "staticwebassets/favicon.ico"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/js/site.js",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/js/site.js",
       "PackagePath": "staticwebassets/js/site.js"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/LICENSE",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/.DS_Store",
+      "PackagePath": "staticwebassets/lib/.DS_Store"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/LICENSE",
       "PackagePath": "staticwebassets/lib/bootstrap"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.css"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.css.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.min.css"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.min.css.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.css"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.css"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.css.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.min.css"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.css"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.css.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.min.css"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.min.css.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap.css",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap.css",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.css"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap.css.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap.css.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.css.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.min.css"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.min.css.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.css"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.css.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.min.css"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.min.css.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.js"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.js.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.js"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.js.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.min.js"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.min.js.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.js",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.js",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.js"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.js.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.js.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.js.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.min.js"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js.map",
       "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.min.js.map"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery-validation-unobtrusive/LICENSE.txt",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/.DS_Store",
+      "PackagePath": "staticwebassets/lib/fullcalendar/.DS_Store"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/common/LICENSE.txt",
+      "PackagePath": "staticwebassets/lib/fullcalendar/common/LICENSE.txt"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/common/README.md",
+      "PackagePath": "staticwebassets/lib/fullcalendar/common/README.md"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/common/main.cjs.js",
+      "PackagePath": "staticwebassets/lib/fullcalendar/common/main.cjs.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/common/main.css",
+      "PackagePath": "staticwebassets/lib/fullcalendar/common/main.css"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/common/main.d.ts",
+      "PackagePath": "staticwebassets/lib/fullcalendar/common/main.d.ts"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/common/main.js",
+      "PackagePath": "staticwebassets/lib/fullcalendar/common/main.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/common/main.js.map",
+      "PackagePath": "staticwebassets/lib/fullcalendar/common/main.js.map"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/common/main.min.css",
+      "PackagePath": "staticwebassets/lib/fullcalendar/common/main.min.css"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/common/package.json",
+      "PackagePath": "staticwebassets/lib/fullcalendar/common/package.json"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/common/vdom.cjs.js",
+      "PackagePath": "staticwebassets/lib/fullcalendar/common/vdom.cjs.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/common/vdom.d.ts",
+      "PackagePath": "staticwebassets/lib/fullcalendar/common/vdom.d.ts"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/common/vdom.js",
+      "PackagePath": "staticwebassets/lib/fullcalendar/common/vdom.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/moment/LICENSE.txt",
+      "PackagePath": "staticwebassets/lib/fullcalendar/moment/LICENSE.txt"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/moment/README.md",
+      "PackagePath": "staticwebassets/lib/fullcalendar/moment/README.md"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/moment/main.cjs.js",
+      "PackagePath": "staticwebassets/lib/fullcalendar/moment/main.cjs.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/moment/main.d.ts",
+      "PackagePath": "staticwebassets/lib/fullcalendar/moment/main.d.ts"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/moment/main.global.js",
+      "PackagePath": "staticwebassets/lib/fullcalendar/moment/main.global.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/moment/main.global.min.js",
+      "PackagePath": "staticwebassets/lib/fullcalendar/moment/main.global.min.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/moment/main.js",
+      "PackagePath": "staticwebassets/lib/fullcalendar/moment/main.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/moment/main.js.map",
+      "PackagePath": "staticwebassets/lib/fullcalendar/moment/main.js.map"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/fullcalendar/moment/package.json",
+      "PackagePath": "staticwebassets/lib/fullcalendar/moment/package.json"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery-validation-unobtrusive/LICENSE.txt",
       "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/LICENSE.txt"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
       "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
       "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery-validation/LICENSE.md",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery-validation/LICENSE.md",
       "PackagePath": "staticwebassets/lib/jquery-validation/LICENSE.md"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery-validation/dist/additional-methods.js",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery-validation/dist/additional-methods.js",
       "PackagePath": "staticwebassets/lib/jquery-validation/dist/additional-methods.js"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery-validation/dist/additional-methods.min.js",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery-validation/dist/additional-methods.min.js",
       "PackagePath": "staticwebassets/lib/jquery-validation/dist/additional-methods.min.js"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery-validation/dist/jquery.validate.js",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery-validation/dist/jquery.validate.js",
       "PackagePath": "staticwebassets/lib/jquery-validation/dist/jquery.validate.js"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery-validation/dist/jquery.validate.min.js",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery-validation/dist/jquery.validate.min.js",
       "PackagePath": "staticwebassets/lib/jquery-validation/dist/jquery.validate.min.js"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery/LICENSE.txt",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery/.DS_Store",
+      "PackagePath": "staticwebassets/lib/jquery/.DS_Store"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery/LICENSE.txt",
       "PackagePath": "staticwebassets/lib/jquery/LICENSE.txt"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery/dist/jquery.js",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery/dist/jquery-ui.js",
+      "PackagePath": "staticwebassets/lib/jquery/dist/jquery-ui.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery/dist/jquery.js",
       "PackagePath": "staticwebassets/lib/jquery/dist/jquery.js"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery/dist/jquery.min.js",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery/dist/jquery.min.js",
       "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.js"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery/dist/jquery.min.map",
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/jquery/dist/jquery.min.map",
       "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.map"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/tslib/CopyrightNotice.txt",
+      "PackagePath": "staticwebassets/lib/tslib/CopyrightNotice.txt"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/tslib/LICENSE.txt",
+      "PackagePath": "staticwebassets/lib/tslib/LICENSE.txt"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/tslib/README.md",
+      "PackagePath": "staticwebassets/lib/tslib/README.md"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/tslib/SECURITY.md",
+      "PackagePath": "staticwebassets/lib/tslib/SECURITY.md"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/tslib/modules/index.d.ts",
+      "PackagePath": "staticwebassets/lib/tslib/modules/index.d.ts"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/tslib/modules/index.js",
+      "PackagePath": "staticwebassets/lib/tslib/modules/index.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/tslib/modules/package.json",
+      "PackagePath": "staticwebassets/lib/tslib/modules/package.json"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/tslib/package.json",
+      "PackagePath": "staticwebassets/lib/tslib/package.json"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/tslib/tslib.d.ts",
+      "PackagePath": "staticwebassets/lib/tslib/tslib.d.ts"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/tslib/tslib.es6.html",
+      "PackagePath": "staticwebassets/lib/tslib/tslib.es6.html"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/tslib/tslib.es6.js",
+      "PackagePath": "staticwebassets/lib/tslib/tslib.es6.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/tslib/tslib.es6.mjs",
+      "PackagePath": "staticwebassets/lib/tslib/tslib.es6.mjs"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/tslib/tslib.html",
+      "PackagePath": "staticwebassets/lib/tslib/tslib.html"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/tslib/tslib.js",
+      "PackagePath": "staticwebassets/lib/tslib/tslib.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/.DS_Store",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/.DS_Store"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/.editorconfig",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/.editorconfig"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/.eslintrc.json",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/.eslintrc.json"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/.gitignore",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/.gitignore"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/.npmignore",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/.npmignore"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/.prettierrc",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/.prettierrc"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/.stylelintrc.json",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/.stylelintrc.json"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/LICENSE",
+      "PackagePath": "staticwebassets/lib/virtual-select-master"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/README.md",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/README.md"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/cypress.config.ts",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/cypress.config.ts"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/cypress/e2e/examples.cy.ts",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/cypress/e2e/examples.cy.ts"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/cypress/support/commands.ts",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/cypress/support/commands.ts"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/cypress/support/e2e.ts",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/cypress/support/e2e.ts"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/cypress/support/index.d.ts",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/cypress/support/index.d.ts"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/dist-archive/virtual-select-1.0.35.min.css",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/dist-archive/virtual-select-1.0.35.min.css"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/dist-archive/virtual-select-1.0.35.min.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/dist-archive/virtual-select-1.0.35.min.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/dist-archive/virtual-select-1.0.36.min.css",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/dist-archive/virtual-select-1.0.36.min.css"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/dist-archive/virtual-select-1.0.36.min.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/dist-archive/virtual-select-1.0.36.min.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/dist-archive/virtual-select-1.0.37.min.css",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/dist-archive/virtual-select-1.0.37.min.css"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/dist-archive/virtual-select-1.0.37.min.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/dist-archive/virtual-select-1.0.37.min.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/dist-archive/virtual-select-1.0.38.min.css",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/dist-archive/virtual-select-1.0.38.min.css"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/dist-archive/virtual-select-1.0.38.min.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/dist-archive/virtual-select-1.0.38.min.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/dist-archive/virtual-select-1.0.39.min.css",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/dist-archive/virtual-select-1.0.39.min.css"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/dist-archive/virtual-select-1.0.39.min.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/dist-archive/virtual-select-1.0.39.min.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/dist/virtual-select.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/dist/virtual-select.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/dist/virtual-select.min.css",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/dist/virtual-select.min.css"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/dist/virtual-select.min.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/dist/virtual-select.min.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/.nojekyll",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/.nojekyll"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/_coverpage.md",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/_coverpage.md"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/_sidebar.md",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/_sidebar.md"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/assets/external/docsify-copy-code.min.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/assets/external/docsify-copy-code.min.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/assets/external/docsify-pagination.min.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/assets/external/docsify-pagination.min.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/assets/external/docsify.4.min.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/assets/external/docsify.4.min.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/assets/external/flags.css",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/assets/external/flags.css"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/assets/external/flags.png",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/assets/external/flags.png"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/assets/external/prism-javascript.min.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/assets/external/prism-javascript.min.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/assets/external/vue.css",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/assets/external/vue.css"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/assets/script.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/assets/script.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/assets/styles.css",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/assets/styles.css"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/assets/tooltip.min.css",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/assets/tooltip.min.css"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/assets/tooltip.min.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/assets/tooltip.min.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/assets/virtual-select.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/assets/virtual-select.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/assets/virtual-select.min.css",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/assets/virtual-select.min.css"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/assets/virtual-select.min.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/assets/virtual-select.min.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/events.md",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/events.md"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/examples.md",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/examples.md"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/get-started.md",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/get-started.md"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/ie11-compatibility.md",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/ie11-compatibility.md"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/index.html",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/index.html"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/methods.md",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/methods.md"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/docs/properties.md",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/docs/properties.md"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/package-lock.json",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/package-lock.json"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/package.json",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/package.json"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/postcss.config.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/postcss.config.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/src/sass/partials/animations.scss",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/src/sass/partials/animations.scss"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/src/sass/partials/mixins.scss",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/src/sass/partials/mixins.scss"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/src/sass/partials/rtl.scss",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/src/sass/partials/rtl.scss"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/src/sass/partials/variable.scss",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/src/sass/partials/variable.scss"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/src/sass/partials/virtual-select.scss",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/src/sass/partials/virtual-select.scss"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/src/sass/styles.scss",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/src/sass/styles.scss"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/src/styles.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/src/styles.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/src/utils/dom-utils.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/src/utils/dom-utils.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/src/utils/index.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/src/utils/index.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/src/utils/utils.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/src/utils/utils.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/src/virtual-select.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/src/virtual-select.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/src/virtual-select.types.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/src/virtual-select.types.js"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/tsconfig.json",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/tsconfig.json"
+    },
+    {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/lib/virtual-select-master/webpack.config.js",
+      "PackagePath": "staticwebassets/lib/virtual-select-master/webpack.config.js"
     },
     {
       "Id": "obj/Debug/net7.0/staticwebassets/msbuild.WebAppsNoAuth.Microsoft.AspNetCore.StaticWebAssets.props",

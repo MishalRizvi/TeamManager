@@ -1,20 +1,23 @@
-﻿
-<div class="container">
+﻿<div>
     <h2 class="appTitle indexHeader">Locations</h2>
     <br />
-    <button type="button" class="btn btn-primary appButton" data-toggle="modal" data-target="#locationModal" onclick="clearTextBox();">Add New Location</button>
-    <br />
-    <br />
-    <table class="table table-bordered table-hover styled-table-calendar">
-        <thead>
-            <tr>
-                <th>Location</th>
-                <th>Location Title</th>
-            </tr>
-        </thead>
-        <tbody class="tbody">
-        </tbody>
-    </table>
+    <div>
+        <table class="table table-hover styled-table-calendar">
+            <thead>
+                <tr>
+                    <th><button class="btn btn-primary appButton" data-toggle="modal" data-target="#locationModal" onclick="clearTextBox()"><i class="fa fa-plus"></i> Add new location </button></th>
+                    <th></th>
+                </tr>
+                <tr style="color:maroon">
+                    <th>Location</th>
+                    <th>Location Title</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="tbody">
+            </tbody>
+        </table>
+    </div>
 </div>
 <div class="modal fade" id="locationModal" tabindex="-1" role="dialog" aria-labelledby="locationModalLabel" aria-hidden="true" style="display:none">
     <div class="modal-dialog">
@@ -26,11 +29,11 @@
             <div class="modal-body">
                 <form>
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="locationName">Location</label>
+                        <label class="form-label appLabel" for="locationName">Location</label>
                         <select id="locationName"></select>
                     </div>
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="title">Location Title</label>
+                        <label class="form-label appLabel" for="title">Location Title</label>
                         <input type="text" id="title" class="form-control form-control-lg" />
                     </div>
                 </form>
@@ -63,9 +66,9 @@
                     var html = "";
                     for (var i = 0; i < result.data.length; i++) {
                         html += "<tr>";
-                        html += "<td>" + result.data[i].locationValue + "</td>";
-                        html += "<td>" + result.data[i].locationTitle + "</td>";
-                        html += "<td><a href='#' onclick='return getByLocationId(" + result.data[i].locationId + ")'>Edit</a> | <a href='#' onclick='deleteLocation(" + result.data[i].locationId + ")'>Delete</a></td>";
+                        html += "<td><p class='fw-bold mb-1'>" + result.data[i].locationValue + "</p></td>";
+                        html += "<td><p class='fw-normal mb-1'>" + result.data[i].locationTitle + "</p></td>";
+                        html += "<td><button class='btn btn-primary px-3' onclick='return getByLocationId(" + result.data[i].locationId + ")'><i class='fa fa-edit'></i></button> <button class='btn btn-danger px-3' onclick='deleteLocation(" + result.data[i].locationId + ")'><i class='fa fa-times'></i></button></td>";
                         html += "<tr>";
                     }
                     $(".tbody").html(html);
@@ -92,9 +95,6 @@
                     $("#locationModal").modal("show");
                     $("#updateLocationButton2").show();
                     $("#addLocationButton2").hide();
-                    //document.getElementById("updateLocationButton").style.display = 'none';
-                    //document.getElementById("addLocationButton").style.display = 'block';
-                    console.log($("#updateLocationButton2"));
                 },
                 error: function (error) {
                     alert(error.responseText);
@@ -113,9 +113,6 @@
             $("#updateLocationButton2").hide();
 
             $("#addLocationButton2").show();
-
-            //document.getElementById("updateLocationButton").style.display = 'block';
-            //document.getElementById("addLocationButton").style.display = 'none';
 
             $("#locationName").css("border-color", "lightgrey");
             $("#title").css("border-color", "lightgrey");
