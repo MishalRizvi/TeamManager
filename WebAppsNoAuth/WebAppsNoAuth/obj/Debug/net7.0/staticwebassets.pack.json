@@ -897,6 +897,10 @@
       "PackagePath": "staticwebassets/lib/virtual-select-master/webpack.config.js"
     },
     {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/train_set.csv",
+      "PackagePath": "staticwebassets/train_set.csv"
+    },
+    {
       "Id": "obj/Debug/net7.0/staticwebassets/msbuild.WebAppsNoAuth.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

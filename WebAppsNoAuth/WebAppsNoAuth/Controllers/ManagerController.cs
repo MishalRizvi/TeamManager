@@ -14,6 +14,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using WebAppsNoAuth.Data;
 using WebAppsNoAuth.Models;
 
+//The following two may need to be added to the provider file 
+using Microsoft.ML;
+using EmployeeSentimentModel;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebAppsNoAuth.Controllers

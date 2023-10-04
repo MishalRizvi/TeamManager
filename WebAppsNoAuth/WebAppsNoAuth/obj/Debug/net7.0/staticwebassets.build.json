@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "PTHu9Pfbf76QkPpBOpUBKya2eKw4FAdlyFsR/2N4Tr8=",
+  "Hash": "P1tfjZ3Vln89IVHgXKNT6bZVmiH9EOoS86/ADf6px94=",
   "Source": "WebAppsNoAuth",
   "BasePath": "_content/WebAppsNoAuth",
   "Mode": "Default",
@@ -3840,6 +3840,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/lib/virtual-select-master/webpack.config.js"
+    },
+    {
+      "Identity": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/train_set.csv",
+      "SourceId": "WebAppsNoAuth",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/",
+      "BasePath": "_content/WebAppsNoAuth",
+      "RelativePath": "train_set.csv",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/train_set.csv"
     }
   ]
 }
