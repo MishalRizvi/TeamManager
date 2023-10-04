@@ -1,0 +1,1 @@
+/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/obj/Debug/docker-compose.dcproj.CoreCompileInputs.cache

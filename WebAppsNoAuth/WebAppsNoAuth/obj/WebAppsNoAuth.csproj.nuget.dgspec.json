@@ -79,38 +79,6 @@
               "target": "Package",
               "version": "[7.0.0, )"
             },
-            "Microsoft.Extensions.ML": {
-              "target": "Package",
-              "version": "[2.0.1, )"
-            },
-            "Microsoft.ML": {
-              "target": "Package",
-              "version": "[2.0.1, )"
-            },
-            "Microsoft.ML.AutoML": {
-              "target": "Package",
-              "version": "[0.20.1, )"
-            },
-            "Microsoft.ML.CodeGenerator": {
-              "target": "Package",
-              "version": "[0.20.1, )"
-            },
-            "Microsoft.ML.DataView": {
-              "target": "Package",
-              "version": "[2.0.1, )"
-            },
-            "Microsoft.ML.FastTree": {
-              "target": "Package",
-              "version": "[2.0.1, )"
-            },
-            "Microsoft.ML.LightGbm": {
-              "target": "Package",
-              "version": "[2.0.1, )"
-            },
-            "Microsoft.ML.Mkl.Redist": {
-              "target": "Package",
-              "version": "[2.0.1, )"
-            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[7.0.1, )"

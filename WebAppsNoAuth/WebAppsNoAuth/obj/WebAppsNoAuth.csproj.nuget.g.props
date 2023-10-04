@@ -367,12 +367,7 @@
     </Content>
   </ItemGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)torchsharp/0.98.1/buildTransitive/net5.0/TorchSharp.props" Condition="Exists('$(NuGetPackageRoot)torchsharp/0.98.1/buildTransitive/net5.0/TorchSharp.props')" />
     <Import Project="$(NuGetPackageRoot)entityframework/6.4.4/buildTransitive/netcoreapp3.0/EntityFramework.props" Condition="Exists('$(NuGetPackageRoot)entityframework/6.4.4/buildTransitive/netcoreapp3.0/EntityFramework.props')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.ml/2.0.1/build/netstandard2.0/Microsoft.ML.props" Condition="Exists('$(NuGetPackageRoot)microsoft.ml/2.0.1/build/netstandard2.0/Microsoft.ML.props')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.ml.mkl.redist/2.0.1/build/netstandard2.0/Microsoft.ML.Mkl.Redist.props" Condition="Exists('$(NuGetPackageRoot)microsoft.ml.mkl.redist/2.0.1/build/netstandard2.0/Microsoft.ML.Mkl.Redist.props')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.ml.fasttree/2.0.1/build/netstandard2.0/Microsoft.ML.FastTree.props" Condition="Exists('$(NuGetPackageRoot)microsoft.ml.fasttree/2.0.1/build/netstandard2.0/Microsoft.ML.FastTree.props')" />
-    <Import Project="$(NuGetPackageRoot)lightgbm/2.3.1/build/LightGBM.props" Condition="Exists('$(NuGetPackageRoot)lightgbm/2.3.1/build/LightGBM.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore/7.0.1/buildTransitive/net6.0/Microsoft.EntityFrameworkCore.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore/7.0.1/buildTransitive/net6.0/Microsoft.EntityFrameworkCore.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore.design/7.0.1/build/net6.0/Microsoft.EntityFrameworkCore.Design.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore.design/7.0.1/build/net6.0/Microsoft.EntityFrameworkCore.Design.props')" />
   </ImportGroup>
@@ -381,10 +376,6 @@
     <PkgSystem_Data_SQLite_EF6 Condition=" '$(PkgSystem_Data_SQLite_EF6)' == '' ">/Users/mishalrizvi/.nuget/packages/system.data.sqlite.ef6/1.0.117</PkgSystem_Data_SQLite_EF6>
     <PkgMicrosoft_CodeAnalysis_Analyzers Condition=" '$(PkgMicrosoft_CodeAnalysis_Analyzers)' == '' ">/Users/mishalrizvi/.nuget/packages/microsoft.codeanalysis.analyzers/3.3.3</PkgMicrosoft_CodeAnalysis_Analyzers>
     <PkgMicrosoft_CodeAnalysis_AnalyzerUtilities Condition=" '$(PkgMicrosoft_CodeAnalysis_AnalyzerUtilities)' == '' ">/Users/mishalrizvi/.nuget/packages/microsoft.codeanalysis.analyzerutilities/3.3.0</PkgMicrosoft_CodeAnalysis_AnalyzerUtilities>
-    <PkgMicrosoft_ML_DnnImageFeaturizer_ResNet50 Condition=" '$(PkgMicrosoft_ML_DnnImageFeaturizer_ResNet50)' == '' ">/Users/mishalrizvi/.nuget/packages/microsoft.ml.dnnimagefeaturizer.resnet50/0.20.1</PkgMicrosoft_ML_DnnImageFeaturizer_ResNet50>
-    <PkgMicrosoft_ML_DnnImageFeaturizer_ResNet18 Condition=" '$(PkgMicrosoft_ML_DnnImageFeaturizer_ResNet18)' == '' ">/Users/mishalrizvi/.nuget/packages/microsoft.ml.dnnimagefeaturizer.resnet18/0.20.1</PkgMicrosoft_ML_DnnImageFeaturizer_ResNet18>
-    <PkgMicrosoft_ML_DnnImageFeaturizer_ResNet101 Condition=" '$(PkgMicrosoft_ML_DnnImageFeaturizer_ResNet101)' == '' ">/Users/mishalrizvi/.nuget/packages/microsoft.ml.dnnimagefeaturizer.resnet101/0.20.1</PkgMicrosoft_ML_DnnImageFeaturizer_ResNet101>
-    <PkgMicrosoft_ML_DnnImageFeaturizer_AlexNet Condition=" '$(PkgMicrosoft_ML_DnnImageFeaturizer_AlexNet)' == '' ">/Users/mishalrizvi/.nuget/packages/microsoft.ml.dnnimagefeaturizer.alexnet/0.20.1</PkgMicrosoft_ML_DnnImageFeaturizer_AlexNet>
     <PkgMicrosoft_EntityFrameworkCore_Tools Condition=" '$(PkgMicrosoft_EntityFrameworkCore_Tools)' == '' ">/Users/mishalrizvi/.nuget/packages/microsoft.entityframeworkcore.tools/7.0.1</PkgMicrosoft_EntityFrameworkCore_Tools>
     <PkgjQuery Condition=" '$(PkgjQuery)' == '' ">/Users/mishalrizvi/.nuget/packages/jquery/3.6.3</PkgjQuery>
   </PropertyGroup>

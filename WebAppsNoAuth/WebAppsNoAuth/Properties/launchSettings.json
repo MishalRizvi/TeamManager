@@ -41,7 +41,7 @@
     "WebAppsNoAuth": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:2353;http://localhost:18275",
+      "applicationUrl": "https://localhost:2353;http://localhost:18275;https://localhost:7066",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
