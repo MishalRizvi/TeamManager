@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "j9PAIH9prdMHWINN3CDGk7RhaFWLR+5X5Sc5nuKoPvU4c2gbapFCY3JJS6P0Q5egVBKk7oc2Q7SnMWQIVmI0Yg==",
+  "dgSpecHash": "4vODx9pblF3MxBhzQFKPdG7fG6R5tAJoBEar7+TSJgcd+aF6+F54T/ntF3TsB/qIkp5lySnZeGIptzPuDroskA==",
   "success": true,
   "projectFilePath": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/WebAppsNoAuth.csproj",
   "expectedPackageFiles": [
@@ -11,6 +11,7 @@
     "/Users/mishalrizvi/.nuget/packages/exceldatareader/3.6.0/exceldatareader.3.6.0.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/jquery/3.6.3/jquery.3.6.3.nupkg.sha512",
+    "/Users/mishalrizvi/.nuget/packages/lightgbm/2.3.1/lightgbm.2.3.1.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/mailkit/3.4.3/mailkit.3.4.3.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/microsoft.aspnetcore.authentication/2.2.0/microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/microsoft.aspnetcore.authentication.abstractions/2.2.0/microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
@@ -94,6 +95,8 @@
     "/Users/mishalrizvi/.nuget/packages/microsoft.ml/2.0.1/microsoft.ml.2.0.1.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/microsoft.ml.cpumath/2.0.1/microsoft.ml.cpumath.2.0.1.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/microsoft.ml.dataview/2.0.1/microsoft.ml.dataview.2.0.1.nupkg.sha512",
+    "/Users/mishalrizvi/.nuget/packages/microsoft.ml.fasttree/2.0.1/microsoft.ml.fasttree.2.0.1.nupkg.sha512",
+    "/Users/mishalrizvi/.nuget/packages/microsoft.ml.lightgbm/2.0.1/microsoft.ml.lightgbm.2.0.1.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/microsoft.net.http.headers/2.2.0/microsoft.net.http.headers.2.2.0.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/microsoft.net.stringtools/17.3.2/microsoft.net.stringtools.17.3.2.nupkg.sha512",
     "/Users/mishalrizvi/.nuget/packages/microsoft.netcore.platforms/1.1.1/microsoft.netcore.platforms.1.1.1.nupkg.sha512",

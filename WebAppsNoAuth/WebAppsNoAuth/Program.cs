@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Net;
 using System.Diagnostics;
 using WebAppsNoAuth.Providers;
+using static EmpSentimentModel.ConsoleApp.EmpSentimentModel;
 //using Microsoft.ML.Data;
 //using Microsoft.Extensions.ML;
 
@@ -25,7 +26,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     });
 builder.Services.Configure<Email>(builder.Configuration.GetSection("EmailConfiguration"));
-        
 
 var app = builder.Build();
 
@@ -59,4 +59,3 @@ app.MapControllerRoute(
     pattern: "{controller=Access}/{action=Login}/{id?}");
 
 app.Run();
-

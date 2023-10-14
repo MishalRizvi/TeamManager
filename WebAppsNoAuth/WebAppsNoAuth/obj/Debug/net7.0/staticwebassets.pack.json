@@ -229,10 +229,6 @@
       "PackagePath": "staticwebassets/css/site.css"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/employee_comments_train_set.csv",
-      "PackagePath": "staticwebassets/employee_comments_train_set.csv"
-    },
-    {
       "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/favicon.ico",
       "PackagePath": "staticwebassets/favicon.ico"
     },
@@ -897,8 +893,8 @@
       "PackagePath": "staticwebassets/lib/virtual-select-master/webpack.config.js"
     },
     {
-      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/train_set.csv",
-      "PackagePath": "staticwebassets/train_set.csv"
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/training_data_tabbed.txt",
+      "PackagePath": "staticwebassets/training_data_tabbed.txt"
     },
     {
       "Id": "obj/Debug/net7.0/staticwebassets/msbuild.WebAppsNoAuth.Microsoft.AspNetCore.StaticWebAssets.props",

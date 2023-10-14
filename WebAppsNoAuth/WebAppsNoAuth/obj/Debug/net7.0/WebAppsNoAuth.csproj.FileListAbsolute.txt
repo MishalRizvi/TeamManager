@@ -1,5 +1,7 @@
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/appsettings.Development.json
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/appsettings.json
+/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/EmpSentimentModel/obj/EmpSentimentModel.csproj.nuget.dgspec.json
+/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/EmpSentimentModel/obj/project.assets.json
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/WebAppsNoAuth.staticwebassets.runtime.json
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/WebAppsNoAuth
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/WebAppsNoAuth.deps.json
@@ -61,6 +63,8 @@
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/Microsoft.ML.dll
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/Microsoft.ML.CpuMath.dll
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/Microsoft.ML.DataView.dll
+/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/Microsoft.ML.FastTree.dll
+/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/Microsoft.ML.LightGbm.dll
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/Microsoft.NET.StringTools.dll
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/Microsoft.SqlServer.Server.dll
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/Microsoft.VisualStudio.Web.CodeGeneration.dll
@@ -267,6 +271,10 @@
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/tr/Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/runtimes/linux-x64/native/lib_lightgbm.so
+/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/runtimes/osx-x64/native/lib_lightgbm.dylib
+/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/runtimes/win-x64/native/lib_lightgbm.dll
+/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/runtimes/win-x64/native/lightgbm.exe
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/runtimes/unix/lib/netcoreapp3.1/Microsoft.Data.SqlClient.dll
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/runtimes/win/lib/netcoreapp3.1/Microsoft.Data.SqlClient.dll
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/runtimes/win-arm/native/Microsoft.Data.SqlClient.SNI.dll
@@ -280,6 +288,10 @@
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/runtimes/osx-x64/native/libLdaNative.dylib
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/runtimes/win-x64/native/LdaNative.dll
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/runtimes/win-x86/native/LdaNative.dll
+/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/runtimes/linux-x64/native/libFastTreeNative.so
+/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/runtimes/osx-x64/native/libFastTreeNative.dylib
+/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/runtimes/win-x64/native/FastTreeNative.dll
+/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/runtimes/win-x86/native/FastTreeNative.dll
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/runtimes/win-arm64/native/sni.dll
 /Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/bin/Debug/net7.0/runtimes/win-x64/native/sni.dll

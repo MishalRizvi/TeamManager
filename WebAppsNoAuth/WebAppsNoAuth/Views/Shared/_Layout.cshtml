@@ -25,57 +25,60 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                            <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Holidays" style="color:maroon">Holidays</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Meetings" style="color:maroon">Meetings</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Calendar" style="color:maroon">Calendar</a>
-                                </li>
-                                @*<li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="MyProjects" style="color:maroon">My Projects</a>
-                                </li>*@
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="PMTasks" style="color:maroon">PM Tasks</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="MyTasks" style="color:maroon">Tasks</a>
-                                </li>
-                                @*<li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ResetPassword" style="color:maroon">Reset Password</a>
-                                    </li>*@
-                                @{
-                                    if (ViewData["Admin"] != null && ViewData["Admin"].ToString() == "True")
-                                    {
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateLocation" style="color:maroon">Locations</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateUser" style="color:maroon">Users</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateTeam" style="color:maroon">Teams</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateEntitlements" style="color:maroon">Entitlements</a>
-                                        </li>
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Holidays" style="color:maroon">Holidays</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Meetings" style="color:maroon">Meetings</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Calendar" style="color:maroon">Calendar</a>
+                                    </li>
+                                    @*<li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="MyProjects" style="color:maroon">My Projects</a>
+        </li>*@
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="PMTasks" style="color:maroon">PM Tasks</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="MyTasks" style="color:maroon">Tasks</a>
+                                    </li>
+                                    @*<li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ResetPassword" style="color:maroon">Reset Password</a>
+        </li>*@
+                                    @{
+                                        if (ViewData["Admin"] != null && ViewData["Admin"].ToString() == "True")
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateLocation" style="color:maroon">Locations</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateUser" style="color:maroon">Users</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateTeam" style="color:maroon">Teams</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateEntitlements" style="color:maroon">Entitlements</a>
+                                            </li>
+                                        }
                                     }
-                                }
-                                @{
-                                    if (ViewData["Manager"] != null && ViewData["Manager"].ToString() == "True")
-                                    {
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Manager" asp-action="ApproveRequest" style="color:maroon">Requests</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Manager" asp-action="Projects" style="color:maroon">Projects</a>
-                                        </li>
+                                    @{
+                                        if (ViewData["Manager"] != null && ViewData["Manager"].ToString() == "True")
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-area="" asp-controller="Manager" asp-action="ApproveRequest" style="color:maroon">Requests</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-area="" asp-controller="Manager" asp-action="Projects" style="color:maroon">Projects</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-area="" asp-controller="Manager" asp-action="EmployeeAnalytics" style="color:maroon">Employee Analytics</a>
+                                            </li>
+                                        }
                                     }
-                                }
-                            </ul>
+                                </ul>
                             <ul class="nav navbar navbar-right">
                                 <li>
                                     <button style="border:none; background-color:maroon; color:white" data-toggle="modal" data-target="#layoutModal">@ViewData["Username"]</button>

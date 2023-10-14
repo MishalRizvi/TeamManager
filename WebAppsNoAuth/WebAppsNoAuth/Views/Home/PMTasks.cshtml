@@ -17,6 +17,15 @@
             background: white;
         }
 
+        .divStyle {
+            margin-top: 20px;
+            width: 200px; 
+            padding: 20px;
+            border-radius: 20px;
+            border: solid 3px maroon;
+            background: white;
+        }
+
         .flex-container {
             display: flex;
         }
@@ -42,8 +51,9 @@
 </div>
 <div class="row">
     <div class="col">
-        <div id="projectPersonsDiv">
-        </div>
+        @*<div class="divStyle" id="projectPersonsDiv">
+        </div>*@
+        <button class="btn btn-primary btn-lg" style="background-color:white; color:maroon; margin-top:20px;" onclick="openCommentModal()">Add Comment <i class="fa fa-comment"></i></button>
     </div>
 </div>
 <div class="flex-container">
@@ -116,6 +126,30 @@
     </div>
 </div>
 
+<div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true" style="display:none">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeCommentModal()">x</button>
+                <h4 class="modal-title appModalFont" id="taskModalLabel">Edit Task</h4>
+            </div>
+            <div class="modal-body">
+                <form method="get">
+                    <div id="projectPersonsDropdown2" style="display:none">
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="newComment">Comment </label>
+                        <textarea id="newComment" rows="4" cols="50">Enter comment here...</textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary appButton" id="addCommentButton" onclick="return addNewComment()">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
 
     <script>
@@ -151,6 +185,15 @@
             $("#newTask").val("");
             $("#newDeadline").val("");
             document.getElementById("projectPersonsDropdown").value = 0;
+        }
+
+        function openCommentModal() {
+            $("#commentModal").modal("show");
+            $("#addCommentButton").show();
+            $("#projectPersonsDropdown2").show();
+
+            $("#newComment").val("");
+            document.getElementById("projectPersonsDropdown2").value = 0;
         }
 
         function getAllTasks() {
@@ -263,19 +306,25 @@
                 dataType: "json",
                 success: function (result) {
                     if (result != undefined) {
-                        //now create the dropdown for adding tasks
                         var htmlDropdown = '<label class="form-label appLabel">Allocate (optional):</label>';
-                        var htmlDiv = '';
+                        var htmlDropdown2 = '<label class="form-label appLabel">Choose employee:</label>';
+                        var htmlDiv = 'Employees on the Project: ';
+                        htmlDiv += '<br />';
                         htmlDropdown += '<select id="selectedUser">';
                         htmlDropdown += '<option value="0"></option>';
+                        htmlDropdown2 += '<select id="selectedUserComment">';
+                        htmlDropdown2 += '<option value="0"></option>';
                         for (var i = 0; i < result.data.length; i++) {
                             htmlDropdown += '<option value="' + result.data[i].id + '">' + result.data[i].name + '</option>';
+                            htmlDropdown2 += '<option value="' + result.data[i].id + '">' + result.data[i].name + '</option>';
                             htmlDiv += result.data[i].name;
                             htmlDiv += '<br />';
                         }
                         htmlDropdown += '</select>';
+                        htmlDropdown2 += '</select>';
                         $("#projectPersonsDiv").html(htmlDiv);
                         $("#projectPersonsDropdown").html(htmlDropdown);
+                        $("#projectPersonsDropdown2").html(htmlDropdown2);
                     }
                 },
                 error: function (error) {
@@ -309,6 +358,31 @@
                 }
             })
         }
+
+        function addNewComment() {
+            var comment = document.getElementById("newComment").value;
+            var selectedProjectId = -1;
+            selectedUserId = document.getElementById("selectedUserComment").value;
+            $.ajax({
+                url: "AddNewComment",
+                type: "POST",
+                data: {
+                    userId: selectedUserId,
+                    projectId: currentProjectId,
+                    comment: comment
+                },
+                success: function (result) {
+                    $("#commentModal").modal("hide");
+                    getAllTasks();
+                    getProjectPie();
+
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+
 
         function deleteTask(taskId) {
             $.ajax({
@@ -394,6 +468,10 @@
 
         function closeTaskModal() {
             $("#taskModal").modal("hide");
+        }
+
+        function closeCommentModal() {
+            $("#commentModal").modal("hide");
         }
 
         function allocateTasks() {

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "P1tfjZ3Vln89IVHgXKNT6bZVmiH9EOoS86/ADf6px94=",
+  "Hash": "UipACUabN7xAhNJuP1hIjBMQORcKwwz7XHWwGuAIwlI=",
   "Source": "WebAppsNoAuth",
   "BasePath": "_content/WebAppsNoAuth",
   "Mode": "Default",
@@ -865,23 +865,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/css/site.css"
-    },
-    {
-      "Identity": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/employee_comments_train_set.csv",
-      "SourceId": "WebAppsNoAuth",
-      "SourceType": "Discovered",
-      "ContentRoot": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/",
-      "BasePath": "_content/WebAppsNoAuth",
-      "RelativePath": "employee_comments_train_set.csv",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/employee_comments_train_set.csv"
     },
     {
       "Identity": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/favicon.ico",
@@ -3842,12 +3825,12 @@
       "OriginalItemSpec": "wwwroot/lib/virtual-select-master/webpack.config.js"
     },
     {
-      "Identity": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/train_set.csv",
+      "Identity": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/training_data_tabbed.txt",
       "SourceId": "WebAppsNoAuth",
       "SourceType": "Discovered",
       "ContentRoot": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/",
       "BasePath": "_content/WebAppsNoAuth",
-      "RelativePath": "train_set.csv",
+      "RelativePath": "training_data_tabbed.txt",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -3856,7 +3839,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/train_set.csv"
+      "OriginalItemSpec": "wwwroot/training_data_tabbed.txt"
     }
   ]
 }

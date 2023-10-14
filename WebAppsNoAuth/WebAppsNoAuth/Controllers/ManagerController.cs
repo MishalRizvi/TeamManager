@@ -16,7 +16,9 @@ using WebAppsNoAuth.Models;
 
 //The following two may need to be added to the provider file 
 using Microsoft.ML;
-using EmployeeSentimentModel;
+using EmpSentimentModel;
+using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebAppsNoAuth.Controllers
@@ -55,8 +57,8 @@ namespace WebAppsNoAuth.Controllers
             }
             else
             {
-                Location fake = new Location { LocationId = -1, LocationValue = "", LocationTitle = "" };
-                List<Location> fakeLocationsList = new List<Location>();
+                WebAppsNoAuth.Models.Location fake = new WebAppsNoAuth.Models.Location { LocationId = -1, LocationValue = "", LocationTitle = "" };
+                List<WebAppsNoAuth.Models.Location> fakeLocationsList = new List<WebAppsNoAuth.Models.Location>();
                 fakeLocationsList.Add(fake);
                 ViewData["UserLocationsList"] = new SelectList(fakeLocationsList, "LocationId", "LocationValue");
 
@@ -85,8 +87,8 @@ namespace WebAppsNoAuth.Controllers
             }
             else
             {
-                Location fake = new Location { LocationId = -1, LocationValue = "", LocationTitle = "" };
-                List<Location> fakeLocationsList = new List<Location>();
+                WebAppsNoAuth.Models.Location fake = new WebAppsNoAuth.Models.Location { LocationId = -1, LocationValue = "", LocationTitle = "" };
+                List<WebAppsNoAuth.Models.Location> fakeLocationsList = new List<WebAppsNoAuth.Models.Location>();
                 fakeLocationsList.Add(fake);
                 ViewData["UserLocationsList"] = new SelectList(fakeLocationsList, "LocationId", "LocationValue");
 
@@ -116,8 +118,43 @@ namespace WebAppsNoAuth.Controllers
             }
             else
             {
-                Location fake = new Location { LocationId = -1, LocationValue = "", LocationTitle = "" };
-                List<Location> fakeLocationsList = new List<Location>();
+                WebAppsNoAuth.Models.Location fake = new WebAppsNoAuth.Models.Location { LocationId = -1, LocationValue = "", LocationTitle = "" };
+                List<WebAppsNoAuth.Models.Location> fakeLocationsList = new List<WebAppsNoAuth.Models.Location>();
+                fakeLocationsList.Add(fake);
+                ViewData["UserLocationsList"] = new SelectList(fakeLocationsList, "LocationId", "LocationValue");
+
+            }
+            return View();
+        }
+
+        public IActionResult EmployeeAnalytics()
+        {
+            int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
+            ViewData["Authenticated"] = "true";
+            ViewData["Username"] = HttpContext.User.Claims.ToList()[2].ToString().Split(":")[1];
+            User currentUser = _providers.User.GetUserById(userId);
+            ViewData["Admin"] = currentUser.Admin;
+            ViewData["Manager"] = currentUser.Manager;
+            ViewData["Admin"] = currentUser.Admin;
+            ViewData["Manager"] = currentUser.Manager;
+
+            var managerUsers = GetAllManagerUsers(userId);
+            ViewData["ManagerUsersList"] = new SelectList(managerUsers, "Id", "Name");
+
+            var allUsers = _providers.User.GetAllUsersAsObject(userId);
+            ViewData["UsersListComplete"] = new SelectList(allUsers, "Id", "Name");
+
+            var statusTypes = _providers.User.GetAllStatusTypes();
+            ViewData["StatusList"] = new SelectList(statusTypes, "StatusTypeId", "StatusTypeName");
+            var userLocationsList = GetAllUserLocations();
+            if (userLocationsList.Count != 0)
+            {
+                ViewData["UserLocationsList"] = new SelectList(userLocationsList, "LocationId", "LocationValue");
+            }
+            else
+            {
+                WebAppsNoAuth.Models.Location fake = new WebAppsNoAuth.Models.Location { LocationId = -1, LocationValue = "", LocationTitle = "" };
+                List<WebAppsNoAuth.Models.Location> fakeLocationsList = new List<WebAppsNoAuth.Models.Location>();
                 fakeLocationsList.Add(fake);
                 ViewData["UserLocationsList"] = new SelectList(fakeLocationsList, "LocationId", "LocationValue");
 
@@ -137,11 +174,10 @@ namespace WebAppsNoAuth.Controllers
         }
         //THESE METHODS NEED TO BE MOVED
 
-        public List<Location> GetAllUserLocations()
+        public List<WebAppsNoAuth.Models.Location> GetAllUserLocations()
         {
             int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
-            List<Location> allUsers = _providers.User.GetAllUserLocations(userId);
-
+            List<WebAppsNoAuth.Models.Location> allUsers = _providers.User.GetAllUserLocations(userId);
             return allUsers;
         }
         //public bool IsUserAdmin(int userId)
@@ -205,6 +241,15 @@ namespace WebAppsNoAuth.Controllers
             return _providers.Email.SendRejectRequestEmail(userId, requestTypeName, requestStartDate, requestEndDate, userName, userEmail, managerId, managerName);
         }
 
+        public List<User> GetAllManagerUsers(int managerUserId) //get all the users who the manager manages 
+        {
+            int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
+            List<User> allUsers = new List<User>();
+            allUsers = _providers.Manager.GetAllManagerUsers(managerUserId);
+
+            return allUsers;
+        }
+
         public ActionResult GetAllManagerRequests()
         {
             int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]); //this is the managerUserId
@@ -249,9 +294,9 @@ namespace WebAppsNoAuth.Controllers
             return Json(new { data = projectList });
         }
 
-        public List<Project> GetAllProjects()
+        public List<WebAppsNoAuth.Models.Project> GetAllProjects()
         {
-            List<Project> allProjects = new List<Project>();
+            List<WebAppsNoAuth.Models.Project> allProjects = new List<WebAppsNoAuth.Models.Project>();
             int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
 
             return _providers.Manager.GetAllProjects(userId);
@@ -301,7 +346,7 @@ namespace WebAppsNoAuth.Controllers
 
         public ActionResult GetProjectById(int projectId)
         {
-            Project currentProject = _providers.Manager.GetProjectById(projectId);
+            WebAppsNoAuth.Models.Project currentProject = _providers.Manager.GetProjectById(projectId);
             return Json(new { data = currentProject });
         }
 
@@ -351,6 +396,11 @@ namespace WebAppsNoAuth.Controllers
             {
                 return _providers.Manager.DeleteProject(projectId);
             }
+        }
+
+        public IOrderedEnumerable<KeyValuePair<string, float>> GetEmpCommentAnalysis(int userId)
+        {
+            return _providers.Manager.GetEmpCommentAnalysis(userId);
         }
 
     }

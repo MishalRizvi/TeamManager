@@ -72,6 +72,8 @@
     <PackageReference Include="MailKit" Version="3.4.3" />
     <PackageReference Include="MimeKit" Version="3.4.3" />
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
+    <PackageReference Include="Microsoft.ML.FastTree" Version="2.0.1" />
+    <PackageReference Include="Microsoft.ML.LightGbm" Version="2.0.1" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\Images\" />

@@ -1854,6 +1854,31 @@ namespace WebAppsNoAuth.Providers
             }
         }
 
+        public bool AddNewComment(int userId, int projectId, string comment)
+        {
+            try
+            {
+                _connection.Open();
+                var queryString = "INSERT INTO [EmployeeComment] VALUES (@USERID, @PROJECTID, @COMMENT, @COMMENTDATE);";
+                SqlCommand command = new SqlCommand(queryString, _connection);
+                command.Parameters.AddWithValue("@USERID", userId);
+                command.Parameters.AddWithValue("@PROJECTID", projectId);
+                command.Parameters.AddWithValue("@COMMENT", comment);
+                command.Parameters.AddWithValue("@COMMENTDATE", DateTime.Now);
+                command.ExecuteNonQuery();
+
+                _connection.Close();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return false;
+            }
+
+        }
+
         public List<ProjectTask> GetAllTasks(int userId)
         {
             List<ProjectTask> allTasks = new List<ProjectTask>();

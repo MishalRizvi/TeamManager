@@ -2,8 +2,14 @@
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.ML;
+using Org.BouncyCastle.Bcpg.Sig;
 using WebAppsNoAuth.Data;
 using WebAppsNoAuth.Models;
+using static EmpSentimentModel.ConsoleApp.EmpSentimentModel;
+//using Microsoft.ML.HalLearners;
+//using Microsoft.ML.LightGBM;
 
 namespace WebAppsNoAuth.Providers
 {
@@ -436,6 +442,56 @@ namespace WebAppsNoAuth.Providers
             {
                 Debug.WriteLine(e);
                 return false;
+            }
+        }
+
+        public IOrderedEnumerable<KeyValuePair<string, float>> GetEmpCommentAnalysis(int userId)
+        {
+            List<ModelInput> allComments = new List<ModelInput>();
+            var aggregatedComments = "";
+            try
+            {
+                _connection.Open();
+                var queryString = "SELECT Comment FROM [EmployeeComment] WHERE UserId = @USERID";
+                SqlCommand command = new SqlCommand(queryString, _connection);
+                command.Parameters.AddWithValue("@USERID", userId);
+                using (SqlDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        //ModelInput currentComment = new ModelInput();
+                        //currentComment.Feedback = dbReader.GetString(0);
+                        aggregatedComments += dbReader.GetString(0);
+                        //allComments.Add(currentComment);
+                    }
+                    _connection.Close();
+                }
+                ModelInput aggregatedInput = new ModelInput { Feedback = aggregatedComments };
+                var mlContext = new MLContext();
+                DataViewSchema predictionPipelineSchema;
+                //ITransformer trainedModel = mlContext.Model.Load("EmployeeSentimentModel/EmployeeSentimentModel.mlnet", out predictionPipelineSchema);
+
+                ITransformer trainedModel = mlContext.Model.Load("EmpSentimentModel/EmpSentimentModel.mlnet", out var _);
+
+                PredictionEngine<ModelInput, ModelOutput> predictionEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(trainedModel);
+
+                ModelOutput prediction = predictionEngine.Predict(aggregatedInput);
+                var allLabels = PredictAllLabels(aggregatedInput);
+                //Console.WriteLine(allComments[1].Feedback);
+                //Console.WriteLine(prediction.Nine_box_category);
+                Console.WriteLine(allLabels);
+                foreach (var label in allLabels)
+                {
+                    Console.WriteLine(label);
+                }
+                // Create PredictionEngines
+                //var predictor = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(model);
+                return allLabels; 
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return null;
             }
         }
 

@@ -330,6 +330,31 @@
       "jQuery/3.6.3": {
         "type": "package"
       },
+      "LightGBM/2.3.1": {
+        "type": "package",
+        "build": {
+          "build/LightGBM.props": {},
+          "build/LightGBM.targets": {}
+        },
+        "runtimeTargets": {
+          "runtimes/linux-x64/native/lib_lightgbm.so": {
+            "assetType": "native",
+            "rid": "linux-x64"
+          },
+          "runtimes/osx-x64/native/lib_lightgbm.dylib": {
+            "assetType": "native",
+            "rid": "osx-x64"
+          },
+          "runtimes/win-x64/native/lib_lightgbm.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x64/native/lightgbm.exe": {
+            "assetType": "native",
+            "rid": "win-x64"
+          }
+        }
+      },
       "MailKit/3.4.3": {
         "type": "package",
         "dependencies": {
@@ -2389,6 +2414,61 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.ML.DataView.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.ML.FastTree/2.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.ML": "2.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.ML.FastTree.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.ML.FastTree.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "build/netstandard2.0/Microsoft.ML.FastTree.props": {}
+        },
+        "runtimeTargets": {
+          "runtimes/linux-x64/native/libFastTreeNative.so": {
+            "assetType": "native",
+            "rid": "linux-x64"
+          },
+          "runtimes/osx-x64/native/libFastTreeNative.dylib": {
+            "assetType": "native",
+            "rid": "osx-x64"
+          },
+          "runtimes/win-x64/native/FastTreeNative.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x86/native/FastTreeNative.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
+          }
+        }
+      },
+      "Microsoft.ML.LightGbm/2.0.1": {
+        "type": "package",
+        "dependencies": {
+          "LightGBM": "2.3.1",
+          "Microsoft.ML": "2.0.1",
+          "Microsoft.ML.FastTree": "2.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.ML.LightGbm.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.ML.LightGbm.dll": {
             "related": ".xml"
           }
         }
@@ -5324,6 +5404,23 @@
         "jquery.nuspec"
       ]
     },
+    "LightGBM/2.3.1": {
+      "sha512": "2YVf5McWa6PT00EJnVYTZLAvTQ2YArIWUmMJ3Fu46ZL1RdKnqCy1s+iUeWxvEuviaQ/cXt6M/EaWpVHnXGc9gg==",
+      "type": "package",
+      "path": "lightgbm/2.3.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/LightGBM.props",
+        "build/LightGBM.targets",
+        "lightgbm.2.3.1.nupkg.sha512",
+        "lightgbm.nuspec",
+        "runtimes/linux-x64/native/lib_lightgbm.so",
+        "runtimes/osx-x64/native/lib_lightgbm.dylib",
+        "runtimes/win-x64/native/lib_lightgbm.dll",
+        "runtimes/win-x64/native/lightgbm.exe"
+      ]
+    },
     "MailKit/3.4.3": {
       "sha512": "Iewef8mcE1B1LrVudxQjQ0LcriPPeTbxmWMoHQzFS+P6TpEY2eVDbdKdB0Qnbmqr/5w7WfK2mNWuoSX9pI470g==",
       "type": "package",
@@ -7525,6 +7622,43 @@
         "lib/netstandard2.0/Microsoft.ML.DataView.xml",
         "microsoft.ml.dataview.2.0.1.nupkg.sha512",
         "microsoft.ml.dataview.nuspec",
+        "mlnetlogo.png"
+      ]
+    },
+    "Microsoft.ML.FastTree/2.0.1": {
+      "sha512": "fLWCabYZJ1maDp8wYn/7KZfGjTmUUKutJpdeK4ZdpBK8urFMHkEOGK2cx5E/Eky5jFUMTCheCbE/NqR3uPexdA==",
+      "type": "package",
+      "path": "microsoft.ml.fasttree/2.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "THIRD-PARTY-NOTICES.TXT",
+        "build/netstandard2.0/Microsoft.ML.FastTree.props",
+        "lib/netstandard2.0/Microsoft.ML.FastTree.dll",
+        "lib/netstandard2.0/Microsoft.ML.FastTree.xml",
+        "microsoft.ml.fasttree.2.0.1.nupkg.sha512",
+        "microsoft.ml.fasttree.nuspec",
+        "mlnetlogo.png",
+        "runtimes/linux-x64/native/libFastTreeNative.so",
+        "runtimes/osx-x64/native/libFastTreeNative.dylib",
+        "runtimes/win-x64/native/FastTreeNative.dll",
+        "runtimes/win-x86/native/FastTreeNative.dll"
+      ]
+    },
+    "Microsoft.ML.LightGbm/2.0.1": {
+      "sha512": "X3dE3cHwLZTB/1Y3lVd3vIRxg2qTX/PnKbJvWMw6+cL40EdXjI8RZwxy4Pvrz+tb+MPqQnmJ2zx45pkLGVU//g==",
+      "type": "package",
+      "path": "microsoft.ml.lightgbm/2.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/netstandard2.0/Microsoft.ML.LightGbm.dll",
+        "lib/netstandard2.0/Microsoft.ML.LightGbm.xml",
+        "microsoft.ml.lightgbm.2.0.1.nupkg.sha512",
+        "microsoft.ml.lightgbm.nuspec",
         "mlnetlogo.png"
       ]
     },
@@ -13335,6 +13469,8 @@
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.1",
       "Microsoft.Extensions.Logging >= 7.0.0",
       "Microsoft.ML >= 2.0.1",
+      "Microsoft.ML.FastTree >= 2.0.1",
+      "Microsoft.ML.LightGbm >= 2.0.1",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 7.0.1",
       "MimeKit >= 3.4.3",
       "NuGet.PackageManagement >= 6.4.0",
@@ -13422,6 +13558,14 @@
             "version": "[7.0.0, )"
           },
           "Microsoft.ML": {
+            "target": "Package",
+            "version": "[2.0.1, )"
+          },
+          "Microsoft.ML.FastTree": {
+            "target": "Package",
+            "version": "[2.0.1, )"
+          },
+          "Microsoft.ML.LightGbm": {
             "target": "Package",
             "version": "[2.0.1, )"
           },

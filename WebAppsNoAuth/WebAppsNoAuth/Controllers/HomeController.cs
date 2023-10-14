@@ -1058,10 +1058,14 @@ namespace WebAppsNoAuth.Controllers
             return Json(new { data = projectPersons });
         }
 
-
         public bool AllocateTask(int taskId, int userId)
         {
             return _providers.User.AllocateTask(taskId, userId);
+        }
+
+        public bool AddNewComment(int userId, int projectId, string comment)
+        {
+            return _providers.User.AddNewComment(userId, projectId, comment);
         }
     }
 
