@@ -4,6 +4,15 @@
 <h2 class="appTitle indexHeader">Holidays</h2>
 <br />
 @{
+    if (ViewData["resetPassword"].ToString() == "True")
+    {
+        <div class="form-outline mb-4">
+            <label class="form-label" for="userId">Please reset your password.</label>
+            <button class="btn btn-primary appButton" onclick="window.location.href = '/Home/ResetPassword';">Reset Password</button>
+        </div>
+    }
+}
+@{
     if (ViewData["Manager"].ToString() == "True")
     {
     <div class="row">
@@ -14,6 +23,7 @@
         <div class="col">
             <button class="btn btn-primary appButton" data-toggle="modal" data-target="#modal-view-event-add" onclick="clearTextBox()"><i class="fa fa-plus"> Add New Request</i></button>
         </div>
+        <br />
     </div>
     }
 }
@@ -29,31 +39,31 @@
                 <h3 class="card-title">Dashboard</h3>
                 <h6 class="card-subtitle mb-2 text-muted">As of today</h6>
                 <div class="row">
-                    <div class="col">
+                    <div class="col" style="text-align:center">
                         <p class="dashboardTitle text-muted">Total entitlements</p>
-                        <p class="dashboardStat" id="totalEntitlements"></p>
+                        <p class="dashboardStat" style="text-align: center" id="totalEntitlements"></p>
                     </div>
-                    <div class="col">
+                    <div class="col" style="text-align:center">
                         <p class="dashboardTitle text-muted">Entitlements remaining</p>
-                        <p class="dashboardStat" id="remainingEntitlements"></p>
+                        <p class="dashboardStat" style="text-align: center" id="remainingEntitlements"></p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <h6 class="dashboardTitle text-muted">Total Requests</h6>
-                        <p class="dashboardStat" id="totalEntitlementsUsed"></p>
+                    <div class="col" style="text-align:center">
+                        <p class="dashboardTitle text-muted">Total Requests<p>
+                        <p class="dashboardStat" style="text-align: center" id="totalEntitlementsUsed"></p>
                     </div>
-                    <div class="col">
+                    <div class="col" style="text-align:center">
                         <p class="dashboardTitle text-muted">Annual</p>
-                        <p class="dashboardStat" id="totalAnnualUsed"></p>
+                        <p class="dashboardStat" style="text-align: center" id="totalAnnualUsed"></p>
                     </div>
-                    <div class="col">
+                    <div class="col" style="text-align:center">
                         <p class="dashboardTitle text-muted">Study</p>
-                        <p class="dashboardStat" id="totalStudyUsed"></p>
+                        <p class="dashboardStat" style="text-align: center" id="totalStudyUsed"></p>
                     </div>
-                    <div class="col">
+                    <div class="col" style="text-align:center">
                         <p class="dashboardTitle text-muted">WFH</p>
-                        <p class="dashboardStat" id="totalWFHUsed"></p>
+                        <p class="dashboardStat" style="text-align: center" id="totalWFHUsed"></p>
                     </div>
                     <div class="col" id="statsSection">
                         <canvas id="statsChart"></canvas>

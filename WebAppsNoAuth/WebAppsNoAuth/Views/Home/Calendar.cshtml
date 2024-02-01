@@ -1787,7 +1787,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" onclick="return addNewRequest()">Save</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="closeEventModalAdd()">Close</button>
                 </div>
             </form>
         </div>
@@ -1879,7 +1879,7 @@
                     }
                 },
                 error: function (error) {
-                    alert(error.responseText);
+                //    alert(error.responseText);
                 }
             })
         }
@@ -2051,6 +2051,10 @@
 
         function closeEventModal() {
             $('#modal-view-event').modal("hide");
+        }
+
+        function closeEventModalAdd() {
+            $('#modal-view-event-add').modal("hide");
         }
 
         function getAllUsers() {

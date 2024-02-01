@@ -1026,7 +1026,9 @@ namespace WebAppsNoAuth.Providers
             {
                 _connection.Open();
 
-                var queryString = "DELETE FROM [UserEntitlements] WHERE UserId = @USERID;" +
+                var queryString = "DELETE FROM [MeetingAttendee] WHERE UserId = @USERID; " +
+                                  "DELETE FROM [ProjectPerson] WHERE UserId = @USERID; " +
+                                  "DELETE FROM [UserEntitlements] WHERE UserId = @USERID;" +
                                   "DELETE FROM [Status] WHERE UserId = @USERID;" +
                                   "DELETE FROM [Users] WHERE Id = @USERID;";
 

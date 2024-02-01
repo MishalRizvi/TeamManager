@@ -106,7 +106,9 @@
                             html += "<td>" + result.data[i].difficulty + "</td>";
                             html += "<td>" + result.data[i].managerUserName + "</td>";
                             html += "<td>" + result.data[i].createdDateStr + "</td>";
-                            html += "<td>" + result.data[i].endDateStr + "</td>";
+                            html += "<td>";
+                            if (result.data[i].endDateStr == null) { html += "" } else { html += result.data[i].endDateStr }
+                            html += "</td>";
                             html += "<td><input type='checkbox'"; if (result.data[i].completed) { html += "checked='checked' disabled />"; } else { html += "disabled />"; }
                             html += "<td><button class='btn btn-primary px-3' onclick='return getByProjectId(" + result.data[i].projectId + ")'><i class='fa fa-edit'></i></button> <button class='btn btn-danger px-3' onclick='deleteProject(" + result.data[i].projectId + ")'><i class='fa fa-times'></i></button></td>";
                             html += "<tr>";

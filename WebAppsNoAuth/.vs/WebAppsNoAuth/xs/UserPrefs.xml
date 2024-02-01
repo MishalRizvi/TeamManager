@@ -1,12 +1,15 @@
 ﻿<Properties StartupConfiguration="{0969071E-5FEC-4F01-8C74-FA0FFC1A5FE8}|Default">
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.WebAppsNoAuth PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="WebAppsNoAuth/Controllers/ManagerController.cs">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="WebAppsNoAuth/Program.cs">
     <Files>
       <File FileName="WebAppsNoAuth/Providers/ManagerProvider.cs" Line="453" Column="64" IsPinned="True" />
-      <File FileName="WebAppsNoAuth/Program.cs" />
+      <File FileName="WebAppsNoAuth/Program.cs" Line="21" Column="76" />
       <File FileName="WebAppsNoAuth/EmpSentimentModel/EmpSentimentModel.consumption.cs" />
-      <File FileName="WebAppsNoAuth/Controllers/ManagerController.cs" Line="463" Column="51" />
+      <File FileName="WebAppsNoAuth/Controllers/ManagerController.cs" />
       <File FileName="WebAppsNoAuth/EmpSentimentModel/EmpSentimentModel.mbconfig" />
       <File FileName="WebAppsNoAuth/EmpSentimentModel/EmpSentimentModel.evaluate.cs" />
       <File FileName="WebAppsNoAuth/EmpSentimentModel/EmpSentimentModel.training.cs" />
@@ -35,14 +38,13 @@
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="WebAppsNoAuth" expanded="True">
-            <Node name="WebAppsNoAuth">
-              <Node name="Controllers" expanded="True">
-                <Node name="ManagerController.cs" selected="True" />
-              </Node>
+          <Node name="WebAppsNoAuth" expanded="True" selected="True">
+            <Node name="WebAppsNoAuth" expanded="True">
+              <Node name="Controllers" expanded="True" />
               <Node name="EmpSentimentModel" expanded="True" />
               <Node name="Providers" expanded="True" />
               <Node name="Services" expanded="True" />
+              <Node name="Upload" expanded="True" />
               <Node name="Views" expanded="True">
                 <Node name="Admin" expanded="True" />
                 <Node name="Home" expanded="True" />
@@ -55,9 +57,6 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.WebAppsNoAuth PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

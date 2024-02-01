@@ -201,7 +201,15 @@ namespace WebAppsNoAuth.Controllers
             int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
             ViewData["Username"] = HttpContext.User.Claims.ToList()[2].ToString().Split(":")[1];
             User currentUser = _providers.User.GetUserById(userId);
+            if (currentUser.Password == "password")
+            {
+                ViewData["resetPassword"] = true;
+            }
+            else
+            {
+                ViewData["resetPassword"] = false;
 
+            }
             ViewData["Admin"] = currentUser.Admin;
             ViewData["Manager"] = currentUser.Manager;
             var managerUsers = GetAllManagerUsers(userId);

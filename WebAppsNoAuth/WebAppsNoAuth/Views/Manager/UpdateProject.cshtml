@@ -1,48 +1,55 @@
 ﻿
 <div class="container">
     <h2 class="appTitle indexHeader">Create New Project</h2>
-    <button type="button" class="btn btn-primary appButton" id="goBackButton" onclick="return redirectBack()">Back</button>
     <br />
-    <div class="modal-body">
-        <form>
-            <div class="form-outline mb-4">
-                <label class="form-label appLabel" for="projectName">Project Name</label>
-                <input type="text" id="projectName" class="form-control form-control-lg" />
-            </div>
-            <div class="form-outline mb-4">
-                <label class="form-label appLabel" for="projectDescription">Project Description</label>
-                <input type="textbox" id="projectDescription" class="form-control form-control-lg" />
-            </div>
-            <div class="form-outline mb-4">
-                <label class="form-label appLabel" for="projectDifficulty">Level of difficulty</label>
-                <input type="number" id="projectDifficulty" class="form-control form-control-lg" />
-            </div>
-            <div class="form-outline mb-4">
-                <label class="form-label appLabel" for="projectManager">Project Manager</label>
-                @Html.DropDownList("UsersListComplete")
-            </div>
-            <div class="form-outline mb-4">
-                <label class="form-label appLabel" required>Skills involved: </label>
-                <div id="multiselectSkills">
+    <br />
+    <div class="card" style="width: 500px; position: center; justify-content: center; margin: auto; width: 50%;">
+        <div class="card-body" style="align-content:center;align-items:center">
+            <form>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary appButton" id="goBackButton" onclick="return redirectBack()">Back</button>
                 </div>
-                <button type="button" class="btn btn-primary appButton" data-toggle="modal" data-target="#myModal" onclick="clearSkillTextBox();">Add New Skill</button>
-                <input type="text" id="newSkill" class="form-control form-control-lg" style="display:none" />
-            </div>
-            <div class="form-outline mb-4">
-                <label class="form-label appLabel" required>Employees working on this project: </label>
-                <div id="multiselectUsers">
-
+                <br />
+                <br />
+                <div class="form-group">
+                    <label class="form-label appLabel" for="projectName">Project Name</label>
+                    <input type="text" id="projectName" class="form-control" style="width:200px" />
                 </div>
-            </div>
-            <div class="form-outline mb-4">
-                <label class="form-label appLabel" for="suggestions">Suggestions</label>
-                <div id="suggestionsMessageBox" style="outline:none"></div>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary appButton" id="getSuggestionsButton" onclick="return getProjectSuggestions()">Generate Suggestions</button>
-        <button type="button" class="btn btn-primary appButton" id="addProjectButton" onclick="return addNewProjectMethod()">Add</button>
+                <br />
+                <div class="form-group">
+                    <label class="form-label appLabel" for="projectDescription">Project Description</label>
+                    <textarea id="projectDescription" class="form-control" style="width:250px"></textarea>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label class="form-label appLabel" for="projectDifficulty">Level of difficulty</label>
+                    <input type="number" id="projectDifficulty" class="form-control" style="width:200px" />
+                    <br />
+                </div>
+                <div class="form-group">
+                    <label class="form-label appLabel" for="projectManager">Project Manager</label>
+                    @Html.DropDownList("UsersListComplete")
+                    <br />
+                </div>
+                <br />
+                <div class="form-group">
+                    <label class="form-label appLabel" for="skills">Skills involved</label>
+                    <div id="multiselectSkills"></div>
+                    <button type="button" class="btn btn-primary appButton" data-toggle="modal" data-target="#myModal" onclick="clearSkillTextBox();">Add New Skill</button>
+                    <input type="text" id="newSkill" class="form-control" style="display:none" />
+                </div>
+                <br />
+                <div class="form-group">
+                    <label class="form-label appLabel">Employees working on this project </label>
+                    <div id="multiselectUsers"></div>
+                </div>
+                <br />
+                <br />
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary appButton" id="addProjectButton" onclick="return addNewProjectMethod()">Add</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
