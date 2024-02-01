@@ -23,7 +23,6 @@ namespace WebAppsNoAuth.Controllers
             _webApps = webApps;
             _configuration = configuration;
 
-          //  SqlConnection pconnection = new SqlConnection(_configuration.GetConnectionString("WebAppsNoAuthDb"));
             User = new UserProvider(_webApps,_configuration);
             Email = new EmailProvider(_webApps,_configuration); //needs config
             Manager = new ManagerProvider(_webApps, _configuration);

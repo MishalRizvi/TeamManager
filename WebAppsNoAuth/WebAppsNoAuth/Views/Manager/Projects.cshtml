@@ -14,6 +14,8 @@
                 <th>Difficulty</th>
                 <th>Project Manager</th>
                 <th>Created Date</th>
+                <th>Finished Date</th>
+                <th>Completed</th>
                 <th></th>
             </tr>
         </thead>
@@ -103,7 +105,9 @@
                             html += "<td>" + result.data[i].description + "</td>";
                             html += "<td>" + result.data[i].difficulty + "</td>";
                             html += "<td>" + result.data[i].managerUserName + "</td>";
-                            html += "<td>" + result.data[i].createdDate + "</td>";
+                            html += "<td>" + result.data[i].createdDateStr + "</td>";
+                            html += "<td>" + result.data[i].endDateStr + "</td>";
+                            html += "<td><input type='checkbox'"; if (result.data[i].completed) { html += "checked='checked' disabled />"; } else { html += "disabled />"; }
                             html += "<td><button class='btn btn-primary px-3' onclick='return getByProjectId(" + result.data[i].projectId + ")'><i class='fa fa-edit'></i></button> <button class='btn btn-danger px-3' onclick='deleteProject(" + result.data[i].projectId + ")'><i class='fa fa-times'></i></button></td>";
                             html += "<tr>";
                         }
@@ -136,8 +140,6 @@
                     $("#projectModal").modal("show");
                     $("#updateProjectButton").show();
                     $("#addProjectButton").hide();
-                    //document.getElementById("updateLocationButton").style.display = 'none';
-                    //document.getElementById("addLocationButton").style.display = 'block';
                 },
                 error: function (error) {
                     alert(error.responseText);

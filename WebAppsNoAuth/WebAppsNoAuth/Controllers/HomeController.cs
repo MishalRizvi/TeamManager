@@ -337,8 +337,8 @@ namespace WebAppsNoAuth.Controllers
             ViewData["Admin"] = currentUser.Admin;
             ViewData["Manager"] = currentUser.Manager;
             var allPMProjects = GetAllPMProjects();
-            ViewData["ProjectsList"] = new SelectList(allPMProjects, "ProjectId", "Name");
-            if (allPMProjects.Count != 0)
+            //ViewData["ProjectsList"];
+            if (allPMProjects != null)
             {
                 ViewData["ProjectsList"] = new SelectList(allPMProjects, "ProjectId", "Name");
             }
@@ -378,7 +378,7 @@ namespace WebAppsNoAuth.Controllers
             ViewData["Admin"] = currentUser.Admin;
             ViewData["Manager"] = currentUser.Manager;
             var allPMProjects = GetAllPMProjects();
-            ViewData["ProjectsList"] = new SelectList(allPMProjects, "ProjectId", "Name");
+            ViewData["ProjectsList"] = null;
             if (allPMProjects.Count != 0)
             {
                 ViewData["ProjectsList"] = new SelectList(allPMProjects, "ProjectId", "Name");
@@ -664,7 +664,6 @@ namespace WebAppsNoAuth.Controllers
             var usersListFour = new List<Int32>();
             var usersListTwo = usersList.Replace("(", "").Replace(")", "");
             var usersListThree = usersListTwo.Split(",");
-            //var pplListThree = pplListTwo.Prepend<string>(userId);
 
             //Convert a new list to map strings representing ints to ints 
             for (var i = 0; i < usersListThree.Count(); i++)
@@ -699,7 +698,6 @@ namespace WebAppsNoAuth.Controllers
         }
         public int GetUserEntitlements(int userId)
         {
-            Debug.WriteLine("getuserentitlements");
             return _providers.User.GetUserEntitlements(userId);
         }
         public bool AddNewRequest(int userId, int requestTypeId, DateTime startDate, DateTime endDate, string requestDescription)
@@ -984,12 +982,18 @@ namespace WebAppsNoAuth.Controllers
             Project project = _providers.User.GetProjectsStatsById(projectId); ;
             return Json(new { data = project });
         }
+        public bool GetProjectStatus(int projectId) //all the projects that a user is a part of 
+        {
+            bool projectStatus = _providers.User.GetProjectStatus(projectId); ;
+            return projectStatus;
+        }
         public List<Project> GetAllPMProjects() //all the projects for which user is project manager 
         {
             List<ProjectTask> allProjects = new List<ProjectTask>();
             int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
-
-            return _providers.User.GetAllPMProjects(userId);
+            
+            var projects = _providers.User.GetAllPMProjects(userId);
+            return projects;
         }
 
         public ActionResult GetProjectPersonsById(int projectId)
@@ -1066,6 +1070,11 @@ namespace WebAppsNoAuth.Controllers
         public bool AddNewComment(int userId, int projectId, string comment)
         {
             return _providers.User.AddNewComment(userId, projectId, comment);
+        }
+        public bool ToggleCompleteProject(int projectId, bool complete)
+        {
+            Console.WriteLine(complete);
+            return _providers.User.ToggleCompleteProject(projectId, complete);
         }
     }
 

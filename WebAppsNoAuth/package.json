@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "@fullcalendar/moment": "^5.11.5",
+    "chart.js": "^4.4.0",
+    "chartjs-chart-treemap": "^2.3.0",
     "fullcalendar": "^5.11.0"
   }
 }

@@ -11,6 +11,7 @@ namespace WebAppsNoAuth.Models
         public int ProjectId { get; set; }
         public string ProjectName { get; set; }
         public string TaskText { get; set; }
+        public DateTime CreateDate { get; set; }
         public DateTime Deadline { get; set; }
         public string DeadlineStr { get; set; }
         public bool Completed { get; set; }

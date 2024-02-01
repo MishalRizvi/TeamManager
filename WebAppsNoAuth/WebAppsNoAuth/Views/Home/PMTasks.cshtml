@@ -93,6 +93,8 @@
                 </tbody>
             </table>
         </div>
+        <button type="button" class="btn btn-success" id="completeProject" style="display:none" onclick="return toggleCompleteProject(true)">Complete</button>
+        <button type="button" class="btn btn-danger" id="incompleteProject" style="display:none" onclick="return toggleCompleteProject(false)">Un-complete</button>
     </div>
 </div>
 
@@ -166,12 +168,37 @@
                 getProjectPersons();
                 getProjectPie();
                 currentProjectId = document.getElementById("ProjectsList").value;
+                getProjectStatus();
             }
             getAllTasks();
             getProjectPersons();
             getProjectPie();
+            getProjectStatus();
         })
 
+        function getProjectStatus() {
+            $.ajax({
+                url: "GetProjectStatus",
+                type: "GET",
+                data: {
+                    projectId: currentProjectId,
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result == true) {
+                        $("#incompleteProject").show();
+                        $("#completeProject").hide();
+                    }
+                    else {
+                        $("#completeProject").show();
+                        $("#incompleteProject").hide();
+                    }
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
         function divTaskAppear() {
             $("#taskDiv").show();
         }
@@ -208,7 +235,6 @@
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 success: function (result) {
-                    console.log(result);
                     tasks = result.data;
                     var html = "";
                     var todayDate = new Date().toISOString();
@@ -528,7 +554,26 @@
                     alert(error.responseText);
                 }
             })
-        }</script>
+        }
+        function toggleCompleteProject(complete) {
+            console.log("complete", complete);
+            $.ajax({
+                url: "ToggleCompleteProject",
+                type: "POST",
+                data: {
+                    projectId: currentProjectId,
+                    complete: complete
+                },
+                success: function (result) {
+                    getProjectStatus();
+                    getAllTasks(); //this may slow things down in which case move it to allocatetasks function
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            })
+        }
+    </script>
 }
 
 

@@ -44,7 +44,9 @@
                         html += "<td>Start: " + result.data[i].startDateStr + "</br>End: " + result.data[i].endDateStr + "</td>";
                         html += "<td>" + result.data[i].requestTypeName + "</td>";
                         html += "<td>" + result.data[i].description + "</td>";
-                        html += "<td style='text-align:center'><button class='btn btn-success px-3' onclick='return approveRequest(" + result.data[i].requestId + ")'><i class='fa fa-check'></i></button> <button class='btn btn-danger px-3' onclick='rejectRequest(" + result.data[i].requestId + ")'><i class='fa fa-times'></i></button></td>";
+                        html += "<td style='text-align:center'><button class='btn btn-success px-3' onclick='return approveRequest("
+                            + result.data[i].requestId + ")'><i class='fa fa-check'></i></button> <button class='btn btn-danger px-3' onclick='rejectRequest("
+                            + result.data[i].requestId + ")'><i class='fa fa-times'></i></button></td>";
                         html += "<tr>";
                     }
                     $(".tbody").html(html);

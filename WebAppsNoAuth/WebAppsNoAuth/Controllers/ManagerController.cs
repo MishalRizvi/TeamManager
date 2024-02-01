@@ -19,6 +19,7 @@ using Microsoft.ML;
 using EmpSentimentModel;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Build.Evaluation;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebAppsNoAuth.Controllers
@@ -401,6 +402,152 @@ namespace WebAppsNoAuth.Controllers
         public IOrderedEnumerable<KeyValuePair<string, float>> GetEmpCommentAnalysis(int userId)
         {
             return _providers.Manager.GetEmpCommentAnalysis(userId);
+        }
+
+        public ActionResult GetEmpStats(int userId)
+        {
+            //Get all the projects that the employee has worked on/is working on done
+            //Get all the tasks from ProjectTask where UserId =  USERID and Completed and then calculate the time it took to complete the task. Find average for all tasks.
+            //Get all tasks from ProjectTask where Completed and Completed Date > Deadline done
+            //Get all the projects where ProjectManager is UserId
+            EmpStats empStats = new EmpStats();
+            IEnumerable<ProjectTask> userTasks = _providers.User.GetAllTasks(userId); //take into consideration null lists
+            IEnumerable<ProjectTask> completedTasks = userTasks.Where(o => o.Completed == true);
+            List<int> taskDuration = new List<int>();
+            int deadlinesMissed = 0;
+            for (int i = 0; i < completedTasks.Count(); i++)
+            {
+                taskDuration.Add((completedTasks.ElementAt(i).CompletedDate - completedTasks.ElementAt(i).CreateDate).Days);
+                if (completedTasks.ElementAt(i).Deadline > completedTasks.ElementAt(i).CreateDate)
+                {
+                    deadlinesMissed += 1;
+                }
+            }
+            empStats.TaskDuration = taskDuration.Count() == 0 ? 0 : (int)taskDuration.Average();
+            empStats.DeadlinesMissed = deadlinesMissed;
+
+            return Json(new { data = empStats });
+
+        }
+
+        public IDictionary<string,int> GetEmpTasksAsJson(int userId) //shall we change this to a list of COMPLETED tasks 
+        {
+            IEnumerable<ProjectTask> userTasks = _providers.User.GetAllTasks(userId); //take into consideration null lists
+            IDictionary<string, int> tasksPerMonth = new Dictionary<string, int>();
+            tasksPerMonth.Add("Jan", 0); 
+            tasksPerMonth.Add("Feb", 0);
+            tasksPerMonth.Add("Mar", 0);
+            tasksPerMonth.Add("Apr", 0);
+            tasksPerMonth.Add("May", 0);
+            tasksPerMonth.Add("Jun", 0);
+            tasksPerMonth.Add("Jul", 0);
+            tasksPerMonth.Add("Aug", 0);
+            tasksPerMonth.Add("Sep", 0);
+            tasksPerMonth.Add("Oct", 0);
+            tasksPerMonth.Add("Nov", 0);
+            tasksPerMonth.Add("Dec", 0);
+            if (userTasks.Count() != 0)
+            {
+                for (var i = 0; i < userTasks.Count(); i++)
+                {
+                    var taskMonthStart = userTasks.ElementAt(i).CreateDate;
+                    var taskMonthEnd = userTasks.ElementAt(i).Deadline;
+                    for (DateTime dt = taskMonthStart; dt <= taskMonthEnd; dt = dt.AddMonths(1))
+                    {
+                        Console.WriteLine(taskMonthStart.ToString("MMM"));
+                        tasksPerMonth[taskMonthStart.ToString("MMM")] += 1;
+
+                    }
+                }
+            }
+            return tasksPerMonth;
+
+        }
+
+        public IDictionary<string, int> GetEmpProjectsAsJson(int userId)
+        {
+            IEnumerable<WebAppsNoAuth.Models.Project> userProjects = _providers.User.GetAllProjects(userId); //take into consideration null lists
+            //IEnumerable<ProjectTask> userTasks = _providers.User.GetAllTasks(userId); //take into consideration null lists
+            IDictionary<string, int> projectsPerMonth = new Dictionary<string, int>();
+            IDictionary<int, List<DateTime>> seenProjects = new Dictionary<int, List<DateTime>>();
+            projectsPerMonth.Add("Jan", 0);
+            projectsPerMonth.Add("Feb", 0);
+            projectsPerMonth.Add("Mar", 0);
+            projectsPerMonth.Add("Apr", 0);
+            projectsPerMonth.Add("May", 0);
+            projectsPerMonth.Add("Jun", 0);
+            projectsPerMonth.Add("Jul", 0);
+            projectsPerMonth.Add("Aug", 0);
+            projectsPerMonth.Add("Sep", 0);
+            projectsPerMonth.Add("Oct", 0);
+            projectsPerMonth.Add("Nov", 0);
+            projectsPerMonth.Add("Dec", 0);
+            for (int i = 0; i < userProjects.Count(); i++)
+            {
+                var projectMonthStart = userProjects.ElementAt(i).CreatedDate;
+                var projectMonthEnd = DateTime.MinValue;
+
+                if (userProjects.ElementAt(i).EndDate != DateTime.MinValue) {
+                    projectMonthEnd = userProjects.ElementAt(i).EndDate; 
+                }
+                else
+                {
+                    projectMonthEnd = DateTime.Now;
+                }
+                for (DateTime dt = projectMonthStart; dt <= projectMonthEnd; dt = dt.AddMonths(1))
+                {
+                    Console.WriteLine(projectMonthStart.ToString("MMM"));
+                    projectsPerMonth[projectMonthStart.ToString("MMM")] += 1;
+
+                }
+            }
+
+            return projectsPerMonth;
+
+        }
+        public IDictionary<string, int> GetEmpPMProjectsAsJson(int userId)
+        {
+            List<WebAppsNoAuth.Models.Project> projectsManaged = _providers.User.GetAllPMProjects(userId);
+            //IEnumerable<ProjectTask> userTasks = _providers.User.GetAllTasks(userId); //take into consideration null lists
+            IDictionary<string, int> projectsPerMonth = new Dictionary<string, int>
+            {
+                { "Jan", 0 },
+                { "Feb", 0 },
+                { "Mar", 0 },
+                { "Apr", 0 },
+                { "May", 0 },
+                { "Jun", 0 },
+                { "Jul", 0 },
+                { "Aug", 0 },
+                { "Sep", 0 },
+                { "Oct", 0 },
+                { "Nov", 0 },
+                { "Dec", 0 }
+            };
+
+            for (int i = 0; i < projectsManaged.Count(); i++)
+            {
+                var projectMonthStart = projectsManaged.ElementAt(i).CreatedDate;
+                var projectMonthEnd = DateTime.MinValue;
+
+                if (projectsManaged.ElementAt(i).EndDate != DateTime.MinValue)
+                {
+                    projectMonthEnd = projectsManaged.ElementAt(i).EndDate;
+                }
+                else
+                {
+                    projectMonthEnd = DateTime.Now;
+                }
+                for (DateTime dt = projectMonthStart; dt <= projectMonthEnd; dt = dt.AddMonths(1))
+                {
+                    Console.WriteLine(projectMonthStart.ToString("MMM"));
+                    projectsPerMonth[projectMonthStart.ToString("MMM")] += 1;
+
+                }
+            }
+
+            return projectsPerMonth;
+
         }
 
     }

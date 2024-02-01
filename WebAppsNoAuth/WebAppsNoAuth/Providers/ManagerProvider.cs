@@ -111,7 +111,8 @@ namespace WebAppsNoAuth.Providers
                         currentProject.Description = dbReader.GetString(2);
                         currentProject.Difficulty = dbReader.GetInt32(3);
                         currentProject.ManagerUserName = dbReader.GetString(4);
-                        currentProject.CreatedDate = dbReader.GetDateTime(5).ToString("dd/MM/yyyy");
+                        currentProject.CreatedDate = dbReader.GetDateTime(5);
+                        currentProject.CreatedDateStr = dbReader.GetDateTime(5).ToString("dd/MM/yyyy");
                         currentProject.CreatedBy = dbReader.GetInt32(6);
                         allProjects.Add(currentProject);
                     }
@@ -145,7 +146,8 @@ namespace WebAppsNoAuth.Providers
                         currentProject.Description = dbReader.GetString(2);
                         currentProject.Difficulty = dbReader.GetInt32(3);
                         currentProject.ManagerUserId = dbReader.GetInt32(4);
-                        currentProject.CreatedDate = dbReader.GetDateTime(5).ToString("dd/MM/yyyy");
+                        currentProject.CreatedDate = dbReader.GetDateTime(5);
+                        currentProject.CreatedDateStr = dbReader.GetDateTime(5).ToString("dd/MM/yyyy");
                         currentProject.CreatedBy = dbReader.GetInt32(6);
                     }
                     _connection.Close();
@@ -167,7 +169,7 @@ namespace WebAppsNoAuth.Providers
             {
                 _connection.Open();
 
-                var queryString = "INSERT INTO [Project] VALUES (@NAME, @DESCRIPTION, @DIFFICULTY, @MANAGERID, @CREATEDATE, @CREATEDBY); " +
+                var queryString = "INSERT INTO [Project] VALUES (@NAME, @DESCRIPTION, @DIFFICULTY, @MANAGERID, @CREATEDATE, @CREATEDBY, NULL, @FALSE); " +
                                   "SELECT CAST(SCOPE_IDENTITY() AS INT);";
                 SqlCommand command = new SqlCommand(queryString, _connection);
                 command.Parameters.AddWithValue("@NAME", projectName);
@@ -176,6 +178,7 @@ namespace WebAppsNoAuth.Providers
                 command.Parameters.AddWithValue("@MANAGERID", managerId);
                 command.Parameters.AddWithValue("@CREATEDATE", projectCreated);
                 command.Parameters.AddWithValue("@CREATEDBY", userId);
+                command.Parameters.AddWithValue("@FALSE", false);
                 using (SqlDataReader dbReader = command.ExecuteReader())
                 {
                     while (dbReader.Read())
@@ -429,7 +432,9 @@ namespace WebAppsNoAuth.Providers
                 _connection.Open();
 
                 var queryString = "DELETE FROM [ProjectPerson] WHERE ProjectId = @PROJECTID;" +
-                                   "DELETE FROM [Project] WHERE ProjectId = @PROJECTID";
+                                  "DELETE FROM [ProjectTask] WHERE ProjectId = @PROJECTID;" +
+                                  "DELETE FROM [EmployeeComment] WHERE ProjectId = @PROJECTID;" +
+                                  "DELETE FROM [Project] WHERE ProjectId = @PROJECTID";
 
                 SqlCommand command = new SqlCommand(queryString, _connection);
                 command.Parameters.AddWithValue("@PROJECTID", projectId);
@@ -447,25 +452,32 @@ namespace WebAppsNoAuth.Providers
 
         public IOrderedEnumerable<KeyValuePair<string, float>> GetEmpCommentAnalysis(int userId)
         {
+            Console.WriteLine(userId);
             List<ModelInput> allComments = new List<ModelInput>();
             var aggregatedComments = "";
             try
             {
                 _connection.Open();
                 var queryString = "SELECT Comment FROM [EmployeeComment] WHERE UserId = @USERID";
+                Console.WriteLine(userId);
                 SqlCommand command = new SqlCommand(queryString, _connection);
                 command.Parameters.AddWithValue("@USERID", userId);
                 using (SqlDataReader dbReader = command.ExecuteReader())
                 {
                     while (dbReader.Read())
                     {
-                        //ModelInput currentComment = new ModelInput();
-                        //currentComment.Feedback = dbReader.GetString(0);
+                        Console.WriteLine("reading.");
+                        if (dbReader.IsDBNull(0))
+                        {
+                            _connection.Close();
+                            return null;
+                        }
                         aggregatedComments += dbReader.GetString(0);
-                        //allComments.Add(currentComment);
+                        aggregatedComments += " ";
                     }
                     _connection.Close();
                 }
+                Console.WriteLine(aggregatedComments);
                 ModelInput aggregatedInput = new ModelInput { Feedback = aggregatedComments };
                 var mlContext = new MLContext();
                 DataViewSchema predictionPipelineSchema;
@@ -474,18 +486,19 @@ namespace WebAppsNoAuth.Providers
                 ITransformer trainedModel = mlContext.Model.Load("EmpSentimentModel/EmpSentimentModel.mlnet", out var _);
 
                 PredictionEngine<ModelInput, ModelOutput> predictionEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(trainedModel);
+                Console.WriteLine("aGGRRGATED INPUT: ");
+                Console.WriteLine(aggregatedComments == "");
+                if (aggregatedComments == "")
+                {
+                    return null;
+                }
 
                 ModelOutput prediction = predictionEngine.Predict(aggregatedInput);
                 var allLabels = PredictAllLabels(aggregatedInput);
-                //Console.WriteLine(allComments[1].Feedback);
-                //Console.WriteLine(prediction.Nine_box_category);
-                Console.WriteLine(allLabels);
                 foreach (var label in allLabels)
                 {
                     Console.WriteLine(label);
                 }
-                // Create PredictionEngines
-                //var predictor = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(model);
                 return allLabels; 
             }
             catch (Exception e)

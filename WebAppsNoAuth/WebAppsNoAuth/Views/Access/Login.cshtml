@@ -36,7 +36,7 @@
                                     {
                                         <br />
                                         <br />
-                                        <label>@ViewData["ValidateMessage"]</label>
+                                        <label style="color:red">@ViewData["ValidateMessage"]</label>
                                     }
                                 </form>
                             </div>
@@ -52,7 +52,7 @@
 @section Scripts {
     <script>$(document).ready(function () {
             console.log("ready!");
-            $("#loginButton").on("click", validateUser);
+        //    $("#loginButton").on("click", validateUser);
         });
 
         function validateUser() {

@@ -1,17 +1,36 @@
 ﻿<Properties StartupConfiguration="{0969071E-5FEC-4F01-8C74-FA0FFC1A5FE8}|Default">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.WebAppsNoAuth PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.Workbench ActiveDocument="WebAppsNoAuth/Controllers/ManagerController.cs">
     <Files>
-      <File FileName="WebAppsNoAuth/Providers/ManagerProvider.cs" Line="465" Column="41" IsPinned="True" />
-      <File FileName="WebAppsNoAuth/Controllers/ManagerController.cs" Line="131" Column="1" />
+      <File FileName="WebAppsNoAuth/Providers/ManagerProvider.cs" Line="453" Column="64" IsPinned="True" />
+      <File FileName="WebAppsNoAuth/Program.cs" />
+      <File FileName="WebAppsNoAuth/EmpSentimentModel/EmpSentimentModel.consumption.cs" />
+      <File FileName="WebAppsNoAuth/Controllers/ManagerController.cs" Line="463" Column="51" />
+      <File FileName="WebAppsNoAuth/EmpSentimentModel/EmpSentimentModel.mbconfig" />
+      <File FileName="WebAppsNoAuth/EmpSentimentModel/EmpSentimentModel.evaluate.cs" />
+      <File FileName="WebAppsNoAuth/EmpSentimentModel/EmpSentimentModel.training.cs" />
       <File FileName="WebAppsNoAuth/Views/Manager/EmployeeAnalytics.cshtml" />
-      <File FileName="WebAppsNoAuth/Views/Home/Meetings.cshtml" />
-      <File FileName="WebAppsNoAuth/Providers/RequestProvider.cs" />
-      <File FileName="WebAppsNoAuth/Program.cs" Line="19" Column="1" />
-      <File FileName="WebAppsNoAuth/Controllers/ProviderController.cs" />
+      <File FileName="WebAppsNoAuth/EmpSentimentModel/EmpSentimentModel.mlnet" />
+      <File FileName="WebAppsNoAuth/Views/Home/Holidays.cshtml" />
+      <File FileName="WebAppsNoAuth/Views/Shared/_Layout.cshtml" />
       <File FileName="WebAppsNoAuth/Providers/UserProvider.cs" />
-      <File FileName="WebAppsNoAuth/wwwroot/train_set.csv" Line="2" Column="1" />
-      <File FileName="WebAppsNoAuth/SentimentModel/SentimentModel.mbconfig" Line="1" Column="1" />
-      <File FileName="WebAppsNoAuth/SentimentModel/SentimentModel.consumption.cs" Line="42" Column="22" />
+      <File FileName="WebAppsNoAuth/Views/Home/PMTasks.cshtml" />
+      <File FileName="WebAppsNoAuth/Views/Manager/Projects.cshtml" />
+      <File FileName="WebAppsNoAuth/Views/Home/MyTasks.cshtml" />
+      <File FileName="WebAppsNoAuth/Views/Home/MyProjects.cshtml" />
+      <File FileName="WebAppsNoAuth/wwwroot/css/card-tasks.css" />
+      <File FileName="WebAppsNoAuth/wwwroot/css/card-analytics.css" />
+      <File FileName="WebAppsNoAuth/Views/Home/Calendar.cshtml" />
+      <File FileName="WebAppsNoAuth/Controllers/HomeController.cs" />
+      <File FileName="WebAppsNoAuth/Providers/TeamProvider.cs" />
+      <File FileName="WebAppsNoAuth/Providers/RequestProvider.cs" />
+      <File FileName="WebAppsNoAuth/Models/RequestStats.cs" />
+      <File FileName="WebAppsNoAuth/Models/EmpStats.cs" />
+      <File FileName="WebAppsNoAuth/Models/ProjectTask.cs" />
+      <File FileName="WebAppsNoAuth/Models/Project.cs" />
+      <File FileName="WebAppsNoAuth/Views/Manager/UpdateProject.cshtml" />
+      <File FileName="WebAppsNoAuth/Views/Manager/ApproveRequest.cshtml" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -21,9 +40,11 @@
               <Node name="Controllers" expanded="True">
                 <Node name="ManagerController.cs" selected="True" />
               </Node>
+              <Node name="EmpSentimentModel" expanded="True" />
               <Node name="Providers" expanded="True" />
-              <Node name="Styles" expanded="True" />
+              <Node name="Services" expanded="True" />
               <Node name="Views" expanded="True">
+                <Node name="Admin" expanded="True" />
                 <Node name="Home" expanded="True" />
                 <Node name="Manager" expanded="True" />
                 <Node name="Shared" expanded="True" />
@@ -34,11 +55,9 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.WebAppsNoAuth PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

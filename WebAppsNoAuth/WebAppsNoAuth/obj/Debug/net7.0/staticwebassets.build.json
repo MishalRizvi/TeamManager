@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "UipACUabN7xAhNJuP1hIjBMQORcKwwz7XHWwGuAIwlI=",
+  "Hash": "UtLI4A9cEAQSL/UgsjbBnb7ovlAlRREyzse2W9lExD0=",
   "Source": "WebAppsNoAuth",
   "BasePath": "_content/WebAppsNoAuth",
   "Mode": "Default",
@@ -814,6 +814,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/.DS_Store"
+    },
+    {
+      "Identity": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/css/card-analytics.css",
+      "SourceId": "WebAppsNoAuth",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/",
+      "BasePath": "_content/WebAppsNoAuth",
+      "RelativePath": "css/card-analytics.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/css/card-analytics.css"
     },
     {
       "Identity": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/css/card-tasks.css",

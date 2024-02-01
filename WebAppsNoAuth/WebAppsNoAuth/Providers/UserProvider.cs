@@ -312,8 +312,10 @@ namespace WebAppsNoAuth.Providers
             try
             {
                 _connection.Open();
-                var queryString = "SELECT U.[Id], U.[Name], U.[Email], U.[Password], U.[ContactNumber], U.[ManagerUserId], U2.[Name], U.[Admin], U.[Manager] FROM [Users] U " +
-                                  "LEFT JOIN [Users] U2 ON U.[ManagerUserId] = U2.[Id] WHERE U.[InstitutionId] = @INSTITUTIONID"; //Left join to allow retrieval of users with null ManagerUserId 
+                var queryString = "SELECT U.[Id], U.[Name], U.[Email], U.[Password], U.[ContactNumber], U.[ManagerUserId], U2.[Name], " +
+                                  "U.[Admin], U.[Manager] FROM [Users] U " +
+                                  "LEFT JOIN [Users] U2 ON U.[ManagerUserId] = U2.[Id] " +
+                                  "WHERE U.[InstitutionId] = @INSTITUTIONID"; //Left join to allow retrieval of users with null ManagerUserId 
                 SqlCommand command = new SqlCommand(queryString, _connection);
                 command.Parameters.AddWithValue("@INSTITUTIONID", institutionId);
                 using (SqlDataReader dbReader = command.ExecuteReader())
@@ -332,7 +334,7 @@ namespace WebAppsNoAuth.Providers
                         currentUser.Manager = dbReader.IsDBNull(8) ? false : dbReader.GetBoolean(8);
                         if (currentUser.Id == userId)
                         {
-                            allUsers.Prepend(currentUser);
+                            allUsers.Insert(0, currentUser);
                         }
                         else
                         {
@@ -902,6 +904,10 @@ namespace WebAppsNoAuth.Providers
                         currentUserStatus.WFHContact = dbReader.IsDBNull(7) ? "" : dbReader.GetString(7);
                     }
                     _connection.Close();
+
+                    if (currentUserStatus.UserId == 0) {
+                        SetUserInitialStatus(userId, 1);
+                    }
                     return currentUserStatus;
                 }
             }
@@ -1152,7 +1158,8 @@ namespace WebAppsNoAuth.Providers
             try
             {
                 _connection.Open();
-                var queryString = "SELECT M.[MeetingId], M.[Title], M.[Description], M.[Priority], U.[Name], M.[Date], M.[StartTime], M.[EndTime], MA.[Active] FROM [Meeting] M " +
+                var queryString = "SELECT M.[MeetingId], M.[Title], M.[Description], M.[Priority], U.[Name], M.[Date], " +
+                                  "M.[StartTime], M.[EndTime], MA.[Active] FROM [Meeting] M " +
                                   "JOIN [MeetingAttendee] MA ON M.[MeetingId] = MA.[MeetingId] " +
                                   "JOIN [Users] U ON M.[HostUserId] = U.[Id] " +
                                   "WHERE MA.[UserId] = @USERID";
@@ -1334,7 +1341,7 @@ namespace WebAppsNoAuth.Providers
             {
                 _connection.Open();
                 var queryString = "SELECT [Project].ProjectId, [Project].Name, [Project].Description, [Project].Difficulty, [Project].ManagerUserId, " +
-                  "[Users].Name, [Project].CreatedDate, [Project].CreatedBy FROM [Project] " +
+                  "[Users].Name, [Project].CreatedDate, [Project].CreatedBy, [Project].EndDate, [Project].Completed FROM [Project] " +
                   "JOIN [Users] ON [Project].[ManagerUserId] = [Users].Id " +
                   "JOIN [ProjectPerson] ON [Project].ProjectId = [ProjectPerson].ProjectId " +
                   "WHERE [ProjectPerson].UserId = @USERID";
@@ -1352,8 +1359,12 @@ namespace WebAppsNoAuth.Providers
                         currentProject.Difficulty = dbReader.GetInt32(3);
                         currentProject.ManagerUserId = dbReader.GetInt32(4);
                         currentProject.ManagerUserName = dbReader.GetString(5);
-                        currentProject.CreatedDate = dbReader.GetDateTime(6).ToString("dd/MM/yyyy");
+                        currentProject.CreatedDate = dbReader.GetDateTime(6);
+                        currentProject.CreatedDateStr = dbReader.GetDateTime(6).ToString("dd/MM/yyyy");
                         currentProject.CreatedBy = dbReader.GetInt32(7);
+                        currentProject.EndDate = dbReader.IsDBNull(8) ? DateTime.MinValue : dbReader.GetDateTime(8);
+                        currentProject.EndDateStr = dbReader.IsDBNull(8) ? "" : dbReader.GetDateTime(8).ToString("dd/MM/yyyy");
+                        currentProject.Completed = dbReader.GetBoolean(9);
                         allProjects.Add(currentProject);
                     }
                     _connection.Close();
@@ -1444,7 +1455,6 @@ namespace WebAppsNoAuth.Providers
                         }
                         _connection.Close();
                     }
-
                 }
                 catch (Exception e)
                 {
@@ -1468,8 +1478,8 @@ namespace WebAppsNoAuth.Providers
                             Project currentProject = new Project();
                             toReturn[i].CompletedTasks = dbReader.GetInt32(0);
                         }
-                        _connection.Close();
                     }
+                    _connection.Close();
 
                 }
                 catch (Exception e)
@@ -1487,7 +1497,7 @@ namespace WebAppsNoAuth.Providers
             {
                 _connection.Open();
                 var queryString = "SELECT [Project].ProjectId, [Project].Name, [Project].Description, [Project].Difficulty, [Project].ManagerUserId, " +
-                  "[Project].CreatedDate, [Project].CreatedBy FROM [Project] WHERE [Project].ManagerUserId = @USERID";
+                  "[Project].CreatedDate, [Project].CreatedBy, [Project].EndDate, [Project].Completed FROM [Project] WHERE [Project].ManagerUserId = @USERID";
 
                 SqlCommand command = new SqlCommand(queryString, _connection);
                 command.Parameters.AddWithValue("@USERID", userId);
@@ -1501,8 +1511,50 @@ namespace WebAppsNoAuth.Providers
                         currentProject.Description = dbReader.GetString(2);
                         currentProject.Difficulty = dbReader.GetInt32(3);
                         currentProject.ManagerUserId = dbReader.GetInt32(4);
-                        currentProject.CreatedDate = dbReader.GetDateTime(5).ToString("dd/MM/yyyy");
+                        currentProject.CreatedDate = dbReader.GetDateTime(5);
+                        currentProject.CreatedDateStr = dbReader.GetDateTime(5).ToString("dd/MM/yyyy");
                         currentProject.CreatedBy = dbReader.GetInt32(6);
+                        currentProject.EndDate = dbReader.IsDBNull(7) ? DateTime.MinValue : dbReader.GetDateTime(7);
+                        currentProject.EndDateStr = dbReader.IsDBNull(7) ? "" : dbReader.GetDateTime(7).ToString("dd/MM/yyyy");
+                        currentProject.Completed = dbReader.GetBoolean(8);
+                        allProjects.Add(currentProject);
+                    }
+                }
+                _connection.Close();
+                return allProjects;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return null;
+            }
+        }
+
+        public List<Project> GetAllProjectsByUserId(int userId)
+        {
+            List<Project> allProjects = new List<Project>();
+            try
+            {
+                _connection.Open();
+                var queryString = "SELECT [Project].ProjectId, [Project].Name, [Project].Description, [Project].Difficulty, [Project].ManagerUserId, " +
+                  "[Project].CreatedDate, [Project].CreatedBy, [Project].EndDate, [Project].Completed FROM [Project] WHERE [Project].ManagerUserId = @USERID";
+
+                SqlCommand command = new SqlCommand(queryString, _connection);
+                command.Parameters.AddWithValue("@USERID", userId);
+                using (SqlDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        Project currentProject = new Project();
+                        currentProject.ProjectId = dbReader.GetInt32(0);
+                        currentProject.Name = dbReader.GetString(1);
+                        currentProject.Description = dbReader.GetString(2);
+                        currentProject.Difficulty = dbReader.GetInt32(3);
+                        currentProject.ManagerUserId = dbReader.GetInt32(4);
+                        currentProject.CreatedDateStr = dbReader.GetDateTime(5).ToString("dd/MM/yyyy");
+                        currentProject.CreatedBy = dbReader.GetInt32(6);
+                        currentProject.EndDateStr = dbReader.GetDateTime(7).ToString("dd/MM/yyyy");
+                        currentProject.Completed = dbReader.GetBoolean(8);
                         allProjects.Add(currentProject);
                     }
                     _connection.Close();
@@ -1526,7 +1578,6 @@ namespace WebAppsNoAuth.Providers
                                                          //will be deleted hence won't be retrieved in this method
         {
             List<User> personNames = new List<User>();
-            string toReturn = "";
             try
             {
                 _connection.Open();
@@ -1612,7 +1663,7 @@ namespace WebAppsNoAuth.Providers
             try
             {
                 _connection.Open();
-                var queryString = "SELECT [ProjectTask].TaskId, [ProjectTask].TaskText, [ProjectTask].Deadline, [ProjectTask].Completed, [ProjectTask].UserId, [Users].Name, [ProjectTask].CompletedDate FROM [ProjectTask] " + 
+                var queryString = "SELECT [ProjectTask].TaskId, [ProjectTask].TaskText, [ProjectTask].CreateDate, [ProjectTask].Deadline, [ProjectTask].Completed, [ProjectTask].UserId, [Users].Name, [ProjectTask].CompletedDate FROM [ProjectTask] " + 
                   "LEFT JOIN [Users] ON ProjectTask.UserId = Users.Id WHERE [ProjectTask].ProjectId = @PROJECTID";
 
                 SqlCommand command = new SqlCommand(queryString, _connection);
@@ -1624,17 +1675,21 @@ namespace WebAppsNoAuth.Providers
                         ProjectTask currentTask = new ProjectTask();
                         currentTask.TaskId = dbReader.GetInt32(0);
                         currentTask.TaskText = dbReader.GetString(1);
-                        currentTask.Deadline = dbReader.GetDateTime(2);
-                        currentTask.DeadlineStr = dbReader.GetDateTime(2).ToString("dd/MM/yyyy");
-                        currentTask.Completed = dbReader.GetBoolean(3);
-                        currentTask.UserId = dbReader.IsDBNull(4) ? -1 : dbReader.GetInt32(4);
-                        currentTask.UserName = dbReader.IsDBNull(4) ? "" : dbReader.GetString(5);
-                        currentTask.CompletedDate = dbReader.IsDBNull(6) ? DateTime.MinValue : dbReader.GetDateTime(6);
+                        currentTask.CreateDate = dbReader.GetDateTime(2);
+                        currentTask.Deadline = dbReader.GetDateTime(3);
+                        currentTask.DeadlineStr = dbReader.GetDateTime(3).ToString("dd/MM/yyyy");
+                        currentTask.Completed = dbReader.GetBoolean(4);
+                        currentTask.UserId = dbReader.IsDBNull(5) ? -1 : dbReader.GetInt32(5);
+                        currentTask.UserName = dbReader.IsDBNull(6) ? "" : dbReader.GetString(6);
+                        currentTask.CompletedDate = dbReader.IsDBNull(7) ? DateTime.MinValue : dbReader.GetDateTime(7);
                         currentTask.CompletedDateStr =  currentTask.CompletedDate.ToString("dd/MM/yyyy");
                         allTasks.Add(currentTask);
                     }
                     _connection.Close();
-                    allTasks = allTasks.OrderBy(e => e.Deadline).ToList();
+                    if (allTasks.Count() != 0)
+                    {
+                        allTasks = allTasks.OrderBy(e => e.Deadline).ToList();
+                    }
                     return allTasks;
                 }
 
@@ -1656,16 +1711,17 @@ namespace WebAppsNoAuth.Providers
                 var queryString = "";
                 if (userId == 0)
                 {
-                    queryString = "INSERT INTO [ProjectTask] VALUES (@PROJECTID, @TASK, @DEADLINE, @FALSE, NULL, NULL);";
+                    queryString = "INSERT INTO [ProjectTask] VALUES (@PROJECTID, @TASK, @CURRENTDATE, @DEADLINE, @FALSE, NULL, NULL);";
                 }
                 else
                 {
-                    queryString = "INSERT INTO [ProjectTask] VALUES (@PROJECTID, @TASK, @DEADLINE, @FALSE, NULL, @USERID);";
+                    queryString = "INSERT INTO [ProjectTask] VALUES (@PROJECTID, @TASK, @CURRENTDATE, @DEADLINE, @FALSE, NULL, @USERID);";
 
                 }
                 SqlCommand command = new SqlCommand(queryString, _connection);
                 command.Parameters.AddWithValue("@PROJECTID", projectId);
                 command.Parameters.AddWithValue("@TASK", task);
+                command.Parameters.AddWithValue("@CURRENTDATE", DateTime.Now);
                 command.Parameters.AddWithValue("@DEADLINE", deadline);
                 command.Parameters.AddWithValue("@FALSE", false);
                 command.Parameters.AddWithValue("@USERID", userId);
@@ -1885,7 +1941,7 @@ namespace WebAppsNoAuth.Providers
             try
             {
                 _connection.Open();
-                var queryString = "SELECT [ProjectTask].TaskId, [ProjectTask].TaskText, [ProjectTask].Deadline, [ProjectTask].Completed, [Project].Name, [ProjectTask].CompletedDate FROM [ProjectTask] " +
+                var queryString = "SELECT [ProjectTask].TaskId, [ProjectTask].TaskText, [ProjectTask].CreateDate, [ProjectTask].Deadline, [ProjectTask].Completed, [Project].Name, [ProjectTask].CompletedDate FROM [ProjectTask] " +
                   "JOIN [Project] ON ProjectTask.ProjectId = Project.ProjectId WHERE [ProjectTask].UserId = @USERID";
 
                 SqlCommand command = new SqlCommand(queryString, _connection);
@@ -1897,11 +1953,12 @@ namespace WebAppsNoAuth.Providers
                         ProjectTask currentTask = new ProjectTask();
                         currentTask.TaskId = dbReader.GetInt32(0);
                         currentTask.TaskText = dbReader.GetString(1);
-                        currentTask.Deadline = dbReader.GetDateTime(2);
-                        currentTask.DeadlineStr = dbReader.GetDateTime(2).ToString("dd/MM/yyyy");
-                        currentTask.Completed = dbReader.GetBoolean(3);
-                        currentTask.ProjectName = dbReader.GetString(4);
-                        currentTask.CompletedDate = dbReader.IsDBNull(5) ? DateTime.MinValue : dbReader.GetDateTime(5);
+                        currentTask.CreateDate = dbReader.GetDateTime(2);
+                        currentTask.Deadline = dbReader.GetDateTime(3);
+                        currentTask.DeadlineStr = dbReader.GetDateTime(3).ToString("dd/MM/yyyy");
+                        currentTask.Completed = dbReader.GetBoolean(4);
+                        currentTask.ProjectName = dbReader.GetString(5);
+                        currentTask.CompletedDate = dbReader.IsDBNull(6) ? DateTime.MinValue : dbReader.GetDateTime(6);
                         currentTask.CompletedDateStr = currentTask.CompletedDate.ToString("dd/MM/yyyy");
                         allTasks.Add(currentTask);
                     }
@@ -1917,6 +1974,67 @@ namespace WebAppsNoAuth.Providers
                 return null;
             }
         }
+
+        public bool ToggleCompleteProject(int projectId, bool complete)
+        {
+            try
+            {
+                var queryString = "";
+                _connection.Open();
+                Console.WriteLine(complete);
+                if (complete == true)
+                {
+                    queryString = "UPDATE [Project] SET EndDate = @COMPLETEDDATE, Completed = @BOOL WHERE ProjectId = @PROJECTID;";
+                }
+                else
+                {
+                    queryString = "UPDATE [Project] SET EndDate = NULL, Completed = @BOOL WHERE ProjectId = @PROJECTID;";
+                }
+
+                SqlCommand command = new SqlCommand(queryString, _connection);
+                command.Parameters.AddWithValue("@PROJECTID", projectId);
+                command.Parameters.AddWithValue("@BOOL", complete);
+                command.Parameters.AddWithValue("@COMPLETEDDATE", DateTime.Now);
+                command.ExecuteNonQuery();
+
+                _connection.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
+        public bool GetProjectStatus(int projectId)
+        {
+            List<ProjectTask> allTasks = new List<ProjectTask>();
+            bool toReturn = false;
+            try
+            {
+                _connection.Open();
+                var queryString = "SELECT Completed FROM [Project] WHERE ProjectId = @PROJECTID;";
+
+                SqlCommand command = new SqlCommand(queryString, _connection);
+                command.Parameters.AddWithValue("@PROJECTID", projectId);
+                using (SqlDataReader dbReader = command.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        toReturn = dbReader.GetBoolean(0);
+                    }
+                    _connection.Close();
+                    return toReturn;
+                }
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return false;
+            }
+        }
     }
+
 }
 

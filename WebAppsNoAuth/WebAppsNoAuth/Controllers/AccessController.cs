@@ -121,7 +121,7 @@ namespace WebAppsNoAuth.Controllers
             using (_connection)
             {
                 _connection.Open();
-
+                Debug.WriteLine("about to execute query");
                 var queryString = "SELECT * FROM [Users] WHERE Email = @EMAIL";
                 SqlCommand command = new SqlCommand(queryString, _connection);
                 command.Parameters.AddWithValue("@EMAIL", userIn.Email);
@@ -129,10 +129,10 @@ namespace WebAppsNoAuth.Controllers
                 {
                     while (dbReader.Read())
                     {
-                        if (dbReader.IsDBNull(0))
+                        if (dbReader.IsDBNull(0) == true)
                         {
-                            ViewData["ValidateMessage"] = "User cannot be found";
-                            return View();
+                            //ViewData["ValidateMessage"] = "User cannot be found";
+                            return Redirect("/Home/Error");
                         }
                         Id = dbReader.GetInt32(0);
                         name = dbReader.GetString(1);
@@ -143,6 +143,12 @@ namespace WebAppsNoAuth.Controllers
                         admin = dbReader.IsDBNull(6) ? false : dbReader.GetBoolean(6);
                         manager = dbReader.IsDBNull(7) ? false : dbReader.GetBoolean(7);
                         institutionID = dbReader.GetInt32(8);
+                    }
+                    if (Id == -1)
+                    {
+                        ViewData["ValidateMessage"] = "User email cannot be found. Please try again!";
+                        return View();
+                        //return Redirect("/Home/Error");
                     }
                     if (VerifyPassword(userIn.Password, storedPassword))
                     {
@@ -156,7 +162,7 @@ namespace WebAppsNoAuth.Controllers
                         AuthenticationProperties properties = new AuthenticationProperties()
                         {
                             AllowRefresh = true,
-                            IsPersistent = true
+                            IsPersistent = true,
                         };
 
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), properties);
@@ -165,7 +171,8 @@ namespace WebAppsNoAuth.Controllers
                     }
                 }
             }
-            ViewData["ValidateMessage"] = "User cannot be found";
+            ViewData["ValidateMessage"] = "User email or password is incorrect. Please try again!";
+            //return Redirect("/Home/Error");
             return View();
         }
 

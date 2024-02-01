@@ -88,7 +88,8 @@
 
 @section Scripts {
     <link rel="stylesheet" href="~/lib/virtual-select-master/dist/virtual-select.min.css" />
-    <script>$(document).ready(function () {
+    <script>
+        $(document).ready(function () {
             getAllMeetings();
             getAllUsers();
         })
@@ -120,7 +121,7 @@
                         var meetingDate = result.data[i].meetingDate;
                         var meetingDateNew = moment(meetingDate).format('MMMM Do YYYY');
                         html += "<td>" + meetingDate + "</td>";
-                        html += "<td>Start: " + result.data[i].startTime + "</br>End: " + result.data[i].endTime + "</td>";
+                        html += "<td>Start: " + result.data[i].startTime + "</br>End:  " + result.data[i].endTime + "</td>";
                         var attendees = result.data[i].attendees;
                         html += "<td>";
                         var attendeesStr = "";

@@ -332,19 +332,20 @@ namespace WebAppsNoAuth.Providers
             }
         }
 
-        public List<Request> GetAllManagerRequests(int userId) //can eventually replace this with the other method
+        public List<Request> GetAllManagerRequests(int userId) 
         {
             List<Request> allRequests = new List<Request>();
             try
             {
                 _connection.Open();
-                var queryString = "SELECT R.[RequestId], R.[RequestTypeId], R.[UserId], R.[StartDate], R.[EndDate], RT.[RequestTypeName], R.[Approved], R.[Description], U.[Name] FROM Request R " +
+                var queryString = "SELECT R.[RequestId], R.[RequestTypeId], R.[UserId], R.[StartDate], R.[EndDate], RT.[RequestTypeName], " + 
+                                  "R.[Approved], R.[Description], U.[Name] FROM Request R " +
                                   "JOIN RequestType RT ON R.[RequestTypeId] = RT.[RequestTypeId] " +
                                   "JOIN Users U ON R.[UserId] = U.[Id] WHERE U.[ManagerUserId] = @USERID AND R.[Approved] IS NULL";
                 SqlCommand command = new SqlCommand(queryString, _connection);
                 command.Parameters.AddWithValue("@USERID", userId);
                 using (SqlDataReader dbReader = command.ExecuteReader())
-                {
+                {   
                     while (dbReader.Read())
                     {
                         Request currentRequest = new Request();

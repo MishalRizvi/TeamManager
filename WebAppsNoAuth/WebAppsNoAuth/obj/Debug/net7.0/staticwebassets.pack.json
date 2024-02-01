@@ -217,6 +217,10 @@
       "PackagePath": "staticwebassets/Images/checklistImage2.png"
     },
     {
+      "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/css/card-analytics.css",
+      "PackagePath": "staticwebassets/css/card-analytics.css"
+    },
+    {
       "Id": "/Users/mishalrizvi/Projects/TeamManager/WebAppsNoAuth/WebAppsNoAuth/wwwroot/css/card-tasks.css",
       "PackagePath": "staticwebassets/css/card-tasks.css"
     },

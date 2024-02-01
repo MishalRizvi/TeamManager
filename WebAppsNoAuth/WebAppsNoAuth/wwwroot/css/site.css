@@ -161,12 +161,14 @@ appButton[disabled=disabled], appButton:disabled {
 
 body {
     font-family: "Lato", sans-serif;
+    margin: 0;
+    transition: margin-left 0.5s;
 }
 .maxWidth {
     width: 2000px;
 }
 
-.sidepanel {
+/*.sidepanel {
     width: 0;
     position: fixed;
     z-index: 1;
@@ -210,13 +212,64 @@ body {
 
     .openbtn:hover {
         background-color: white;
+    }*/
+
+/* Add a class to the body when the side panel is open */
+body.sidepanel-open {
+    overflow-x: hidden;
+    margin-left: 250px; /* Adjust this value based on your side panel width */
+}
+
+.sidepanel {
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    height: 100%;
+    top: 20px;
+    left: 0;
+    background-color: maroon;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+    .sidepanel a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 15px;
+        color: white;
+        display: block;
+        transition: 0.3s;
+        text-transform: capitalize;
     }
 
+        .sidepanel a:hover {
+            color: #818181;
+        }
 
+    .sidepanel .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        color: white;
+        text-decoration: none;
+    }
+
+    .sidepanel .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-left: 5px;
+    }
+
+/* Adjust the margin of the body when the side panel is open */
+.sidepanel-open .content {
+    margin-left: 250px; /* Adjust this value based on your side panel width */
+}
 /* FOR HOME PAGE SIDE PANEL */
-
 /* FOR USER ICON */
-
 .avatar {
     overflow: hidden;
 }
