@@ -342,6 +342,7 @@
                         $("#messageBox").html(result.data.messageStr);
                         return false;
                     }
+                    $("#modal-view-event-add").modal("hide");
                     resetPage()
                     getUserRequests();
                 },
