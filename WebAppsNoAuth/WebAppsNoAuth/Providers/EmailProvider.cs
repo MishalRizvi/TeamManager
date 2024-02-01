@@ -236,7 +236,7 @@ namespace WebAppsNoAuth.Providers
             {
                 MailMessage m = new MailMessage();
                 SmtpClient sc = new SmtpClient();
-                m.From = new MailAddress(_configuration.GetSection("EmailConfiguration")["From"], "ManaTeam");
+                m.From = new MailAddress(_configuration.GetSection("EmailConfiguration")["From"], "Execusync");
                 m.To.Add(new MailAddress(emailTemplate.To, emailTemplate.ToName));
                 m.Subject = emailTemplate.Subject;
                 m.Body = emailTemplate.Body;
