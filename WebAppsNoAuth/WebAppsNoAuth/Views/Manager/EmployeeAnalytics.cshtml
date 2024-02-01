@@ -228,8 +228,6 @@
                     };
                     barChart = new Chart(document.getElementById("statsChart"), config);
 
-
-
                     var tm = document.getElementById("treemap");
                     var ctx = tm.getContext("2d");
 
@@ -253,10 +251,10 @@
                             }]
                         },
                         options: {
-                            maintainAspectRatio: false,
+                            maintainAspectRatio: true,
                             legend: { display: true },
                             tooltips: { enabled: false },
-                            responsive: false
+                            responsive: true
                         }
                     });
                 },
