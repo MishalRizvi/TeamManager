@@ -430,7 +430,7 @@ namespace WebAppsNoAuth.Controllers
 
         }
 
-        public IDictionary<string,int> GetEmpTasksAsJson(int userId) //shall we change this to a list of COMPLETED tasks 
+        public IDictionary<string,int> GetEmpTasksAsJson(int userId) 
         {
             IEnumerable<ProjectTask> userTasks = _providers.User.GetAllTasks(userId); //take into consideration null lists
             IDictionary<string, int> tasksPerMonth = new Dictionary<string, int>();

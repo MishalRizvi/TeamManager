@@ -827,6 +827,7 @@ namespace WebAppsNoAuth.Providers
 
         public bool SetUserStatus(int userId, int statusTypeId, int locationId, bool isWFH, string wfhContact) //set default as unavailable
         {
+            Console.WriteLine("location id", locationId);
             var queryString = "";
             try
             {
@@ -1027,6 +1028,7 @@ namespace WebAppsNoAuth.Providers
                 _connection.Open();
 
                 var queryString = "DELETE FROM [MeetingAttendee] WHERE UserId = @USERID; " +
+                                  "DELETE FROM [TeamUser] WHERE UserId = @USERID;" +
                                   "DELETE FROM [ProjectPerson] WHERE UserId = @USERID; " +
                                   "DELETE FROM [UserEntitlements] WHERE UserId = @USERID;" +
                                   "DELETE FROM [Status] WHERE UserId = @USERID;" +
@@ -1122,6 +1124,7 @@ namespace WebAppsNoAuth.Providers
 
         public List<Location> GetAllUserLocations(int userId)
         {
+            Console.WriteLine("userid: " + userId);
             List<Location> userLocations = new List<Location>();
             try
             {
@@ -1614,8 +1617,8 @@ namespace WebAppsNoAuth.Providers
             }
         }
 
-        public List<User> GetOrderedProjectPersonsById(int projectId) //this method gets all attendees WHO HAVE NOT REJECTED THE MEETING, if they reject the meeting their entry in MA table
-                                                               //will be deleted hence won't be retrieved in this method
+        public List<User> GetOrderedProjectPersonsById(int projectId) 
+                                                              
         {
             List<User> personNames = GetProjectPersonsById(projectId);
             List<User> toReturn = new List<User>();

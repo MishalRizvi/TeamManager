@@ -1,39 +1,69 @@
-﻿
+﻿<style>
+    .text-maroon {
+        color: maroon;
+    }
 
+    .border-maroon {
+        border-color: maroon;
+    }
+
+    .card {
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+</style>
 @{
     if (ViewData["resetPassword"].ToString() == "True")
     {
-        <div class="form-outline mb-4">
-            <label class="form-label" for="userId">Please reset your password.</label>
-            <button class="btn btn-primary appButton" onclick="window.location.href = '/Home/ResetPassword';">Reset Password</button>
+        <div class="container mt-4">
+            <div class="alert alert-warning" role="alert">
+                <strong>Please reset your password.</strong>
+                <button class="btn btn-primary ml-2" onclick="window.location.href = '/Home/ResetPassword';">Reset Password</button>
+            </div>
         </div>
     }
 }
-<div style="position:relative; left:100px">
-    <h1 class="indexHeader">Managing Teams Effectively</h1>
-    <br />
-    <br />
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12 text-center">
+            <h1 class="indexHeader" style="color: maroon;">Managing Teams Effectively</h1>
+        </div>
+    </div>
 </div>
-<div class="row" style="position:relative; top:450px; left:100px">
-    <div class="col-md-4 box_industries">
-        <h3 class="indexHeaderTwo">View</h3>
-        <img src="~/Images/calendarImage.png" width="100" height="100" object-fit="cover" class="indexHeaderTwo"/>
-        <div class="content">
-            <label style="padding:50px 0; font-family:sans-serif">Study leave, work from home days, holidays</label>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card border-maroon mb-4">
+                <div class="card-body">
+                    <h3 class="card-title text-maroon">View</h3>
+                    <img src="~/Images/calendarImage.png" width="100" height="100" class="img-fluid mb-3" alt="Calendar Image">
+                    <p class="card-text text-maroon">Study leave, work from home days, holidays</p>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="col-md-4 box_industries">
-        <h3 class="indexHeaderThree">Manage</h3>
-        <img src="~/Images/checklistImage2.png" width="100" height="100" object-fit="cover" class="indexHeaderThree" />
-        <div class="content">
-            <h6 style="padding:50px 0; font-family:sans-serif">Manage employee leave</h6>
+        <div class="col-md-4">
+            <div class="card border-maroon mb-4">
+                <div class="card-body">
+                    <h3 class="card-title text-maroon">Manage</h3>
+                    <img src="~/Images/checklistImage2.png" width="100" height="100" class="img-fluid mb-3" alt="Checklist Image">
+                    <p class="card-text text-maroon">Manage employee leave</p>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="col-md-4 box_industries">
-        <h3 class="indexHeaderFour">Admin</h3>
-        <img src="~/Images/adminImage.png" width="100" height="100" class="indexHeaderFour" />
-        <div class="content">
-            <h6 style="padding:50px 0; font-family:sans-serif">Create locations with personalised names and teams, add users</h6>
+        <div class="col-md-4">
+            <div class="card border-maroon mb-4">
+                <div class="card-body">
+                    <h3 class="card-title text-maroon">Admin</h3>
+                    <img src="~/Images/adminImage.png" width="100" height="100" class="img-fluid mb-3" alt="Admin Image">
+                    <p class="card-text text-maroon">Create locations with personalised names and teams, add users</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

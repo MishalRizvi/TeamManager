@@ -174,7 +174,7 @@ namespace WebAppsNoAuth.Providers
                     _connection.Open();
                     var queryString = "SELECT R.[RequestId], R.[RequestTypeId], R.[UserId], R.[StartDate], R.[EndDate], RT.[RequestTypeName], R.[Approved], R.[Description], U.[Name] FROM Request R " +
                                       "JOIN RequestType RT ON R.[RequestTypeId] = RT.[RequestTypeId] " +
-                                      "JOIN Users U ON R.[UserId] = U.[Id] WHERE R.[UserId] = @USERID AND R.[Approved] = @TRUE";
+                                      "JOIN Users U ON R.[UserId] = U.[Id] WHERE R.[UserId] = @USERID";
                     SqlCommand command = new SqlCommand(queryString, _connection);
                     command.Parameters.AddWithValue("@USERID", usersList.ElementAt(i));
                     command.Parameters.AddWithValue("@TRUE", true);

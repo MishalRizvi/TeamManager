@@ -97,7 +97,7 @@ namespace WebAppsNoAuth.Providers
             {
                 _connection.Open();
                 var queryString = "SELECT [Project].ProjectId, [Project].Name, [Project].Description, [Project].Difficulty, " +
-                                  "[Users].Name, [Project].CreatedDate, [Project].CreatedBy FROM [Project] " +
+                                  "[Users].Name, [Project].CreatedDate, [Project].CreatedBy, [Project].EndDate, [Project].Completed FROM [Project] " +
                                   "JOIN [Users] ON [Project].[ManagerUserId] = [Users].Id WHERE CreatedBy = @MANAGERUSERID"; //WHERE INSTITUTION ID = THE SAME ONE AS THE ADMIN WHO IS ON UPDATEUSERPAGE 
                 SqlCommand command = new SqlCommand(queryString, _connection);
                 command.Parameters.AddWithValue("@MANAGERUSERID", userId);
@@ -114,6 +114,9 @@ namespace WebAppsNoAuth.Providers
                         currentProject.CreatedDate = dbReader.GetDateTime(5);
                         currentProject.CreatedDateStr = dbReader.GetDateTime(5).ToString("dd/MM/yyyy");
                         currentProject.CreatedBy = dbReader.GetInt32(6);
+                        currentProject.EndDate = dbReader.IsDBNull(7) ? new DateTime(1) : dbReader.GetDateTime(7);
+                        currentProject.EndDateStr = currentProject.EndDate.ToString("dd/MM/yyyy");
+                        currentProject.Completed = dbReader.IsDBNull(7) ? false : dbReader.GetBoolean(8);
                         allProjects.Add(currentProject);
                     }
                     _connection.Close();
@@ -478,10 +481,11 @@ namespace WebAppsNoAuth.Providers
                     _connection.Close();
                 }
                 Console.WriteLine(aggregatedComments);
+
+
                 ModelInput aggregatedInput = new ModelInput { Feedback = aggregatedComments };
                 var mlContext = new MLContext();
                 DataViewSchema predictionPipelineSchema;
-                //ITransformer trainedModel = mlContext.Model.Load("EmployeeSentimentModel/EmployeeSentimentModel.mlnet", out predictionPipelineSchema);
 
                 ITransformer trainedModel = mlContext.Model.Load("EmpSentimentModel/EmpSentimentModel.mlnet", out var _);
 

@@ -111,8 +111,8 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
+                            <h4 class="modal-title modalFont" id="layoutModalLabel">Edit profile</h4>
                             <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeLayoutModal()">x</button>
-                            <h4 class="modal-title appModalFont" id="layoutModalLabel">Edit profile</h4>
                         </div>
                         <div class="modal-body">
                             <form>
@@ -148,8 +148,8 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
+                            <h4 class="modal-title modalFont" id="userModalLabel">Status</h4>
                             <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeUserModal()">x</button>
-                            <h4 class="modal-title appModalFont" id="userModalLabel">Status</h4>
                         </div>
                         <div class="modal-body">
                             <form>
@@ -317,7 +317,8 @@
     function setUserStatus() {
         var statusTypeId = document.getElementById("StatusList").value;
         var locationId = 0;
-        //if there are no locations that blelong to the user 
+        //if there are no locations that blelong to the user
+        console.log(document.getElementById("UserLocationsList"));
         if (!document.getElementById("UserLocationsList").options.length || !document.getElementById("UserLocationsList").value) {
             locationId = -1;
         }
@@ -373,6 +374,7 @@
             success: function (result) {
                 console.log(result);
                 var html = "<a class='closebtn' href='' onclick='closeSideBar()'>×</a>";
+                html += "<a><h4 style='color:white'>Users</h4></a>"
                 for (var i = 0; i < result.data.length; i++) {
                     var colour = "";
                  //   html += "<td>" + result.data[i].teamName + "</td>";

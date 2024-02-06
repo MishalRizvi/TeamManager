@@ -28,8 +28,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                <h4 class="modal-title modalFont" id="projectModalLabel">Add Project</h4>
                 <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeUpdateProjModal()">x</button>
-                <h4 class="modal-title appModalFont" id="projectModalLabel">Add Project</h4>
             </div>
             <div class="modal-body">
                 <form>
@@ -110,7 +110,7 @@
                             if (result.data[i].endDateStr == null) { html += "" } else { html += result.data[i].endDateStr }
                             html += "</td>";
                             html += "<td><input type='checkbox'"; if (result.data[i].completed) { html += "checked='checked' disabled />"; } else { html += "disabled />"; }
-                            html += "<td><button class='btn btn-primary px-3' onclick='return getByProjectId(" + result.data[i].projectId + ")'><i class='fa fa-edit'></i></button> <button class='btn btn-danger px-3' onclick='deleteProject(" + result.data[i].projectId + ")'><i class='fa fa-times'></i></button></td>";
+                            html += "<td><button style='width: 50px' class='btn btn-primary px-3' onclick='return getByProjectId(" + result.data[i].projectId + ")'><i class='fa fa-edit'></i></button> <button style='width: 50px' class='btn btn-danger px-3' onclick='deleteProject(" + result.data[i].projectId + ")'><i class='fa fa-times'></i></button></td>";
                             html += "<tr>";
                         }
                     }

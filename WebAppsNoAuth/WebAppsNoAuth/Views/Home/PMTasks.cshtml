@@ -53,7 +53,7 @@
     <div class="col">
         @*<div class="divStyle" id="projectPersonsDiv">
         </div>*@
-        <button class="btn btn-primary btn-lg" style="background-color:white; color:maroon; margin-top:20px;" onclick="openCommentModal()">Add Comment <i class="fa fa-comment"></i></button>
+        <button class="btn btn-primary btn-lg" style="background-color:white; color:maroon; margin-top:20px; margin-left:20px" onclick="openCommentModal()"><i class="fa fa-comment"></i> Comment</button>
     </div>
 </div>
 <div class="flex-container">
@@ -102,8 +102,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeTaskModal()">x</button>
                 <h4 class="modal-title appModalFont" id="taskModalLabel">Edit Task</h4>
+                <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeTaskModal()">x</button>
             </div>
             <div class="modal-body">
                 <form method="get">
@@ -132,16 +132,18 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                <h4 class="modal-title appModalFont" id="taskModalLabel">Comment</h4>
                 <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeCommentModal()">x</button>
-                <h4 class="modal-title appModalFont" id="taskModalLabel">Edit Task</h4>
             </div>
             <div class="modal-body">
                 <form method="get">
                     <div id="projectPersonsDropdown2" style="display:none">
                     </div>
+                    <br />
                     <div class="form-outline mb-4">
-                        <label class="form-label appLabel" for="newComment">Comment </label>
-                        <textarea id="newComment" rows="4" cols="50">Enter comment here...</textarea>
+                        @*<label class="form-label appLabel" for="newComment">Comment </label>*@
+
+                        <textarea id="newComment" rows="4" cols="50" placeholder="Enter comment here..." border: 2px solid #ccc; border-radius: 4px;></textarea>
                     </div>
                 </form>
             </div>

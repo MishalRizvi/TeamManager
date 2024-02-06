@@ -15,8 +15,8 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeTaskModal()">x</button>
                         <h4 class="modal-title appModalFont" id="taskModalLabel">Edit Task</h4>
+                        <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeTaskModal()">x</button>
                     </div>
                     <div class="modal-body">
                         <form>
@@ -91,6 +91,7 @@
                         html2 += "<div class='project-info'><span class='project-info-label'>Project: </span><span class='project-info-value'>" + completedList[i].projectName + "</span></div>";
                         html2 += "<br /><div style='text-align:center'><button class='btn btn-warning px-3' onclick='incompleteTask(" + completedList[i].taskId + ")'><i class='fa-solid fa-pencil'></i></button> <button class='btn btn-danger px-3' onclick='deleteTask(" + completedList[i].taskId + ")'><i class='fa fa-times'></i></button></div>";
                         html2 += "</div></div>";
+
                     }
                     $("#completeTasks").html(html2);
 

@@ -1761,7 +1761,7 @@
     </div>
 </div>
 
-<div id="modal-view-event-add" class="modal modal-top fade calendar-modal">
+@*<div id="modal-view-event-add" class="modal modal-top fade calendar-modal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form id="add-event" method="get">
@@ -1790,6 +1790,42 @@
                     <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="closeEventModalAdd()">Close</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>*@
+
+<div id="modal-view-event-add" class="modal modal-top fade calendar-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title modalFont" id="locationModalLabel">Add Event Detail</h4>
+                <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeEventModalAdd()">x</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-event" method="get">
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="startDate">Start Date:</label>
+                        <input type="date" id="startDate" class="form-control form-control-lg" required />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="endDate">End Date:</label>
+                        <input type="date" id="endDate" class="form-control form-control-lg" required />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="requestType" required>Type: </label>
+                        @Html.DropDownList("RequestTypeList", "---")
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="requestDescription">Description:</label>
+                        <input type="text" id="requestDescription" class="form-control form-control-lg" required />
+                    </div>
+                    <div id="messageBox" style="outline:none">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary appButton" style="background-color:maroon" onclick="return addNewRequest()">Save</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -1837,9 +1873,9 @@
                     }
                 },
                 eventClick: function (event, jsEvent, view) {
-                    console.log(event); //this is for when an event is clicked
-                    console.log(jsEvent); //this is for when an event is clicked
-                    console.log(view); //this is for when an event is clicked
+                    console.log(event); 
+                    console.log(jsEvent); 
+                    console.log(view); 
                     $('.event-icon').html("<i class='fa fa-" + event.icon + "'></i>");
                     $('.event-title').html(event.title);
                     $('.event-body').html(event.description);
@@ -1875,8 +1911,13 @@
                     console.log(result);
                     if (result.data.id == 3) {
                         $("#messageBox").html(result.data.messageStr);
-                        return false;
+                        //    return false;
                     }
+                    else {
+                        $('#modal-view-event').modal("hide");
+                        window.location.reload();
+                    }
+                //    return true;
                 },
                 error: function (error) {
                 //    alert(error.responseText);
@@ -1931,15 +1972,15 @@
                         var bgCol = '';
                         if (requestType === "Annual") {
                             icon = "plane";
-                            bgCol = "pinkred";
+                            bgCol = "#DD4124";
                         }
                         if (requestType === "Study") {
                             icon = "book";
-                            bgCol = "blue";
+                            bgCol = "#B565A7";
                         }
                         if (requestType === "WFH") {
                             icon = "home";
-                            bgCol = "deepskyblue";
+                            bgCol = "#009B77";
                         }
                         var event = {
                             title: result.data[i].requestTypeName,
@@ -1947,6 +1988,7 @@
                             start: result.data[i].startDate,
                             end: result.data[i].endDate,
                             className: 'fc-bg-' + bgCol,
+                            color: bgCol,
                             icon: icon,
                             allDay: false,
                         };
@@ -1968,7 +2010,6 @@
         //goes through each event in the array
         function getFilteredApprovedRequests() {
             $("#calendar").fullCalendar('removeEvents');
-
             var allEvents = [];
             var usersVal = document.getElementById("multiselectUsers").value;
             if (usersVal.length == 0) {
@@ -1992,43 +2033,55 @@
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 success: function (result) {
-                    console.log("got filtered requests");
                     console.log(result);
                     for (var i = 0; i < result.data.length; i++) {
                         for (var j = 0; j < result.data[i].length; j++) {
                             var requestType = result.data[i][j].requestTypeName;
+                            var approvedMessage = result.data[i][j].approvedMessage;
+                            var titleSet = ""; 
+                            if (approvedMessage == "Rejected") {
+                                continue;
+                            }
+                            else if (approvedMessage == "Pending") {
+                                titleSet = result.data[i][j].requestTypeName + " - Pending";
+                            }
+                            else {
+                                titleSet = result.data[i][j].requestTypeName
+                            }
                             var icon = '';
                             var bgCol = '';
                             if (requestType === "Annual") {
                                 icon = "plane";
-                                bgCol = "pinkred";
+                                bgCol = "#DD4124";
                             }
                             if (requestType === "Study") {
                                 icon = "book";
-                                bgCol = "blue";
+                                bgCol = "#B565A7";
                             }
                             if (requestType === "WFH") {
                                 icon = "home";
-                                bgCol = "deepskyblue";
+                                bgCol = "#009B77";
                             }
                             if (result.data[i][j].userId == currentUserId) {
                                 var event = {
-                                    title: result.data[i][j].requestTypeName,
+                                    title: titleSet,
                                     description: result.data[i][j].description,
                                     start: result.data[i][j].startDate,
                                     end: result.data[i][j].endDate,
                                     className: 'fc-bg-' + bgCol,
+                                    color: bgCol,
                                     icon: icon,
                                     allDay: false,
                                 };
                             }
                             else {
                                 var event = {
-                                    title: result.data[i][j].requestTypeName + " - " + result.data[i][j].userName,
+                                    title: titleSet + " - " + result.data[i][j].userName,
                                     description: result.data[i][j].description,
                                     start: result.data[i][j].startDate,
                                     end: result.data[i][j].endDate,
                                     className: 'fc-bg-' + bgCol,
+                                    color: bgCol,
                                     icon: icon,
                                     allDay: false,
                                 };

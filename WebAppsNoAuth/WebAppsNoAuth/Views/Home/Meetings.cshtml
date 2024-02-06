@@ -253,6 +253,9 @@
             $("#endTime").css("border-color", "lightgrey");
         }
 
+        function closeMeetingModal() {
+            $("#meetingModal").modal("hide");
+        }
         function validateDetails() {
             var meetingTitle = document.getElementById("meetingTitle").value;
             var meetingDate = document.getElementById("meetingDate").value;

@@ -31,61 +31,6 @@ nav-link {
     color: white;
 }
 
-/* FOR CALENDAR PAGE, MOVE TO THAT SPECIFIC PAGE IF NECESSARY */
-
-
-/*table {
-    border-collapse: collapse;
-}
-
-td,
-th {
-    border: 1px solid black;
-    padding: 3px;
-    text-align: center;
-}
-
-th {
-    font-weight: bold;
-    background-color: maroon;
-}
-
-.column {
-    float: left;
-    width: 33.33%;
-}*/
-
-/* Clear floats after the columns */
-/*.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-.tooltip {
-    display: none;
-    position: absolute;
-    z-index: 100;
-    border: 1px;
-    background-color: white;
-    border-style: solid;
-    border-width: 1px;
-    border-color: red;
-    padding: 3px;
-    color: red;
-    top: 20px;
-    left: 20px;
-}*/
-
-/*.styled-table-calendar {
-    border-collapse: collapse;
-    margin: 25px 0;
-    font-size: 0.9em;
-    font-family: sans-serif;
-    min-width: 370px;*/ /*change this to change the width of the calendar*/
-    /*box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-
-}*/
-
 .styled-table-calendar {
     border-collapse: collapse;
     margin: 25px 0;
@@ -151,8 +96,8 @@ appButton[disabled=disabled], appButton:disabled {
 .appTitle {
     color: maroon;
 }
-.appModalFont {
-    font-family: cursive;
+.modalFont {
+    font-family: "Courier New", Courier, monospace;
 }
 
 /* FOR CALENDAR PAGE */

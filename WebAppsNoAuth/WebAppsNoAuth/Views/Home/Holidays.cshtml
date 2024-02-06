@@ -90,37 +90,38 @@
 <div id="modal-view-event-add" class="modal modal-top fade calendar-modal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form id="add-event" method="get">
-                <div class="modal-body">
-                    <h4>Add Event Detail</h4>
-                    <div class="form-outline mb-4">
-                        <label class="form-label appLabel" for="startDate">Start Date:</label>
-                        <input type="date" id="startDate" class="form-control form-control-lg" required />
+            <div class="modal-header">
+                <h4 class="modal-title modalFont" id="locationModalLabel">Add Event Detail</h4>
+                <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeHolModal()">x</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-event" method="get">
+                        <div class="form-outline mb-4">
+                            <label class="form-label appLabel" for="startDate">Start Date:</label>
+                            <input type="date" id="startDate" class="form-control form-control-lg" required />
+                        </div>
+                        <div class="form-outline mb-4">
+                            <label class="form-label appLabel" for="endDate">End Date:</label>
+                            <input type="date" id="endDate" class="form-control form-control-lg" required />
+                        </div>
+                        <div class="form-outline mb-4">
+                            <label class="form-label appLabel" for="requestType" required>Type: </label>
+                            @Html.DropDownList("RequestTypeList", "---")
+                        </div>
+                        <div class="form-outline mb-4">
+                            <label class="form-label appLabel" for="requestDescription">Description:</label>
+                            <input type="text" id="requestDescription" class="form-control form-control-lg" required />
+                        </div>
+                        <div id="messageBox" style="outline:none">
+                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary appButton" onclick="return addNewRequest()">Save</button>
                     </div>
-                    <div class="form-outline mb-4">
-                        <label class="form-label appLabel" for="endDate">End Date:</label>
-                        <input type="date" id="endDate" class="form-control form-control-lg" required />
-                    </div>
-                    <div class="form-outline mb-4">
-                        <label class="form-label appLabel" for="requestType" required>Type: </label>
-                        @Html.DropDownList("RequestTypeList", "---")
-                    </div>
-                    <div class="form-outline mb-4">
-                        <label class="form-label appLabel" for="requestDescription">Description:</label>
-                        <input type="text" id="requestDescription" class="form-control form-control-lg" required />
-                    </div>
-                    <div id="messageBox" style="outline:none">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="return addNewRequest()">Save</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>
-
 
 
 @section Scripts {
@@ -378,7 +379,10 @@
             $("#startDate").css("border-color", "lightgrey");
             $("#endDate").css("border-color", "lightgrey");
             $("#RequestTypeList").css("border-color", "lightgrey");
+        }
 
+        function closeHolModal() {
+            $("#modal-view-event-add").modal("hide");
         }
 
         function validateDetails() {

@@ -19,7 +19,7 @@ using MimeKit;
 using Org.BouncyCastle.Crypto.Macs;
 using System.Net.Mail;
 using Microsoft.Build.ObjectModelRemoting;
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+// For more information on enabling MVC for xty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebAppsNoAuth.Controllers
 {
@@ -162,6 +162,7 @@ namespace WebAppsNoAuth.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
+            return Redirect("/Home/Calendar");
             ViewData["Authenticated"] = "true";
             int userId = Int32.Parse(HttpContext.User.Claims.ToList()[1].ToString().Split(":")[1]);
             ViewData["Username"] = HttpContext.User.Claims.ToList()[2].ToString().Split(":")[1];

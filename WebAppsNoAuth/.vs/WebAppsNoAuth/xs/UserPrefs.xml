@@ -1,51 +1,38 @@
 ﻿<Properties StartupConfiguration="{0969071E-5FEC-4F01-8C74-FA0FFC1A5FE8}|Default">
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.WebAppsNoAuth PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench ActiveDocument="WebAppsNoAuth/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="WebAppsNoAuth/dockercompose.yml">
     <Files>
       <File FileName="WebAppsNoAuth/Providers/ManagerProvider.cs" Line="453" Column="64" IsPinned="True" />
-      <File FileName="WebAppsNoAuth/Program.cs" Line="21" Column="76" />
-      <File FileName="WebAppsNoAuth/EmpSentimentModel/EmpSentimentModel.consumption.cs" />
-      <File FileName="WebAppsNoAuth/Controllers/ManagerController.cs" />
-      <File FileName="WebAppsNoAuth/EmpSentimentModel/EmpSentimentModel.mbconfig" />
-      <File FileName="WebAppsNoAuth/EmpSentimentModel/EmpSentimentModel.evaluate.cs" />
-      <File FileName="WebAppsNoAuth/EmpSentimentModel/EmpSentimentModel.training.cs" />
-      <File FileName="WebAppsNoAuth/Views/Manager/EmployeeAnalytics.cshtml" />
-      <File FileName="WebAppsNoAuth/EmpSentimentModel/EmpSentimentModel.mlnet" />
-      <File FileName="WebAppsNoAuth/Views/Home/Holidays.cshtml" />
-      <File FileName="WebAppsNoAuth/Views/Shared/_Layout.cshtml" />
-      <File FileName="WebAppsNoAuth/Providers/UserProvider.cs" />
-      <File FileName="WebAppsNoAuth/Views/Home/PMTasks.cshtml" />
-      <File FileName="WebAppsNoAuth/Views/Manager/Projects.cshtml" />
-      <File FileName="WebAppsNoAuth/Views/Home/MyTasks.cshtml" />
-      <File FileName="WebAppsNoAuth/Views/Home/MyProjects.cshtml" />
-      <File FileName="WebAppsNoAuth/wwwroot/css/card-tasks.css" />
-      <File FileName="WebAppsNoAuth/wwwroot/css/card-analytics.css" />
-      <File FileName="WebAppsNoAuth/Views/Home/Calendar.cshtml" />
-      <File FileName="WebAppsNoAuth/Controllers/HomeController.cs" />
-      <File FileName="WebAppsNoAuth/Providers/TeamProvider.cs" />
-      <File FileName="WebAppsNoAuth/Providers/RequestProvider.cs" />
-      <File FileName="WebAppsNoAuth/Models/RequestStats.cs" />
-      <File FileName="WebAppsNoAuth/Models/EmpStats.cs" />
-      <File FileName="WebAppsNoAuth/Models/ProjectTask.cs" />
-      <File FileName="WebAppsNoAuth/Models/Project.cs" />
-      <File FileName="WebAppsNoAuth/Views/Manager/UpdateProject.cshtml" />
-      <File FileName="WebAppsNoAuth/Views/Manager/ApproveRequest.cshtml" />
+      <File FileName="WebAppsNoAuth/Views/Manager/EmployeeAnalytics.cshtml" Line="230" Column="1" IsPinned="True" />
+      <File FileName="WebAppsNoAuth/Controllers/AdminController.cs" Line="107" Column="1" />
+      <File FileName="WebAppsNoAuth/Views/Shared/_Layout.cshtml" Line="22" Column="129" />
+      <File FileName="WebAppsNoAuth/Views/Home/Meetings.cshtml" Line="1" Column="1" />
+      <File FileName="WebAppsNoAuth/Controllers/EmailController.cs" Line="1" Column="1" />
+      <File FileName="WebAppsNoAuth/Providers/EmailProvider.cs" Line="231" Column="1" />
+      <File FileName="WebAppsNoAuth/Views/Home/MyTasks.cshtml" Line="90" Column="35" />
+      <File FileName="WebAppsNoAuth/Dockerfile" Line="8" Column="25" />
+      <File FileName="WebAppsNoAuth/dockercompose.yml" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="WebAppsNoAuth" expanded="True" selected="True">
-            <Node name="WebAppsNoAuth" expanded="True">
-              <Node name="Controllers" expanded="True" />
+          <Node name="WebAppsNoAuth" expanded="True">
+            <Node name="WebAppsNoAuth">
+              <Node name="Controllers" expanded="True">
+                <Node name="AdminController.cs" selected="True" />
+              </Node>
               <Node name="EmpSentimentModel" expanded="True" />
               <Node name="Providers" expanded="True" />
               <Node name="Services" expanded="True" />
               <Node name="Upload" expanded="True" />
               <Node name="Views" expanded="True">
+                <Node name="Access" expanded="True" />
                 <Node name="Admin" expanded="True" />
                 <Node name="Home" expanded="True" />
                 <Node name="Manager" expanded="True" />
@@ -57,6 +44,4 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.WebAppsNoAuth PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>
