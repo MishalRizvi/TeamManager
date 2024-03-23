@@ -104,8 +104,10 @@ appButton[disabled=disabled], appButton:disabled {
 
 /* FOR HOME PAGE SIDE PANEL */
 
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin&display=swap');
+
 body {
-    font-family: "Lato", sans-serif;
+    font-family: "Libre Franklin", sans-serif;
     margin: 0;
     transition: margin-left 0.5s;
 }
@@ -323,6 +325,8 @@ body.sidepanel-open {
     display: block;
     text-align: left;
 }
+
+
 
 /* FOR USER ICON */
 

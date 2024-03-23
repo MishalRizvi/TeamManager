@@ -1,33 +1,30 @@
 ﻿<Properties StartupConfiguration="{0969071E-5FEC-4F01-8C74-FA0FFC1A5FE8}|Default">
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.WebAppsNoAuth PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="WebAppsNoAuth/dockercompose.yml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="WebAppsNoAuth/Program.cs">
     <Files>
-      <File FileName="WebAppsNoAuth/Providers/ManagerProvider.cs" Line="453" Column="64" IsPinned="True" />
+      <File FileName="WebAppsNoAuth/Providers/ManagerProvider.cs" Line="453" Column="14" IsPinned="True" />
       <File FileName="WebAppsNoAuth/Views/Manager/EmployeeAnalytics.cshtml" Line="230" Column="1" IsPinned="True" />
-      <File FileName="WebAppsNoAuth/Controllers/AdminController.cs" Line="107" Column="1" />
-      <File FileName="WebAppsNoAuth/Views/Shared/_Layout.cshtml" Line="22" Column="129" />
-      <File FileName="WebAppsNoAuth/Views/Home/Meetings.cshtml" Line="1" Column="1" />
-      <File FileName="WebAppsNoAuth/Controllers/EmailController.cs" Line="1" Column="1" />
-      <File FileName="WebAppsNoAuth/Providers/EmailProvider.cs" Line="231" Column="1" />
-      <File FileName="WebAppsNoAuth/Views/Home/MyTasks.cshtml" Line="90" Column="35" />
-      <File FileName="WebAppsNoAuth/Dockerfile" Line="8" Column="25" />
-      <File FileName="WebAppsNoAuth/dockercompose.yml" Line="1" Column="1" />
+      <File FileName="WebAppsNoAuth/Controllers/AdminController.cs" />
+      <File FileName="WebAppsNoAuth/Views/Shared/_Layout.cshtml" />
+      <File FileName="WebAppsNoAuth/Views/Home/Meetings.cshtml" />
+      <File FileName="WebAppsNoAuth/Controllers/EmailController.cs" />
+      <File FileName="WebAppsNoAuth/Providers/EmailProvider.cs" />
+      <File FileName="WebAppsNoAuth/Views/Home/MyTasks.cshtml" />
+      <File FileName="WebAppsNoAuth/Dockerfile" Line="23" Column="1" />
+      <File FileName="WebAppsNoAuth/dockercompose.yml" Line="11" Column="10" />
+      <File FileName="WebAppsNoAuth/Program.cs" Line="37" Column="1" />
+      <File FileName="WebAppsNoAuth/appsettings.json" Line="20" Column="1" />
+      <File FileName="WebAppsNoAuth/WebAppsNoAuth.db" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="WebAppsNoAuth" expanded="True">
-            <Node name="WebAppsNoAuth">
-              <Node name="Controllers" expanded="True">
-                <Node name="AdminController.cs" selected="True" />
-              </Node>
+            <Node name="WebAppsNoAuth" expanded="True">
+              <Node name="Controllers" expanded="True" />
               <Node name="EmpSentimentModel" expanded="True" />
+              <Node name="Migrations" expanded="True" />
+              <Node name="Models" expanded="True" />
               <Node name="Providers" expanded="True" />
               <Node name="Services" expanded="True" />
               <Node name="Upload" expanded="True" />
@@ -38,10 +35,17 @@
                 <Node name="Manager" expanded="True" />
                 <Node name="Shared" expanded="True" />
               </Node>
+              <Node name="Program.cs" selected="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.WebAppsNoAuth PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>

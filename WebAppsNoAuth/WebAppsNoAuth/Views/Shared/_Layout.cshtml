@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-grid.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/WebAppsNoAuth.styles.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.css" />
 </head>
@@ -35,60 +36,53 @@
                                 <li class="nav-item">
                                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Calendar" style="color:maroon">Calendar</a>
                                 </li>
-                                @*<li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="MyProjects" style="color:maroon">My Projects</a>
-                                    </li>*@
                                 <li class="nav-item">
                                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="PMTasks" style="color:maroon">PM Tasks</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="MyTasks" style="color:maroon">Tasks</a>
                                 </li>
-                                @*<li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ResetPassword" style="color:maroon">Reset Password</a>
-                                    </li>*@
                                 @{
                                     if (ViewData["Admin"] != null && ViewData["Admin"].ToString() == "True")
                                     {
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateLocation" style="color:maroon">Locations</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateUser" style="color:maroon">Users</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateTeam" style="color:maroon">Teams</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UpdateEntitlements" style="color:maroon">Entitlements</a>
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: maroon;">
+                                                Admin
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="adminDropdown" style="min-width: 200px;">
+                                                <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="UpdateLocation">Locations</a>
+                                                <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="UpdateUser">Users</a>
+                                                <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="UpdateTeam">Teams</a>
+                                                <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="UpdateEntitlements">Entitlements</a>
+                                            </div>
                                         </li>
                                     }
                                 }
                                 @{
                                     if (ViewData["Manager"] != null && ViewData["Manager"].ToString() == "True")
                                     {
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Manager" asp-action="ApproveRequest" style="color:maroon">Requests</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Manager" asp-action="Projects" style="color:maroon">Projects</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-area="" asp-controller="Manager" asp-action="EmployeeAnalytics" style="color:maroon">Employee Analytics</a>
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="managerDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: maroon;">
+                                                Manager
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="managerDropdown" style="min-width: 200px;">
+                                                <a class="dropdown-item" asp-area="" asp-controller="Manager" asp-action="ApproveRequest">Requests</a>
+                                                <a class="dropdown-item" asp-area="" asp-controller="Manager" asp-action="Projects">Projects</a>
+                                                <a class="dropdown-item" asp-area="" asp-controller="Manager" asp-action="EmployeeAnalytics">Employee Analytics</a>
+                                            </div>
                                         </li>
                                     }
                                 }
                             </ul>
                             <ul class="nav navbar navbar-right">
                                 <li>
-                                    <button style="border:none; background-color:maroon; color:white" data-toggle="modal" data-target="#layoutModal">@ViewData["Username"]</button>
+                                    <button style="color:maroon" data-toggle="modal" data-target="#layoutModal">@ViewData["Username"]</button>
                                 </li>
                                 <li>
                                     <div class="avatar">
                                         <div class="user-icon font18" style="opacity:1" data-toggle="modal" data-target="#layoutModal" onclick="openProfile()">
                                             <span class="amber" id="statusColour"></span>
                                         </div>
-
                                     </div>
                                 </li>
                                 <li class="nav-item">
@@ -101,6 +95,7 @@
                     </div>
                 </nav>
             </header>
+
             <body>
 
                 <div id="userStatus" class="sidepanel">

@@ -115,7 +115,7 @@ namespace WebAppsNoAuth.Providers
                         currentProject.CreatedDateStr = dbReader.GetDateTime(5).ToString("dd/MM/yyyy");
                         currentProject.CreatedBy = dbReader.GetInt32(6);
                         currentProject.EndDate = dbReader.IsDBNull(7) ? new DateTime(1) : dbReader.GetDateTime(7);
-                        currentProject.EndDateStr = currentProject.EndDate.ToString("dd/MM/yyyy");
+                        currentProject.EndDateStr = dbReader.IsDBNull(7) ? "" : currentProject.EndDate.ToString("dd/MM/yyyy");
                         currentProject.Completed = dbReader.IsDBNull(7) ? false : dbReader.GetBoolean(8);
                         allProjects.Add(currentProject);
                     }

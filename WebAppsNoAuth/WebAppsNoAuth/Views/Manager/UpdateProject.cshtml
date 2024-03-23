@@ -1,238 +1,327 @@
-﻿
-<div class="container">
-    <h2 class="appTitle indexHeader">Create New Project</h2>
+﻿<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Project</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5wE7Wkwsnzvry+Y2xlLNXJhHPU6Ijzr2rsrvE7a4gCy5dUei/9S3" crossorigin="anonymous">
+    <!-- Bootstrap Icons CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<div class="container mt-5">
+    <h2 class="appTitle indexHeader mb-4">Create New Project</h2>
+    <!-- Progress bar -->
     <br />
     <br />
-    <div class="card" style="width: 500px; position: center; justify-content: center; margin: auto; width: 50%;">
-        <div class="card-body" style="align-content:center;align-items:center">
-            <form>
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary appButton" id="goBackButton" onclick="return redirectBack()">Back</button>
+    <div class="d-flex justify-content-center">
+        <div class="progress mb-3" style="width: 400px;">
+            <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%; background-color:maroon; color:maroon" aria-valuenow="0"
+                 aria-valuemin="0" aria-valuemax="100">Step 1</div>
+        </div>
+    </div>
+    <div class="card shadow p-3 mb-5 bg-white rounded" style="max-width: 600px; margin: auto;">
+        <div class="card-body">
+            <form id="projectForm">
+                <!-- Step 1: Project Name and Description -->
+                <div id="step1">
+                    <div class="mb-3">
+                        <label class="form-label appLabel" for="projectName">Project Name</label>
+                        <input type="text" id="projectName" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label appLabel" for="projectDescription">Project Description</label>
+                        <textarea id="projectDescription" class="form-control" rows="4"></textarea>
+                    </div>
+                    <div class="mb-3 text-center">
+                        <button type="button" class="btn btn-outline-maroon appButton" style="color:white" id="nextStep"
+                                onclick="nextStepFunc()">
+                            <i class="bi bi-arrow-right" style="color:white"></i>
+                        </button>
+                    </div>
                 </div>
-                <br />
-                <br />
-                <div class="form-group">
-                    <label class="form-label appLabel" for="projectName">Project Name</label>
-                    <input type="text" id="projectName" class="form-control" style="width:200px" />
+
+                <!-- Step 2: Project Difficulty and Manager -->
+                <div id="step2" style="display: none;">
+                    <div class="mb-3">
+                        <label class="form-label appLabel" for="projectDifficulty">Level of Difficulty</label>
+                        <input type="number" id="projectDifficulty" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label appLabel" for="projectManager">Project Manager</label>
+                        @Html.DropDownList("UsersListComplete")
+                    </div>
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-outline-maroon appButton float-start"
+                                id="prevStep" onclick="prevStepFunc()">
+                            <i class="bi bi-arrow-left" style="color:white"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-maroon appButton float-end"
+                                id="nextStep" style="color:white" onclick="nextStepFunc()">
+                            <i class="bi bi-arrow-right" style="color:white"></i>
+                        </button>
+                    </div>
                 </div>
-                <br />
-                <div class="form-group">
-                    <label class="form-label appLabel" for="projectDescription">Project Description</label>
-                    <textarea id="projectDescription" class="form-control" style="width:250px"></textarea>
-                </div>
-                <br />
-                <div class="form-group">
-                    <label class="form-label appLabel" for="projectDifficulty">Level of difficulty</label>
-                    <input type="number" id="projectDifficulty" class="form-control" style="width:200px" />
-                    <br />
-                </div>
-                <div class="form-group">
-                    <label class="form-label appLabel" for="projectManager">Project Manager</label>
-                    @Html.DropDownList("UsersListComplete")
-                    <br />
-                </div>
-                <br />
-                <div class="form-group">
-                    <label class="form-label appLabel" for="skills">Skills involved</label>
-                    <div id="multiselectSkills"></div>
-                    <button type="button" class="btn btn-primary appButton" data-toggle="modal" data-target="#myModal" onclick="clearSkillTextBox();">Add New Skill</button>
-                    <input type="text" id="newSkill" class="form-control" style="display:none" />
-                </div>
-                <br />
-                <div class="form-group">
-                    <label class="form-label appLabel">Employees working on this project </label>
-                    <div id="multiselectUsers"></div>
-                </div>
-                <br />
-                <br />
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary appButton" id="addProjectButton" onclick="return addNewProjectMethod()">Add</button>
-                </div>
+
+                <!-- Step 3: Skills Involved and Employees -->
+                <div id="step3" style="display: none;">
+                    <div class="mb-3">
+                        <label class="form-label appLabel" for="skills">Skills Involved</label>
+                        <div class="d-flex align-items-center">
+                            <div id="multiselectSkills"></div>
+                            <button type="button" class="btn btn-outline-maroon appButton ms-2"
+                                    data-toggle="modal" data-target="#myModal" onclick="clearSkillTextBox();">
+                                <i class="fa fa-plus" style="color: white;"></i>
+                            </button>
+                        </div>
+                        <input type="text" id="newSkill" class="form-control mt-2" style="display:none" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label appLabel">Select Employees</label>
+                        <div class="d-flex align-items-center">
+                            <div id="multiselectUsers"></div>
+                        </div>
+                        </div>
+                        <div class="mb-3">
+                            <button type="button" class="btn btn-outline-maroon appButton float-start" id="prevStep" onclick="prevStepFunc()"><i class="bi bi-arrow-left" style="color:white"></i></button>
+                            <button type="button" class="btn btn-outline-maroon appButton float-end" id="addProjectButton" style="color:white" onclick="addNewProjectMethod()">Add Project</button>
+                        </div>
+                    </div>
             </form>
         </div>
     </div>
 </div>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title appModalFont" id="myModalLabel">Add User</h4>
-                <button type="button" class="close appCloseButton" data-dismiss="modal" onclick="closeModal()">x</button>
-            </div>
-            <div class="modal-body">
-                <form method="get">
-                    <div class="form-outline mb-4">
-                        <label class="form-label appLabel" for="name">Add Skill: </label>
-                        <input type="text" id="name" class="form-control form-control-lg" />
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary appButton" id="addUserButton" onclick="return addNewSkill()">Add</button>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title appModalFont" id="myModalLabel">Add User</h4>
+                    <button type="button" class="close appCloseButton" data-dismiss="modal"
+                            onclick="closeModal()">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="get">
+                        <div class="mb-3">
+                            <label class="form-label appLabel" for="name">Add Skill:</label>
+                            <input type="text" id="name" class="form-control" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-maroon appButton" id="addUserButton"
+                            onclick="return addNewSkill()">
+                        Add
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<style>
-    #SkillsList {
-        height: 150px;
-    }
-
-    #UsersListComplete2 {
-        height: 150px;
-    }
-</style>
-
-@section Scripts {
-    <link rel="stylesheet" href="~/lib/virtual-select-master/dist/virtual-select.min.css" />
-    <script>var updateLocationId = -1;
-        $(document).ready(function () {
-            getAllUsers();
-            getAllSkills();
-        });
 
 
-        function addNewProjectMethod() {
-            var newProject = document.getElementById("projectName").value;
-            var newProjectDes = document.getElementById("projectDescription").value;
-            var newProjectDiff = document.getElementById("projectDifficulty").value;
-            var newProjectManager = document.getElementById("UsersListComplete").value;
-            var usersVal = document.getElementById("multiselectUsers").value;
-            var usersListStr = "(";
-            for (var i = 0; i < usersVal.length; i++) {
-                usersListStr += usersVal[i];
-                if (i == usersVal.length - 1) {
-                    break;
-                }
-                usersListStr += ",";
-            }
-            usersListStr += ")";
-            $.ajax({
-                url: "AddNewProject",
-                type: "POST",
-                data: {
-                    projectName: newProject,
-                    projectDes: newProjectDes,
-                    projectDiff: newProjectDiff,
-                    projectManager: newProjectManager,
-                    projectPpl: usersListStr
-                },
-                success: function (result) {
-                    clearTextBox();
-                    window.location.href = "/Manager/Projects";
-                },
-                error: function (error) {
-                    alert(error.responseText);
-                }
-            })
+    <style>
+        #SkillsList {
+            height: 150px;
         }
 
-        function addNewSkill() {
-            var confirmA = confirm("By adding this new skill, the page will refresh and you will lose all the changes made. Would you like to continue?");
-            if (confirmA == false) {
-                closeModal();
-                return;
+        #UsersListComplete2 {
+            height: 150px;
+        }
+    </style>
+
+    @section Scripts {
+        <link rel="stylesheet" href="~/lib/virtual-select-master/dist/virtual-select.min.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"
+                integrity="sha384-+2FKXHpA/7RP6FYXXgBUfVkzumVn+ysdIVACFK/i02KaFaT53RGb8VCNLHG8ZwXf"
+                crossorigin="anonymous"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"
+                integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+n0T/r7ZBaw3+X0F1qCC0wqyq1PZg7jsV6JCBjq"
+                crossorigin="anonymous"></script>
+        <script>let currentStep = 1;
+            const totalSteps = 3;
+
+            function nextStepFunc() {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateProgressBar(currentStep, totalSteps);
+                }
+                showStep(currentStep);
             }
-            var newSkill = $("#name").val();
-            $.ajax({
-                url: "AddNewSkill",
-                type: "POST",
-                data: {
-                    skillName: newSkill
-                },
-                success: function (result) {
-                    // getAllUsers();
+
+            function prevStepFunc() {
+                if (currentStep > 1) {
+                    currentStep--;
+                    updateProgressBar(currentStep, totalSteps);
+                }
+                showStep(currentStep);
+            }
+
+            function updateProgressBar(currentStep, totalSteps) {
+                const progressPercentage = (currentStep / totalSteps) * 100;
+                document.getElementById('progress-bar').style.width = progressPercentage + '%';
+                document.getElementById('progress-bar').innerText = `Step ${currentStep} of ${totalSteps}`;
+            }
+
+            function showStep(step) {
+                document.querySelectorAll('[id^="step"]').forEach(el => {
+                    el.style.display = 'none';
+                });
+                document.getElementById(`step${step}`).style.display = 'block';
+            }
+
+
+
+
+            var updateLocationId = -1;
+            $(document).ready(function () {
+                getAllUsers();
+                getAllSkills();
+            });
+
+
+            function addNewProjectMethod() {
+                var newProject = document.getElementById("projectName").value;
+                var newProjectDes = document.getElementById("projectDescription").value;
+                var newProjectDiff = document.getElementById("projectDifficulty").value;
+                var newProjectManager = document.getElementById("UsersListComplete").value;
+                var usersVal = document.getElementById("multiselectUsers").value;
+                var usersListStr = "(";
+                for (var i = 0; i < usersVal.length; i++) {
+                    usersListStr += usersVal[i];
+                    if (i == usersVal.length - 1) {
+                        break;
+                    }
+                    usersListStr += ",";
+                }
+                usersListStr += ")";
+                $.ajax({
+                    url: "AddNewProject",
+                    type: "POST",
+                    data: {
+                        projectName: newProject,
+                        projectDes: newProjectDes,
+                        projectDiff: newProjectDiff,
+                        projectManager: newProjectManager,
+                        projectPpl: usersListStr
+                    },
+                    success: function (result) {
+                        clearTextBox();
+                        window.location.href = "/Manager/Projects";
+                    },
+                    error: function (error) {
+                        alert(error.responseText);
+                    }
+                })
+            }
+
+            function addNewSkill() {
+                var confirmA = confirm("By adding this new skill, the page will refresh and you will lose all the changes made. Would you like to continue?");
+                if (confirmA == false) {
                     closeModal();
-                    var newProject = document.getElementById("projectName").value;
-                    console.log(newProject);
-                    var newProjectDes = document.getElementById("projectDescription").value;
-                    var newProjectDiff = document.getElementById("projectDifficulty").value;
-                    window.location.reload(); //is this what is required in order to refresh the skillset list
-                    document.getElementById("projectName").value = newProject;
-                    document.getElementById("projectDescription").value = newProjectDes;
-                    document.getElementById("projectDifficulty").value = newProjectDiff;
-                },
-                error: function (error) {
-                    alert(error.responseText);
+                    return;
                 }
-            })
-        }
-        function closeModal() {
-            $("#myModal").modal("hide");
-        }
-
-        function clearSkillTextBox() {
-            $("#myModal").modal("show");
-            $("#name").val("");
-        }
-
-        function clearTextBox() {
-            document.getElementById("projectName").value = "";
-            document.getElementById("projectDescription").value = "";
-            document.getElementById("projectDifficulty").value = "";
-            $("#suggestionsMessageBox").html("");
-        }
-        function redirectBack() {
-            window.location.href = "/Manager/Projects"
-        }
-
-        function getAllUsers() {
-            var usersArray = [];
-            $.ajax({
-                url: "GetAllUsersAsJson",
-                type: "GET",
-                contentType: "application/json;charset=utf-8",
-                dataType: "json",
-                success: function (result) {
-                    console.log(result);
-                    var html = "";
-                    for (var i = 0; i < result.data.length; i++) {
-                        if (i == 0) {
-                            currentUserId = result.data[i].id;
-                        }
-                        var currentUser = { label: result.data[i].name, value: result.data[i].id };
-                        usersArray.push(currentUser);
+                var newSkill = $("#name").val();
+                $.ajax({
+                    url: "AddNewSkill",
+                    type: "POST",
+                    data: {
+                        skillName: newSkill
+                    },
+                    success: function (result) {
+                        // getAllUsers();
+                        closeModal();
+                        var newProject = document.getElementById("projectName").value;
+                        console.log(newProject);
+                        var newProjectDes = document.getElementById("projectDescription").value;
+                        var newProjectDiff = document.getElementById("projectDifficulty").value;
+                        window.location.reload(); //is this what is required in order to refresh the skillset list
+                        document.getElementById("projectName").value = newProject;
+                        document.getElementById("projectDescription").value = newProjectDes;
+                        document.getElementById("projectDifficulty").value = newProjectDiff;
+                    },
+                    error: function (error) {
+                        alert(error.responseText);
                     }
-                    console.log(usersArray);
-                    VirtualSelect.init({
-                        ele: '#multiselectUsers',
-                        options: usersArray,
-                        multiple: true
-                    });
-                },
-                error: function (error) {
-                    console.log(error.responseText);
-                }
-            });
-        }
+                })
+            }
+            function closeModal() {
+                $("#myModal").modal("hide");
+            }
 
+            function clearSkillTextBox() {
+                $("#myModal").modal("show");
+                $("#name").val("");
+            }
 
-        function getAllSkills() {
-            var skillsArray = [];
-            $.ajax({
-                url: "GetAllSkills",
-                type: "GET",
-                contentType: "application/json;charset=utf-8",
-                dataType: "json",
-                success: function (result) {
-                    var html = "";
-                    for (var i = 0; i < result.data.length; i++) {
-                        if (i == 0) {
-                            currentUserId = result.data[i].id;
+            function clearTextBox() {
+                document.getElementById("projectName").value = "";
+                document.getElementById("projectDescription").value = "";
+                document.getElementById("projectDifficulty").value = "";
+                $("#suggestionsMessageBox").html("");
+            }
+            function redirectBack() {
+                window.location.href = "/Manager/Projects"
+            }
+
+            function getAllUsers() {
+                var usersArray = [];
+                $.ajax({
+                    url: "GetAllUsersAsJson",
+                    type: "GET",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result);
+                        var html = "";
+                        for (var i = 0; i < result.data.length; i++) {
+                            if (i == 0) {
+                                currentUserId = result.data[i].id;
+                            }
+                            var currentUser = { label: result.data[i].name, value: result.data[i].id };
+                            usersArray.push(currentUser);
                         }
-                        var currentUser = { label: result.data[i].skillName, value: result.data[i].skillId };
-                        skillsArray.push(currentUser);
+                        console.log(usersArray);
+                        VirtualSelect.init({
+                            ele: '#multiselectUsers',
+                            options: usersArray,
+                            multiple: true
+                        });
+                    },
+                    error: function (error) {
+                        console.log(error.responseText);
                     }
-                    VirtualSelect.init({
-                        ele: '#multiselectSkills',
-                        options: skillsArray,
-                        multiple: true
-                    });
-                },
-                error: function (error) {
-                    console.log(error.responseText);
-                }
-            });
-        }
-    </script>
-}
+                });
+            }
+
+
+            function getAllSkills() {
+                var skillsArray = [];
+                $.ajax({
+                    url: "GetAllSkills",
+                    type: "GET",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        var html = "";
+                        for (var i = 0; i < result.data.length; i++) {
+                            if (i == 0) {
+                                currentUserId = result.data[i].id;
+                            }
+                            var currentUser = { label: result.data[i].skillName, value: result.data[i].skillId };
+                            skillsArray.push(currentUser);
+                        }
+                        VirtualSelect.init({
+                            ele: '#multiselectSkills',
+                            options: skillsArray,
+                            multiple: true
+                        });
+                    },
+                    error: function (error) {
+                        console.log(error.responseText);
+                    }
+                });
+            }</script>
+    }
