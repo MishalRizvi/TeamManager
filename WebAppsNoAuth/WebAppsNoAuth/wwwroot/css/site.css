@@ -3,6 +3,45 @@ html {
   font-size: 14px;
 }
 
+:root {
+    --text-color: #800000; /* Maroon */
+    --background-color: #f5f5f5; /* Light gray */
+    --accent-color: #008080; /* Teal */
+}
+
+body {
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+.navbar {
+    background-color: var(--accent-color);
+    color: var(--background-color);
+}
+
+    .navbar a {
+        color: var(--background-color);
+    }
+
+.btn {
+    background-color: var(--accent-color);
+    color: var(--background-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+    .btn:hover {
+        background-color: darken(var(--accent-color), 10%);
+    }
+
+
+/*.btn-primary {
+    background-color: var(--primary-color);
+    color: #fff;
+}*/
+
+
 /*@media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -21,7 +60,7 @@ html {
 
 body {
     margin-bottom: 60px;
-    background-color: rgb(246, 242, 241);
+    background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
     /*    background-image: url('/Images/PurpleGradientBackground.jpeg');
 */
     background-size: cover;
@@ -35,7 +74,7 @@ nav-link {
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 0.9em;
-    font-family: sans-serif;
+    font-family: 'Libre Franklin', sans-serif;
     min-width: 800px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     background-color: whitesmoke;
@@ -68,7 +107,7 @@ nav-link {
 
 .appLabel {
     color: maroon;
-    font-family: sans-serif;
+    font-family: 'Libre Franklin', sans-serif;
 }
 
 .appButton {
@@ -97,7 +136,7 @@ appButton[disabled=disabled], appButton:disabled {
     color: maroon;
 }
 .modalFont {
-    font-family: "Courier New", Courier, monospace;
+    font-family: 'Libre Franklin', sans-serif;
 }
 
 /* FOR CALENDAR PAGE */
@@ -307,23 +346,10 @@ body.sidepanel-open {
 .avatar:hover .dropdown-content {
     display: block;
 }
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    overflow:hidden;
-    float:left;
-}
-.dropdown-content button {
-    float: none;
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
+
+.dropdown:hover .dropdown-menu {
     display: block;
-    text-align: left;
+    margin-top: 10px; /* Adjust as needed */
 }
 
 
@@ -365,8 +391,8 @@ body.sidepanel-open {
 
 
 .form-label-style {
-    font-family:Arial, Helvetica, sans-serif;
-    font-weight:100;
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 100;
     color: maroon;
 }
 

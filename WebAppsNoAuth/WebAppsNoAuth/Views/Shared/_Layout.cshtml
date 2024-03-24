@@ -26,62 +26,65 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                            <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Holidays" style="color:maroon">Holidays</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Meetings" style="color:maroon">Meetings</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Calendar" style="color:maroon">Calendar</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="PMTasks" style="color:maroon">PM Tasks</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="MyTasks" style="color:maroon">Tasks</a>
-                                </li>
-                                @{
-                                    if (ViewData["Admin"] != null && ViewData["Admin"].ToString() == "True")
-                                    {
-                                        <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: maroon;">
-                                                Admin
-                                            </a>
-                                            <div class="dropdown-menu" aria-labelledby="adminDropdown" style="min-width: 200px;">
-                                                <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="UpdateLocation">Locations</a>
-                                                <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="UpdateUser">Users</a>
-                                                <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="UpdateTeam">Teams</a>
-                                                <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="UpdateEntitlements">Entitlements</a>
-                                            </div>
-                                        </li>
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Holidays" style="color:maroon">Holidays</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Meetings" style="color:maroon">Meetings</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Calendar" style="color:maroon">Calendar</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="PMTasks" style="color:maroon">PM Tasks</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="MyTasks" style="color:maroon">Tasks</a>
+                                    </li>
+                                    @{
+                                        if (ViewData["Admin"] != null && ViewData["Admin"].ToString() == "True")
+                                        {
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color: maroon;">
+                                                    Admin
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="adminDropdown" style="min-width: 200px;">
+                                                    <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="UpdateLocation">Locations</a>
+                                                    <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="UpdateUser">Users</a>
+                                                    <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="UpdateTeam">Teams</a>
+                                                    <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="UpdateEntitlements">Entitlements</a>
+                                                </div>
+                                            </li>
+                                        }
                                     }
-                                }
-                                @{
-                                    if (ViewData["Manager"] != null && ViewData["Manager"].ToString() == "True")
-                                    {
-                                        <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" id="managerDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: maroon;">
-                                                Manager
-                                            </a>
-                                            <div class="dropdown-menu" aria-labelledby="managerDropdown" style="min-width: 200px;">
-                                                <a class="dropdown-item" asp-area="" asp-controller="Manager" asp-action="ApproveRequest">Requests</a>
-                                                <a class="dropdown-item" asp-area="" asp-controller="Manager" asp-action="Projects">Projects</a>
-                                                <a class="dropdown-item" asp-area="" asp-controller="Manager" asp-action="EmployeeAnalytics">Employee Analytics</a>
-                                            </div>
-                                        </li>
+                                    @{
+                                        if (ViewData["Manager"] != null && ViewData["Manager"].ToString() == "True")
+                                        {
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" id="managerDropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color: maroon;">
+                                                    Manager
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="managerDropdown" style="min-width: 200px;">
+                                                    <a class="dropdown-item" asp-area="" asp-controller="Manager" asp-action="ApproveRequest">Requests</a>
+                                                    <a class="dropdown-item" asp-area="" asp-controller="Manager" asp-action="Projects">Projects</a>
+                                                    <a class="dropdown-item" asp-area="" asp-controller="Manager" asp-action="EmployeeAnalytics">Employee Analytics</a>
+                                                </div>
+                                            </li>
+                                        }
                                     }
-                                }
-                            </ul>
+                                </ul>
                             <ul class="nav navbar navbar-right">
                                 <li>
-                                    <button style="color:maroon" data-toggle="modal" data-target="#layoutModal">@ViewData["Username"]</button>
-                                </li>
-                                <li>
-                                    <div class="avatar">
-                                        <div class="user-icon font18" style="opacity:1" data-toggle="modal" data-target="#layoutModal" onclick="openProfile()">
-                                            <span class="amber" id="statusColour"></span>
+                                    <div class="d-flex align-items-center">
+                                        <!-- User's name -->
+                                        <span class="username" style="color: maroon; font-weight: bold; margin-right: 10px; font-size:medium">@ViewData["Username"]</span>
+
+                                        <!-- Avatar icon or user image -->
+                                        <div class="avatar">
+                                            <div class="user-icon font18" style="opacity: 1" data-toggle="modal" data-target="#layoutModal" onclick="openProfile()">
+                                                <span class="amber" id="statusColour"></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </li>
@@ -216,6 +219,51 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+<style>
+    .navbar-nav .nav-item {
+        margin-right: 15px; /* Adjust the right margin to increase or decrease spacing */
+    }
+    .nav-item.dropdown:hover .dropdown-menu {
+        display: block; /* Display the dropdown menu */
+        opacity: 1; /* Make it fully visible */
+        visibility: visible; /* Make it visible */
+        transform: translateY(0); /* Move it down */
+        max-height: 200px; /* Set the maximum height */
+    }
+
+    .dropdown-menu {
+        display: block; /* Initially set it to block */
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 50px !important;
+        max-width: 150px !important;
+        width: auto !important;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        overflow: hidden;
+        float: left;
+        opacity: 0; /* Initially hide it */
+        visibility: hidden; /* Initially hide it */
+        transform: translateY(-10px); /* Move it up */
+        max-height: 0; /* Initially hide the dropdown */
+        transition: max-height 0.8s ease, opacity 0.8s ease, visibility 0.8s ease, transform 0.8s ease; /* Add transition effect */
+        transform-origin: top; /* Set transform origin */
+    }
+
+        .dropdown-menu a {
+            float: none;
+            color: black;
+            padding: 6px 10px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+    body {
+        font-family: 'Libre Franklin', sans-serif; /* Apply the custom font to the body */
+    }
+
+</style>
 
 <script>
     $(document).ready(function () {

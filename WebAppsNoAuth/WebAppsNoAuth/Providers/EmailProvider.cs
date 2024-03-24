@@ -149,7 +149,7 @@ namespace WebAppsNoAuth.Providers
             emailTemplate.Subject = "Meeting invite";
 
 
-            emailTemplate.Body = "Hi " + userName + "," + Environment.NewLine +
+            emailTemplate.Body = "Hi " + userName + "," + Environment.NewLine + Environment.NewLine + 
                                  "You have been invited to a new meeting." + Environment.NewLine + Environment.NewLine +
                                  "Meeting Details:" + Environment.NewLine +
                                  "Date: " + meetingDate.ToString("dd/MM/yyyy") + Environment.NewLine +

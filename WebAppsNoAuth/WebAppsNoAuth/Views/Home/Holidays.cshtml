@@ -1,5 +1,6 @@
 ﻿<head>
-    <link rel="stylesheet" href="~/css/card.css"/>
+    <link rel="stylesheet" href="~/css/card.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <h2 class="appTitle indexHeader">Holidays</h2>
 <br />
@@ -15,68 +16,85 @@
 @{
     if (ViewData["Manager"].ToString() == "True")
     {
-    <div class="row">
-        <div class="col">
-            <label class="form-label" for="userId" style="color:maroon">Select User: </label>
-            @Html.DropDownList("ManagerUsersList")
+        <div class="row">
+            <div class="col">
+                <label class="form-label" for="userId" style="color:maroon">Select User: </label>
+                @Html.DropDownList("ManagerUsersList")
+            </div>
         </div>
-        <div class="col">
-            <button class="btn btn-primary appButton" data-toggle="modal" data-target="#modal-view-event-add" onclick="clearTextBox()"><i class="fa fa-plus"> Add New Request</i></button>
-        </div>
-        <br />
-    </div>
     }
 }
+<br />
+<br />
 <div class="row gy-5">
     <div class="col-6 overflow-auto" id="cardSection">
-        <h4>Upcoming</h4>
-        <ul style="--length: 5; width: 549px; height: 500px" role="list" class="cardClass overflow-auto" id="currentRequests">
+        <h4>Upcoming Requests</h4>
+        <ul style="--length: 5; width: 480px; height: 500px" role="list" class="cardClass overflow-auto" id="currentRequests">
         </ul>
     </div>
     <div class="col-6">
-        <div class="card">
+        <div class="card position-relative">
             <div class="card-body">
                 <h3 class="card-title">Dashboard</h3>
                 <h6 class="card-subtitle mb-2 text-muted">As of today</h6>
                 <div class="row">
                     <div class="col" style="text-align:center">
                         <p class="dashboardTitle text-muted">Total entitlements</p>
-                        <p class="dashboardStat" style="text-align: center" id="totalEntitlements"></p>
+                        <div class="dashboardStat">
+                            <i class="fas fa-users fa-2x" style="color: #007bff;"></i>
+                            <p id="totalEntitlements" style="font-size: 18px; margin-top: 5px;">100</p>
+                        </div>
                     </div>
                     <div class="col" style="text-align:center">
                         <p class="dashboardTitle text-muted">Entitlements remaining</p>
-                        <p class="dashboardStat" style="text-align: center" id="remainingEntitlements"></p>
+                        <div class="dashboardStat">
+                            <i class="fas fa-chart-pie fa-2x" style="color: #28a745;"></i>
+                            <p id="remainingEntitlements" style="font-size: 18px; margin-top: 5px;">50</p>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col" style="text-align:center">
-                        <p class="dashboardTitle text-muted">Total Requests<p>
-                        <p class="dashboardStat" style="text-align: center" id="totalEntitlementsUsed"></p>
+                        <p class="dashboardTitle text-muted">Total Requests</p>
+                        <div class="dashboardStat">
+                            <i class="fas fa-clipboard-list fa-2x" style="color: #dc3545;"></i>
+                            <p id="totalEntitlementsUsed" style="font-size: 18px; margin-top: 5px;">30</p>
+                        </div>
                     </div>
                     <div class="col" style="text-align:center">
                         <p class="dashboardTitle text-muted">Annual</p>
-                        <p class="dashboardStat" style="text-align: center" id="totalAnnualUsed"></p>
+                        <div class="dashboardStat">
+                            <i class="fas fa-plane fa-2x" style="color: #ffc107;"></i>
+                            <p id="totalAnnualUsed" style="font-size: 18px; margin-top: 5px;">20</p>
+                        </div>
                     </div>
                     <div class="col" style="text-align:center">
                         <p class="dashboardTitle text-muted">Study</p>
-                        <p class="dashboardStat" style="text-align: center" id="totalStudyUsed"></p>
+                        <div class="dashboardStat">
+                            <i class="fas fa-book fa-2x" style="color: #17a2b8;"></i>
+                            <p id="totalStudyUsed" style="font-size: 18px; margin-top: 5px;">10</p>
+                        </div>
                     </div>
                     <div class="col" style="text-align:center">
                         <p class="dashboardTitle text-muted">WFH</p>
-                        <p class="dashboardStat" style="text-align: center" id="totalWFHUsed"></p>
+                        <div class="dashboardStat">
+                            <i class="fas fa-home fa-2x" style="color: #6c757d;"></i>
+                            <p id="totalWFHUsed" style="font-size: 18px; margin-top: 5px;">5</p>
+                        </div>
                     </div>
                     <div class="col" id="statsSection">
                         <canvas id="statsChart"></canvas>
                     </div>
+                    <div>
+                        <button class="btn btn-primary rounded-circle appButton" style="position: absolute; top: 10px; right: 10px; font-family: 'Libre Franklin', sans-serif !important; font-size:large" data-toggle="modal" data-target="#modal-view-event-add" onclick="clearTextBox()"><i class="fa fa-plus" style="font-family: 'Libre Franklin', sans-serif !important;"></i></button>
+                    </div>
                 </div>
             </div>
-            <a href="/Home/Calendar" class="card-link">View calendar</a>
         </div>
     </div>
-
-    <div class="col-6" id="cardSection">
+    <div class="col-6 overflow-auto" style="margin-bottom: 0 !important;" id="cardSection">
         <h4>Previous Requests</h4>
-        <ul style="--length: 5; width:549px; height:400px" role="list" class="cardClass overflow-auto" id="previousRequests">
+        <ul style="--length: 5; width:480px; height:400px" role="list" class="cardClass overflow-auto" id="previousRequests">
         </ul>
     </div>
 
@@ -96,24 +114,24 @@
             </div>
             <div class="modal-body">
                 <form id="add-event" method="get">
-                        <div class="form-outline mb-4">
-                            <label class="form-label appLabel" for="startDate">Start Date:</label>
-                            <input type="date" id="startDate" class="form-control form-control-lg" required />
-                        </div>
-                        <div class="form-outline mb-4">
-                            <label class="form-label appLabel" for="endDate">End Date:</label>
-                            <input type="date" id="endDate" class="form-control form-control-lg" required />
-                        </div>
-                        <div class="form-outline mb-4">
-                            <label class="form-label appLabel" for="requestType" required>Type: </label>
-                            @Html.DropDownList("RequestTypeList", "---")
-                        </div>
-                        <div class="form-outline mb-4">
-                            <label class="form-label appLabel" for="requestDescription">Description:</label>
-                            <input type="text" id="requestDescription" class="form-control form-control-lg" required />
-                        </div>
-                        <div id="messageBox" style="outline:none">
-                        </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="startDate">Start Date:</label>
+                        <input type="date" id="startDate" class="form-control form-control-lg" required />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="endDate">End Date:</label>
+                        <input type="date" id="endDate" class="form-control form-control-lg" required />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="requestType" required>Type: </label>
+                        @Html.DropDownList("RequestTypeList", "---")
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label appLabel" for="requestDescription">Description:</label>
+                        <input type="text" id="requestDescription" class="form-control form-control-lg" required />
+                    </div>
+                    <div id="messageBox" style="outline:none">
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary appButton" onclick="return addNewRequest()">Save</button>
                     </div>
@@ -126,8 +144,7 @@
 
 @section Scripts {
 
-    <script>
-        var isManager = false;
+    <script>var isManager = false;
         var managerUserId = -1;
         var months = { "01": 0, "02": 0, "03": 0, "04": 0, "05": 0, "06": 0, "07": 0, "08": 0, "09": 0, "10": 0, "11": 0, "12": 0 };
         var monthValues = [];
@@ -160,7 +177,7 @@
                 success: function (result) {
                     console.log(result);
                     var html = "";
-                    var oldRequests = []; 
+                    var oldRequests = [];
                     for (var i = 0; i < result.data.length; i++) {
                         var fetchedSDate = result.data[i].startDate;
                         var fetchedEDate = result.data[i].endDate;
@@ -431,8 +448,8 @@
                 success: function (result) {
                     console.log(result);
                     var totalUsed = result.data.totalUsed;
-                    var annualUsed = result.data.annualUsed; 
-                    var studyUsed = result.data.studyUsed; 
+                    var annualUsed = result.data.annualUsed;
+                    var studyUsed = result.data.studyUsed;
                     var wfhUsed = result.data.wfhUsed;
                     var entitlementAmount = result.data.entitlementAmount;
 
@@ -441,7 +458,7 @@
                     $("#totalStudyUsed").html(studyUsed);
                     $("#totalWFHUsed").html(wfhUsed);
                     $("#totalEntitlements").html(entitlementAmount);
-                    $("#remainingEntitlements").html(entitlementAmount-annualUsed);
+                    $("#remainingEntitlements").html(entitlementAmount - annualUsed);
 
 
                 },
@@ -569,9 +586,7 @@
                     console.log(error.responseText);
                 }
             });
-        }
-
-    </script>
+        }</script>
 }
 
 
